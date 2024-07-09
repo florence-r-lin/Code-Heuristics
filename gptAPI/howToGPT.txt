@@ -1,0 +1,14 @@
+installations:
+pip install openai
+
+environment variable:
+see my SFA log for the api key
+in your terminal:
+- macs: export OPENAI_API_KEY="key"
+- windows: set OPENAI_API_KEY="key"
+
+can tinker with the input message, just make sure its in the right format of a string
+you can also change the model to:
+- gpt-4o
+- gpt-4-turbo
+bear in mind that it may cost slightly more to use these models to do API calls ($10 on the account), granted making these API calls are pretty cheap
