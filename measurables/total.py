@@ -5,6 +5,27 @@ import csv
 
 onlyfiles = [f for f in listdir("studentScripts")]
 onlyfiles = [join("studentscripts/", f) for f in onlyfiles]
-print(onlyfiles)
+# print(onlyfiles)
+
+fileList = []
+
 for i in onlyfiles:
-     print(HardMetrics(i))
+     fileList.append(HardMetrics(i)[1])
+
+fieldDict = { # currently is only used for keys
+    "File Name": [], 
+    "LOC": [], 
+    "Comment Percentage":[] , 
+    "Number Of Functions": [], 
+    "CycloComplexity": [],
+    "Max Depth": [] , 
+    "Weeks Covered": [] 
+    }
+          
+with open('Metrics Score.csv', 'w', newline='') as file:
+    file.truncate(0) # clear file 
+    writer = csv.writer(file)
+    writer.writerow(fieldDict.keys())
+
+    for i in fileList:
+        writer.writerow(x for x in i)
