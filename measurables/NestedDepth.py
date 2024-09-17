@@ -14,8 +14,8 @@ class CallChain:
         self.maxFunctionCalls = self.findFunctionCalls()[0] 
         self.maxFunctionCallsList = self.findFunctionCalls()[1] # list of function calls in function with the most calls
         self.functionMostCalls = self.maxFunctionCallsList[0] # function with the most calls
-
-        self.averageDepth = self.depth/len(self.names)
+        # broken until I put [0] in ???
+        self.averageDepth = self.depth[0]/len(self.names)
         self.averageCalls = self.totalFuncCalls/len(self.names)
         
 
@@ -55,7 +55,7 @@ class CallChain:
             # print('currentPath appending', path)
             allPaths.append(path)
             # print('allPaths =', allPaths)
-        
+
         longestPath = max(allPaths, key=lambda x: self.findMaxDepth(x))
         # print('longest chain length is', self.findMaxDepth(longestPath))
         # print('Longest chain contains: ', longestPath)

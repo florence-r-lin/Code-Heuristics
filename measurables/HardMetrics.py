@@ -134,6 +134,13 @@ def sumTests(boolList):
             total = total+1
     return total
 
+def commentOnlyCheck(inputStr):
+    nonCommentList = []
+    for i in inputStr:
+        if not(i == "\n"):
+           nonCommentList.append(i)
+    if len(nonCommentList) == 0:
+        raise Exception ("Comment only file")
 
 
 
@@ -152,6 +159,7 @@ def HardMetrics(scriptPath):
     inputfile = open(scriptPath, "r")
     inputfiletest2 = open(scriptPath, "r")
     noCommentsinputfile = removeComments(inputfiletest2.read())
+    commentOnlyCheck(noCommentsinputfile)
     # making two line by line lists of the file, both full and only comments
     for x in inputfile:
         totalScriptList.append(x)
@@ -165,7 +173,6 @@ def HardMetrics(scriptPath):
     depthChain = CallChain()
     depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
     ambitionScore = depthChain.depth
-    maxCallChain =  depthChain.funcLongestChain
     # getting into weekstested
     weeksTesting = []
     weeksTesting.append(findIfOrVar(noCommentsinputfile))
@@ -179,11 +186,11 @@ def HardMetrics(scriptPath):
     weeksTesting.append(findOop(scriptPath))
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
-    fullList = [totalLOC , comment_percentage, functions, totalCC, depthChain.funcLongestChain, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
+    fullList = [totalLOC , comment_percentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
     return fullList
 
 
-print(HardMetrics("measurables/LOC.py"))
+print(HardMetrics("studentScripts/throw.py"))
 # commentList = []
 # totalScriptList = []
 # inputfile = open(scriptPath, "r")
