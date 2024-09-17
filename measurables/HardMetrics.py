@@ -153,16 +153,6 @@ def commentOnlyCheck(inputStr):
 # ---------------------------
 
 def HardMetrics(scriptPath):
-# def HardMetrics(scriptPath, filename = '',
-#     totalLOC = 0,
-#     commentPercentage = 0,
-#     numFunc = 0,
-#     totalCC = 0,
-#     ambitionScore = 0,
-#     weeksCovered = 0):
-    '''Jenny's code Im sorry in advance'''
-    # Writing dictionary into CSV
-    #created local variables corresponding with the stats
 
     commentList = []
     totalScriptList = []
