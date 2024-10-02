@@ -4,6 +4,7 @@ from os.path import isfile, join
 import csv
 
 onlyfiles = [f for f in listdir("studentScripts")]
+#test
 onlyfiles = [join("studentscripts/", f) for f in onlyfiles]
 # print(onlyfiles)
 
