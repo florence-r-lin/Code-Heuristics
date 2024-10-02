@@ -1,4 +1,5 @@
 from HardMetrics import HardMetrics
+from Histograms import makeHistogram
 from os import listdir
 from os.path import isfile, join
 import csv
@@ -30,3 +31,15 @@ with open('Metrics Numeber Score.csv', 'w', newline='') as file:
 
     for i in fileList:
         writer.writerow(x for x in i)
+
+depthList = []
+for i in fileList:
+    depthList.append(i[5][0])
+
+weeksUsedList = []
+
+for i in fileList:
+    weeksUsedList.append(i[6])
+
+print(weeksUsedList)
+makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')

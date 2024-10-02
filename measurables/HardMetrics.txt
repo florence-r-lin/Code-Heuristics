@@ -152,7 +152,7 @@ totalScriptList = []
 
 # CHANGE THE SCRIPT HERE
 # ---------------------------
-scriptPath = "CodeMeasure/LOC.py"
+scriptPath = "measurables/LOC.py"
 # ---------------------------
 
 
