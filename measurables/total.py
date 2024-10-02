@@ -32,7 +32,7 @@ for i in fileList:
     fieldDict["Number Of Functions"].append(i[3]) # Assuming i[3] is Number Of Functions
     fieldDict["CycloComplexity"].append(i[4])     # Assuming i[4] is Cyclomatic Complexity
     fieldDict["Max Depth"].append(i[5])           # Assuming i[5] is Max Depth
-    fieldDict["Weeks Covered"].append(i[6])       # Assuming i[6] is Weeks Covered
+    fieldDict["Weeks Covered"].append(i[5])       # Assuming i[6] is Weeks Covered
 
 
 with open('Metrics Score.csv', 'w', newline='') as file:
@@ -43,9 +43,9 @@ with open('Metrics Score.csv', 'w', newline='') as file:
     for i in fileList:
         writer.writerow(x for x in i)
 
-depthList = []
-for i in fileList:
-    depthList.append(i[5][0])
+# depthList = []
+# for i in fileList:
+#     depthList.append(i[5][0])
 
 weeksUsedList = []
 

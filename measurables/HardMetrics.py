@@ -105,12 +105,12 @@ def findRecursion(scriptPath):
     return False
 
 def findListComp(noCommentScriptStr):
-    # return containsString("\[.*for.*in.*\]", noCommentScriptStr)
-    tree = ast.parse(noCommentScriptStr)
-    for node in ast.walk(tree):
-        if isinstance(node, ast.ListComp):
-            return True
-    return False
+    return containsString("\[.*for.*in.*\]", noCommentScriptStr)
+    # tree = ast.parse(noCommentScriptStr)
+    # for node in ast.walk(tree):
+    #     if isinstance(node, ast.ListComp):
+    #         return True
+    # return False
     
 def findOop(scriptPath):
     with open(scriptPath, "r") as file:
