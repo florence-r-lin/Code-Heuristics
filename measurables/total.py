@@ -50,7 +50,7 @@ with open('Metrics Score.csv', 'w', newline='') as file:
 weeksUsedList = []
 
 for i in fileList:
-    weeksUsedList.append(i[6])
+    weeksUsedList.append(i[5])
 
 print(weeksUsedList)
 makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')
