@@ -9,14 +9,14 @@ class CallChain:
         self.names = funcNames
         self.depth = self.findLongestBranch()[0]
         self.longestChain = self.findLongestBranch()[1]
-        self.funcLongestChain = self.longestChain[0]
         self.totalFuncCalls = 0 # gets updated after self.maxFunctionCalls is initialized
 
         self.maxFunctionCalls = self.findFunctionCalls()[0] 
         self.maxFunctionCallsList = self.findFunctionCalls()[1] # list of function calls in function with the most calls
         self.functionMostCalls = self.maxFunctionCallsList[0] # function with the most calls
-        # broken until I put [0] in ???
-        self.averageDepth = self.depth[0]/len(self.names)
+        print(self.depth)
+        print(len(self.names))
+        self.averageDepth = self.depth/len(self.names)
         self.averageCalls = self.totalFuncCalls/len(self.names)
         
 
@@ -56,11 +56,11 @@ class CallChain:
             # print('currentPath appending', path)
             allPaths.append(path)
             # print('allPaths =', allPaths)
-
+        
         longestPath = max(allPaths, key=lambda x: self.findMaxDepth(x))
         # print('longest chain length is', self.findMaxDepth(longestPath))
         # print('Longest chain contains: ', longestPath)
-        return self.findMaxDepth(longestPath)[0], self.findMaxDepth(longestPath)[1]
+        return self.findMaxDepth(longestPath), longestPath
 
     def findMaxDepth(self, nestedList, currentDepth=1):
         if not isinstance(nestedList, list) or not nestedList:

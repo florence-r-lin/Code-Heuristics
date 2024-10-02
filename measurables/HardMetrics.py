@@ -134,6 +134,7 @@ def sumTests(boolList):
             total = total+1
     return total
 
+
 def commentOnlyCheck(inputStr):
     nonCommentList = []
     for i in inputStr:
@@ -145,12 +146,18 @@ def commentOnlyCheck(inputStr):
 
 
 
+
+
+
 # CHANGE THE SCRIPT HERE
 # ---------------------------
+
 # scriptPath = "measurables/LOC.py"
+
 # scriptPath = "CodeMeasure/LOC.py"
 
 # ---------------------------
+
 
 def HardMetrics(scriptPath):
 
@@ -275,6 +282,3 @@ def HardMetrics(scriptPath):
 # print(f"{'Week 9: Has Dictionaries?':<{alignment_width}}" + color_boolean(findDictionaries(noCommentsinputfile)))
 # print(f"{'Week 10: Has OOP?':<{alignment_width}}" + color_boolean(findOop(scriptPath)))
 # print(f"{'This project encompasses':<{alignment_width}}" + bold_colored_text(sumTests(weeksTesting), COLOR_BLUE) + " out of " + bold_colored_text(len(weeksTesting), COLOR_BLUE) + " weeks tested in this course")
-
-
-
