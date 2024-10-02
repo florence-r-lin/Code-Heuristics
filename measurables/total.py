@@ -11,7 +11,7 @@ onlyfiles = [join("studentscripts/", f) for f in onlyfiles]
 fileList = []
 
 for i in onlyfiles:
-     fileList.append(HardMetrics(i)[1])
+    fileList.append(HardMetrics(i)[1])
 
 fieldDict = { # currently is only used for keys
     "File Name": [], 
@@ -23,7 +23,7 @@ fieldDict = { # currently is only used for keys
     "Weeks Covered": [] 
     }
           
-with open('Metrics Score.csv', 'w', newline='') as file:
+with open('Metrics Numeber Score.csv', 'w', newline='') as file:
     file.truncate(0) # clear file 
     writer = csv.writer(file)
     writer.writerow(fieldDict.keys())
