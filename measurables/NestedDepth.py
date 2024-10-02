@@ -16,7 +16,7 @@ class CallChain:
         self.maxFunctionCallsList = self.findFunctionCalls()[1] # list of function calls in function with the most calls
         self.functionMostCalls = self.maxFunctionCallsList[0] # function with the most calls
         # broken until I put [0] in ???
-        self.averageDepth = self.depth[0]/len(self.names)
+        self.averageDepth = self.depth/len(self.names)
         self.averageCalls = self.totalFuncCalls/len(self.names)
         
 

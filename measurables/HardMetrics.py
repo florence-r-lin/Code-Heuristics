@@ -105,12 +105,12 @@ def findRecursion(scriptPath):
     return False
 
 def findListComp(noCommentScriptStr):
-    # return containsString("\[.*for.*in.*\]", noCommentScriptStr)
-    tree = ast.parse(noCommentScriptStr)
-    for node in ast.walk(tree):
-        if isinstance(node, ast.ListComp):
-            return True
-    return False
+    return containsString("\[.*for.*in.*\]", noCommentScriptStr)
+    # tree = ast.parse(noCommentScriptStr)
+    # for node in ast.walk(tree):
+    #     if isinstance(node, ast.ListComp):
+    #         return True
+    # return False
     
 def findOop(scriptPath):
     with open(scriptPath, "r") as file:
@@ -195,7 +195,7 @@ def HardMetrics(scriptPath):
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
 
-    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", functions, totalCC, ambitionScore, weeksUsed]
+    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", totalCC, ambitionScore, weeksUsed]
     fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
     return fullList,outputList
     # return fieldDict
