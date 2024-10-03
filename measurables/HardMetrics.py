@@ -177,7 +177,7 @@ def HardMetrics(scriptPath):
     totalLOC = len(totalScriptList)
     commentPercentage = (1 - (len(noCommentsinputfile) / len(open(scriptPath, "r").read()))) * 100
     #functions = funcName(scriptPath)
-    #totalCC = calculate_cyclomatic_complexity(open(scriptPath, "r").read())
+    totalCC = calculate_cyclomatic_complexity(open(scriptPath, "r").read())
     #depthChain = CallChain()
     #depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
     #ambitionScore = depthChain.depth
@@ -195,7 +195,7 @@ def HardMetrics(scriptPath):
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
 
-    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", weeksUsed]#ambitionScore, weeksUsed]
+    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", totalCC, weeksUsed]#ambitionScore, weeksUsed]
     #fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
     return outputList#fullList,outputList
     # return fieldDict
