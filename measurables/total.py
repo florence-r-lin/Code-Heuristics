@@ -1,18 +1,35 @@
 from HardMetrics import HardMetrics
 from Histograms import makeHistogram
+import os
 from os import listdir
 from os.path import isfile, join
 import csv
 
-onlyfiles = [f for f in listdir("studentScripts")]
-#test
-onlyfiles = [join("studentscripts/", f) for f in onlyfiles]
-# print(onlyfiles)
+filePath = '/Users/yuan/Downloads/assignment_214232_export'
 
-fileList = []
+#TODO: turn this into a function, probably called pruning
 
-for i in onlyfiles:
-    fileList.append(HardMetrics(i)[1])
+result = list(os.walk(filePath))
+pathList = []
+
+for folder_tuple in result:
+    currentpath, subfolder, files = folder_tuple
+
+    if '__MACOSX' in currentpath: continue
+
+    for file in files:
+        pathList.append(currentpath + "/" + file)
+        
+finalPyList = [f for f in pathList if f.endswith('.py')]
+
+
+metricsList = []
+
+#TODO: fix issue with tree by figuring out how to change the stuff inside the code, 
+# or at least what get's sent to HardMetrics, clone everything in the repo and then gitignore?
+
+for i in finalPyList:
+    metricsList.append(HardMetrics(i)[1])
 
 fieldDict = { # currently is only used for keys
     "File Name": [], 
@@ -25,7 +42,7 @@ fieldDict = { # currently is only used for keys
     }
           
 #initializing fieldDict
-for i in fileList:
+for i in metricsList:
     fieldDict["File Name"].append(i[0])           # Assuming i[0] is File Name
     fieldDict["LOC"].append(i[1])                 # Assuming i[1] is LOC
     fieldDict["Comment Percentage"].append(i[2])  # Assuming i[2] is Comment Percentage
@@ -40,7 +57,7 @@ with open('Metrics Score.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(fieldDict.keys())
 
-    for i in fileList:
+    for i in metricsList:
         writer.writerow(x for x in i)
 
 # depthList = []
@@ -49,7 +66,7 @@ with open('Metrics Score.csv', 'w', newline='') as file:
 
 weeksUsedList = []
 
-for i in fileList:
+for i in metricsList:
     weeksUsedList.append(i[5])
 
 print(weeksUsedList)

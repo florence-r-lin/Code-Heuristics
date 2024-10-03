@@ -176,11 +176,11 @@ def HardMetrics(scriptPath):
     # setting up all portions of list
     totalLOC = len(totalScriptList)
     commentPercentage = (1 - (len(noCommentsinputfile) / len(open(scriptPath, "r").read()))) * 100
-    functions = funcName(scriptPath)
-    totalCC = calculate_cyclomatic_complexity(open(scriptPath, "r").read())
-    depthChain = CallChain()
-    depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
-    ambitionScore = depthChain.depth
+    #functions = funcName(scriptPath)
+    #totalCC = calculate_cyclomatic_complexity(open(scriptPath, "r").read())
+    #depthChain = CallChain()
+    #depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
+    #ambitionScore = depthChain.depth
     # getting into weekstested
     weeksTesting = []
     weeksTesting.append(findIfOrVar(noCommentsinputfile))
@@ -195,9 +195,9 @@ def HardMetrics(scriptPath):
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
 
-    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", totalCC, ambitionScore, weeksUsed]
-    fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
-    return fullList,outputList
+    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", weeksUsed]#ambitionScore, weeksUsed]
+    #fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
+    return outputList#fullList,outputList
     # return fieldDict
 
 # print(HardMetrics("studentScripts/throw.py"))
