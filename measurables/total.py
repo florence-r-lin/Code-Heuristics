@@ -69,5 +69,5 @@ weeksUsedList = []
 for i in metricsList:
     weeksUsedList.append(i[5])
 
-print(weeksUsedList)
+#print(weeksUsedList)
 makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')
