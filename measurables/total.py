@@ -1,4 +1,4 @@
-from HardMetrics import HardMetrics
+import HardMetrics
 from Histograms import makeHistogram
 import os
 from os import listdir
@@ -25,11 +25,11 @@ finalPyList = [f for f in pathList if f.endswith('.py')]
 
 metricsList = []
 
-#TODO: fix issue with tree by figuring out how to change the stuff inside the code, 
-# or at least what get's sent to HardMetrics, clone everything in the repo and then gitignore?
+# TODO: figure out what to do with the taken out Vpython files :(
 
 for i in finalPyList:
-    metricsList.append(HardMetrics(i)[1])
+    if not(HardMetrics.containsString("VPython", HardMetrics.noCommentsFromFile(i))):
+        metricsList.append((HardMetrics.allMetrics(i)))
 
 fieldDict = { # currently is only used for keys
     "File Name": [], 
