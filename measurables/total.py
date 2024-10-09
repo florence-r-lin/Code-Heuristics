@@ -12,7 +12,7 @@ yuanFilePath = '/Users/yuan/Downloads/Some year cs5'
 #jennyFilePath = ''
 #florenceFilePath = ''
 
-filePath = jennyFilePath
+filePath = yuanFilePath
 
 #TODO: turn this into a function, probably called pruning
 
@@ -98,8 +98,8 @@ for i in metricsList:
 
 #print(weeksUsedList)
 makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')
-makeHistogram(Comments, 100, 'Weeks Used', 'Num Weeks')
+makeHistogram(Comments, 5, 'Weeks Used', 'Num Weeks')
 makeHistogram(FuncNum, 10, 'Weeks Used', 'Num Weeks')
-makeHistogram(Cyclo, 10, 'Weeks Used', 'Num Weeks')
+makeHistogram(Cyclo, 10, 'Cyclomatic complexity', 'Num Weeks')
 makeHistogram(Lines, 10, 'Weeks Used', 'Num Weeks')
 
