@@ -5,7 +5,7 @@ from os import listdir
 from os.path import isfile, join
 import csv
 
-yuanFilePath = '/Users/yuan/Downloads/assignment_214232_export'
+yuanFilePath = '/Users/yuan/Downloads/Some year cs5'
 #jennyFilePath = ''
 #florenceFilePath = ''
 
