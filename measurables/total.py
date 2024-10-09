@@ -12,7 +12,7 @@ yuanFilePath = '/Users/yuan/Downloads/Some year cs5'
 #jennyFilePath = ''
 #florenceFilePath = ''
 
-filePath = yuanFilePath
+filePath = jennyFilePath
 
 #TODO: turn this into a function, probably called pruning
 
