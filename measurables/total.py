@@ -5,7 +5,11 @@ from os import listdir
 from os.path import isfile, join
 import csv
 
-filePath = '/Users/yuan/Downloads/assignment_214232_export'
+yuanFilePath = '/Users/yuan/Downloads/assignment_214232_export'
+#jennyFilePath = ''
+#florenceFilePath = ''
+
+filePath = yuanFilePath
 
 #TODO: turn this into a function, probably called pruning
 
