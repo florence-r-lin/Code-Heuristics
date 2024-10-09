@@ -5,11 +5,11 @@ from os import listdir
 from os.path import isfile, join
 import csv
 
-yuanFilePath = '/Users/yuan/Downloads/assignment_214232_export'
-#jennyFilePath = ''
+#yuanFilePath = '/Users/yuan/Downloads/assignment_214232_export'
+jennyFilePath = '/Users/jennyngo/Downloads/Some year cs5'
 #florenceFilePath = ''
 
-filePath = yuanFilePath
+filePath = jennyFilePath
 
 #TODO: turn this into a function, probably called pruning
 
@@ -33,7 +33,9 @@ metricsList = []
 
 for i in finalPyList:
     if not(HardMetrics.containsString("VPython", HardMetrics.noCommentsFromFile(i))):
+        print('Subission name' , i)
         metricsList.append((HardMetrics.allMetrics(i)))
+       
 
 fieldDict = { # currently is only used for keys
     "File Name": [], 
@@ -74,4 +76,5 @@ for i in metricsList:
     weeksUsedList.append(i[5])
 
 #print(weeksUsedList)
-makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')
+makeHistogram(weeksUsedList,  range(0,10) , 'Weeks Used', 'Num Weeks')
+
