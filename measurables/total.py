@@ -1,18 +1,41 @@
-from HardMetrics import HardMetrics
+import HardMetrics
 from Histograms import makeHistogram
+import os
 from os import listdir
 from os.path import isfile, join
 import csv
 
-onlyfiles = [f for f in listdir("studentScripts")]
-#test
-onlyfiles = [join("studentscripts/", f) for f in onlyfiles]
-# print(onlyfiles)
+yuanFilePath = '/Users/yuan/Downloads/Some year cs5'
+#jennyFilePath = ''
+#florenceFilePath = ''
 
-fileList = []
+filePath = jennyFilePath
 
-for i in onlyfiles:
-    fileList.append(HardMetrics(i)[1])
+#TODO: turn this into a function, probably called pruning
+
+result = list(os.walk(filePath))
+pathList = []
+
+for folder_tuple in result:
+    currentpath, subfolder, files = folder_tuple
+
+    if '__MACOSX' in currentpath: continue
+
+    for file in files:
+        pathList.append(currentpath + "/" + file)
+        
+finalPyList = [f for f in pathList if f.endswith('.py')]
+
+
+metricsList = []
+
+# TODO: figure out what to do with the taken out Vpython files :(
+
+for i in finalPyList:
+    if not(HardMetrics.containsString("VPython", HardMetrics.noCommentsFromFile(i))):
+        print('Subission name' , i)
+        metricsList.append((HardMetrics.allMetrics(i)))
+       
 
 fieldDict = { # currently is only used for keys
     "File Name": [], 
@@ -25,7 +48,7 @@ fieldDict = { # currently is only used for keys
     }
           
 #initializing fieldDict
-for i in fileList:
+for i in metricsList:
     fieldDict["File Name"].append(i[0])           # Assuming i[0] is File Name
     fieldDict["LOC"].append(i[1])                 # Assuming i[1] is LOC
     fieldDict["Comment Percentage"].append(i[2])  # Assuming i[2] is Comment Percentage
@@ -40,7 +63,7 @@ with open('Metrics Score.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(fieldDict.keys())
 
-    for i in fileList:
+    for i in metricsList:
         writer.writerow(x for x in i)
 
 # depthList = []
@@ -49,8 +72,9 @@ with open('Metrics Score.csv', 'w', newline='') as file:
 
 weeksUsedList = []
 
-for i in fileList:
+for i in metricsList:
     weeksUsedList.append(i[5])
 
-print(weeksUsedList)
-makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')
+#print(weeksUsedList)
+makeHistogram(weeksUsedList,  range(0,10) , 'Weeks Used', 'Num Weeks')
+

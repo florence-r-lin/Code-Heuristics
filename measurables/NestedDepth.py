@@ -41,6 +41,7 @@ class CallChain:
                     nextFunc = funcs[names.index(name)]  # go to function that just got called
                     # print(nextFunc)
                     nestedPath = self.findBranches(nextFunc, funcs, names, [])
+                    print(nestedPath)
                     newPath.extend(nestedPath)  # Extend the current path with the nested path
                     currentPath.append(newPath)
             return currentPath

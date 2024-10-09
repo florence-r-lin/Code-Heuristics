@@ -4,7 +4,6 @@ import ast
 from Cyclomatic import *
 from NestedDepth import CallChain 
 
-
 def commentCheck(comment): #fix becauyse it works now
     #hashtags = "\#[^\n\r]+?(?:[\n\r])"   # is the actual solution
     hashtags = "[\#]" # is the very temporary solution until I figure out how to get the actual solution to work
@@ -134,6 +133,9 @@ def sumTests(boolList):
             total = total+1
     return total
 
+def noCommentsFromFile(scriptPath):
+    file = open(scriptPath, "r")
+    return(removeComments(file.read()))
 
 def commentOnlyCheck(inputStr):
     nonCommentList = []
@@ -159,7 +161,7 @@ def commentOnlyCheck(inputStr):
 # ---------------------------
 
 
-def HardMetrics(scriptPath):
+def allMetrics(scriptPath):
 
     commentList = []
     totalScriptList = []
@@ -177,6 +179,7 @@ def HardMetrics(scriptPath):
     totalLOC = len(totalScriptList)
     commentPercentage = (1 - (len(noCommentsinputfile) / len(open(scriptPath, "r").read()))) * 100
     functions = funcName(scriptPath)
+    lenFuncs = len(functions)
     totalCC = calculate_cyclomatic_complexity(open(scriptPath, "r").read())
     depthChain = CallChain()
     depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
@@ -195,9 +198,9 @@ def HardMetrics(scriptPath):
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
 
-    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", totalCC, ambitionScore, weeksUsed]
-    fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
-    return fullList,outputList
+    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", lenFuncs, totalCC, weeksUsed]#ambitionScore, weeksUsed]
+    #fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
+    return outputList#fullList,outputList
     # return fieldDict
 
 # print(HardMetrics("studentScripts/throw.py"))
