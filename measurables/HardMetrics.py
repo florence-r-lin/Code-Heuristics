@@ -160,6 +160,16 @@ def commentOnlyCheck(inputStr):
 
 # ---------------------------
 
+def replaceInFile(scriptPath, toBeReplaced, replacer):
+    f = open(scriptPath,'r')
+    filedata = f.read()
+    f.close()
+
+    newdata = filedata.replace(toBeReplaced, replacer)
+
+    f = open(scriptPath,'w')
+    f.write(newdata)
+    f.close()
 
 def allMetrics(scriptPath):
 

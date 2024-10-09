@@ -4,6 +4,9 @@ import os
 from os import listdir
 from os.path import isfile, join
 import csv
+import fileinput
+
+
 
 yuanFilePath = '/Users/yuan/Downloads/Some year cs5'
 #jennyFilePath = ''
@@ -13,8 +16,11 @@ filePath = yuanFilePath
 
 #TODO: turn this into a function, probably called pruning
 
+
+
 result = list(os.walk(filePath))
 pathList = []
+
 
 for folder_tuple in result:
     currentpath, subfolder, files = folder_tuple
@@ -32,8 +38,12 @@ metricsList = []
 # TODO: figure out what to do with the taken out Vpython files :(
 
 for i in finalPyList:
-    if not(HardMetrics.containsString("VPython", HardMetrics.noCommentsFromFile(i))):
-        metricsList.append((HardMetrics.allMetrics(i)))
+    #if not(HardMetrics.containsString("VPython", HardMetrics.noCommentsFromFile(i))):
+    HardMetrics.replaceInFile(i, "GlowScript", "#")
+    HardMetrics.replaceInFile(i, "    if mag( wpos_noy - bpos_noy ) < smallest_dim \\",
+                               "    if mag( wpos_noy - bpos_noy ) < smallest_dim or (-wLENGTH < b_axial < wLENGTH and -wWIDTH < b_perp < wWIDTH):")
+    HardMetrics.replaceInFile(i, "       or (-wLENGTH < b_axial < wLENGTH and -wWIDTH < b_perp < wWIDTH):", "#")
+    metricsList.append((HardMetrics.allMetrics(i)))
 
 fieldDict = { # currently is only used for keys
     "File Name": [], 
@@ -68,10 +78,28 @@ with open('Metrics Score.csv', 'w', newline='') as file:
 # for i in fileList:
 #     depthList.append(i[5][0])
 
+
+Lines = []
+Comments = []
+FuncNum = []
+Cyclo =[]
+Depth = []
 weeksUsedList = []
 
+
+
+
 for i in metricsList:
+    Lines.append(i[1])
+    Comments.append(i[2])
+    FuncNum.append(i[3])
+    Cyclo.append(i[4])
     weeksUsedList.append(i[5])
 
 #print(weeksUsedList)
 makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')
+makeHistogram(Comments, 100, 'Weeks Used', 'Num Weeks')
+makeHistogram(FuncNum, 10, 'Weeks Used', 'Num Weeks')
+makeHistogram(Cyclo, 10, 'Weeks Used', 'Num Weeks')
+makeHistogram(Lines, 10, 'Weeks Used', 'Num Weeks')
+
