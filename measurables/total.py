@@ -14,19 +14,11 @@ yuanFilePath = '/Users/yuan/Desktop/CS5 data/post-LLM data'#summer cs5 2024 sect
 #florenceFilePath = ''
 
 filePath = yuanFilePath
-
-#TODO: turn this into a function, probably called pruning
+metricsList = []
 
 finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
 
-
-metricsList = []
-
-# TODO: figure out what to do with the taken out Vpython files :(
-
 for i in finalPyList:
-    #if not(HardMetrics.containsString("VPython", HardMetrics.noCommentsFromFile(i))):
-
     #preproccessing portion
     fileParsing.replaceErrorsInFile(i)
     #calling all metrics portion
