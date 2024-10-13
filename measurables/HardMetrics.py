@@ -172,7 +172,6 @@ def replaceInFile(scriptPath, toBeReplaced, replacer):
     f.close()
 
 def allMetrics(scriptPath):
-
     commentList = []
     totalScriptList = []
     # opening file
@@ -208,7 +207,7 @@ def allMetrics(scriptPath):
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
 
-    outputList = [scriptPath, totalLOC, f"{commentPercentage:.2f} %", lenFuncs, totalCC, weeksUsed]#ambitionScore, weeksUsed]
+    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC, weeksUsed]#ambitionScore, weeksUsed]
     #fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
     return outputList#fullList,outputList
     # return fieldDict

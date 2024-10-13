@@ -1,4 +1,5 @@
 import HardMetrics
+import fileParsing
 from Histograms import makeHistogram
 import os
 from os import listdir
@@ -8,7 +9,7 @@ import fileinput
 
 
 
-yuanFilePath = '/Users/yuan/Downloads/Some year cs5'
+yuanFilePath = '/Users/yuan/Desktop/CS5 data/post-LLM data'#summer cs5 2024 section 1'
 #jennyFilePath = ''
 #florenceFilePath = ''
 
@@ -16,21 +17,7 @@ filePath = yuanFilePath
 
 #TODO: turn this into a function, probably called pruning
 
-
-
-result = list(os.walk(filePath))
-pathList = []
-
-
-for folder_tuple in result:
-    currentpath, subfolder, files = folder_tuple
-
-    if '__MACOSX' in currentpath: continue
-
-    for file in files:
-        pathList.append(currentpath + "/" + file)
-        
-finalPyList = [f for f in pathList if f.endswith('.py')]
+finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
 
 
 metricsList = []
@@ -39,10 +26,10 @@ metricsList = []
 
 for i in finalPyList:
     #if not(HardMetrics.containsString("VPython", HardMetrics.noCommentsFromFile(i))):
-    HardMetrics.replaceInFile(i, "GlowScript", "#")
-    HardMetrics.replaceInFile(i, "    if mag( wpos_noy - bpos_noy ) < smallest_dim \\",
-                               "    if mag( wpos_noy - bpos_noy ) < smallest_dim or (-wLENGTH < b_axial < wLENGTH and -wWIDTH < b_perp < wWIDTH):")
-    HardMetrics.replaceInFile(i, "       or (-wLENGTH < b_axial < wLENGTH and -wWIDTH < b_perp < wWIDTH):", "#")
+
+    #preproccessing portion
+    fileParsing.replaceErrorsInFile(i)
+    #calling all metrics portion
     metricsList.append((HardMetrics.allMetrics(i)))
 
 fieldDict = { # currently is only used for keys
@@ -97,9 +84,8 @@ for i in metricsList:
     weeksUsedList.append(i[5])
 
 #print(weeksUsedList)
-makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')
-makeHistogram(Comments, 5, 'Weeks Used', 'Num Weeks')
-makeHistogram(FuncNum, 10, 'Weeks Used', 'Num Weeks')
-makeHistogram(Cyclo, 10, 'Cyclomatic complexity', 'Num Weeks')
-makeHistogram(Lines, 10, 'Weeks Used', 'Num Weeks')
-
+makeHistogram(weeksUsedList, 6, 'Weeks Used', 'Num Weeks')
+makeHistogram(Comments, 30, 'Comments', 'Percentages')
+makeHistogram(FuncNum, 10, 'Number Of Functions', 'Num Weeks')
+makeHistogram(Cyclo, 30, 'Cyclomatic complexity', 'Num Weeks')
+makeHistogram(Lines, 20, 'Lines Of Code', 'Num Weeks')
