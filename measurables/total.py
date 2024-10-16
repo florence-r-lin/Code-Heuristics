@@ -9,7 +9,7 @@ import fileinput
 
 
 
-yuanFilePath = '/Users/yuan/Desktop/CS5 data/post-LLM data'#summer cs5 2024 section 1'
+yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data'#summer cs5 2024 section 1'
 #jennyFilePath = ''
 #florenceFilePath = ''
 
@@ -80,4 +80,4 @@ makeHistogram(weeksUsedList, 6, 'Weeks Used', 'Num Weeks')
 makeHistogram(Comments, 30, 'Comments', 'Percentages')
 makeHistogram(FuncNum, 10, 'Ambition', 'Number Of Functions')
 makeHistogram(Cyclo, 30, 'Cyclomatic complexity', 'Cyclomatic complexity')
-makeHistogram(Lines, 5, 'Volume', 'Lines Of Code')
+makeHistogram(Lines, 10, 'Volume', 'Lines Of Code')
