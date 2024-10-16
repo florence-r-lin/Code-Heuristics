@@ -1,18 +1,28 @@
-from HardMetrics import HardMetrics
+import HardMetrics
+import fileParsing
 from Histograms import makeHistogram
+import os
 from os import listdir
 from os.path import isfile, join
 import csv
+import fileinput
 
-onlyfiles = [f for f in listdir("studentScripts")]
-#test
-onlyfiles = [join("studentscripts/", f) for f in onlyfiles]
-# print(onlyfiles)
 
-fileList = []
 
-for i in onlyfiles:
-    fileList.append(HardMetrics(i)[1])
+yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data'#summer cs5 2024 section 1'
+#jennyFilePath = ''
+#florenceFilePath = ''
+
+filePath = yuanFilePath
+metricsList = []
+
+finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
+
+for i in finalPyList:
+    #preproccessing portion
+    fileParsing.replaceErrorsInFile(i)
+    #calling all metrics portion
+    metricsList.append((HardMetrics.allMetrics(i)))
 
 fieldDict = { # currently is only used for keys
     "File Name": [], 
@@ -25,7 +35,7 @@ fieldDict = { # currently is only used for keys
     }
           
 #initializing fieldDict
-for i in fileList:
+for i in metricsList:
     fieldDict["File Name"].append(i[0])           # Assuming i[0] is File Name
     fieldDict["LOC"].append(i[1])                 # Assuming i[1] is LOC
     fieldDict["Comment Percentage"].append(i[2])  # Assuming i[2] is Comment Percentage
@@ -40,17 +50,34 @@ with open('Metrics Score.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(fieldDict.keys())
 
-    for i in fileList:
+    for i in metricsList:
         writer.writerow(x for x in i)
 
 # depthList = []
 # for i in fileList:
 #     depthList.append(i[5][0])
 
+
+Lines = []
+Comments = []
+FuncNum = []
+Cyclo =[]
+Depth = []
 weeksUsedList = []
 
-for i in fileList:
+
+
+
+for i in metricsList:
+    Lines.append(i[1])
+    Comments.append(i[2])
+    FuncNum.append(i[3])
+    Cyclo.append(i[4])
     weeksUsedList.append(i[5])
 
-print(weeksUsedList)
-makeHistogram(weeksUsedList, 10, 'Weeks Used', 'Num Weeks')
+#print(weeksUsedList)
+makeHistogram(weeksUsedList, 6, 'Weeks Used', 'Num Weeks')
+makeHistogram(Comments, 30, 'Comments', 'Percentages')
+makeHistogram(FuncNum, 10, 'Ambition', 'Number Of Functions')
+makeHistogram(Cyclo, 30, 'Cyclomatic complexity', 'Cyclomatic complexity')
+makeHistogram(Lines, 10, 'Volume', 'Lines Of Code')
