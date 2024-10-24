@@ -22,7 +22,9 @@ for i in finalPyList:
     #preproccessing portion
     fileParsing.replaceErrorsInFile(i)
     #calling all metrics portion
-    metricsList.append((HardMetrics.allMetrics(i)))
+    result = HardMetrics.allMetrics(i)
+    if (result != None):
+        metricsList.append(result)
 
 fieldDict = { # currently is only used for keys
     "File Name": [], 
@@ -78,6 +80,6 @@ for i in metricsList:
 #print(weeksUsedList)
 makeHistogram(weeksUsedList, 6, 'Weeks Used', 'Num Weeks')
 makeHistogram(Comments, 30, 'Comments', 'Percentages')
-makeHistogram(FuncNum, 10, 'Ambition', 'Number Of Functions')
+makeHistogram(FuncNum, 7, 'Ambition', 'Number Of Functions')
 makeHistogram(Cyclo, 30, 'Cyclomatic complexity', 'Cyclomatic complexity')
-makeHistogram(Lines, 10, 'Volume', 'Lines Of Code')
+makeHistogram(Lines, 30, 'Volume', 'Lines Of Code')

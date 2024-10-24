@@ -2,6 +2,7 @@ import re
 import ast
 # import pygame
 from Cyclomatic import *
+import fileParsing
 from NestedDepth import CallChain 
 
 def commentCheck(comment): #fix becauyse it works now
@@ -137,13 +138,7 @@ def noCommentsFromFile(scriptPath):
     file = open(scriptPath, "r")
     return(removeComments(file.read()))
 
-def commentOnlyCheck(inputStr):
-    nonCommentList = []
-    for i in inputStr:
-        if not(i == "\n"):
-           nonCommentList.append(i)
-    if len(nonCommentList) == 0:
-        raise Exception ("Comment only file")
+
 
 
 
@@ -171,14 +166,18 @@ def replaceInFile(scriptPath, toBeReplaced, replacer):
     f.write(newdata)
     f.close()
 
+
 def allMetrics(scriptPath):
+    parseable = fileParsing.doesItParse(scriptPath)
+    if (not parseable):
+        print(scriptPath, "is not parseable")
+        return
     commentList = []
     totalScriptList = []
     # opening file
     inputfile = open(scriptPath, "r")
     inputfiletest2 = open(scriptPath, "r")
     noCommentsinputfile = removeComments(inputfiletest2.read())
-    commentOnlyCheck(noCommentsinputfile)
     # making two line by line lists of the file, both full and only comments
     for x in inputfile:
         totalScriptList.append(x)
@@ -188,8 +187,8 @@ def allMetrics(scriptPath):
     totalLOC = len(totalScriptList)
     commentPercentage = (1 - (len(noCommentsinputfile) / len(open(scriptPath, "r").read()))) * 100
     functions = funcName(scriptPath)
-    lenFuncs = len(functions)
     totalCC = calculate_cyclomatic_complexity(open(scriptPath, "r").read())
+    lenFuncs = len(functions)
     #depthChain = CallChain()
     #depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
     #ambitionScore = depthChain.depth

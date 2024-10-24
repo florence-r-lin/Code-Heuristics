@@ -5,6 +5,7 @@ from os import listdir
 from os.path import isfile, join
 import csv
 import fileinput
+import ast
 
 def getChildFolderNames(folderPath):
     folderTree = list(os.walk(folderPath))
@@ -24,6 +25,7 @@ def replaceErrorsInFile(filePath):
     HardMetrics.replaceInFile(filePath, "    if mag( wpos_noy - bpos_noy ) < smallest_dim \\",
                                "    if mag( wpos_noy - bpos_noy ) < smallest_dim or (-wLENGTH < b_axial < wLENGTH and -wWIDTH < b_perp < wWIDTH):")
     HardMetrics.replaceInFile(filePath, "       or (-wLENGTH < b_axial < wLENGTH and -wWIDTH < b_perp < wWIDTH):", "#")
+    HardMetrics.replaceInFile(filePath, "else if", "elif")
 
 def getAllPythonFilesInPath(filePath):
     pathList = []
@@ -37,5 +39,23 @@ def getAllPythonFilesInPath(filePath):
             pathList.append(currentpath + "/" + file)
     finalPyList = [f for f in pathList if f.endswith('.py')]
     return finalPyList
+
+def doesItParse(scriptPath):
+    try:
+        with open(scriptPath, "r") as file:
+            s = file.read()
+            isOnlyComments(s)
+            tree = ast.parse(s, filename=scriptPath)
+        return True
+    except:
+        return False
+    
+def isOnlyComments(inputStr):
+    nonCommentList = []
+    for i in inputStr:
+        if not(i == "\n"):
+           nonCommentList.append(i)
+    if len(nonCommentList) == 0:
+        raise Exception ("Comment only file")
 
 #print(getAllPythonFilesInPath('/Users/yuan/Desktop/CS5 data'))
