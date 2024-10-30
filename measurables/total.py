@@ -9,11 +9,13 @@ import fileinput
 
 
 
-yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5'#/2018 pre llm'#summer cs5 2024 section 1'
-#jennyFilePath = ''
+# yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5'#/2018 pre llm'#summer cs5 2024 section 1'
+jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5'
 #florenceFilePath = ''
 
-filePath = yuanFilePath
+print(fileParsing.getPathsForYears("/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/", 2018, 2023))
+
+filePath = jennyFilePath
 metricsList = []
 
 finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
@@ -77,9 +79,11 @@ for i in metricsList:
     Cyclo.append(i[4])
     weeksUsedList.append(i[5])
 
-#print(weeksUsedList)
-makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram.png')
-makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram.png')
-makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram.png')
-makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram.png')
-makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram.png')
+statsCsv = 'histogram_stats.csv'
+with open(statsCsv, 'w') as f:
+    f.write('')
+makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram.png',csv_filename = statsCsv)
+makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram.png', csv_filename = statsCsv)
+makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram.png', csv_filename = statsCsv)
+makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram.png', csv_filename = statsCsv)
+makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram.png', csv_filename = statsCsv)
