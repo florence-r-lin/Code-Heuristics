@@ -3,7 +3,7 @@ import shutil
 
 
 # cd to summer-2024 directory
-main_directory = '/Users/summer-2024/Desktop/assignments prellm/'  
+main_directory = '/Users/summer-2024/Desktop/code metrics 24/assignments prellm'  
 all_text_dir = os.path.join(main_directory, 'allText')
 
 for root, dirs, files in os.walk(main_directory):
