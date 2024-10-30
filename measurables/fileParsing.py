@@ -11,7 +11,7 @@ def getPathsForYears(intoOverallFilePath, startYear, endYear):
     pathList = []
     for i in range(endYear-startYear+1):
         pathName = intoOverallFilePath + str((startYear + i)) + " pre llm/cs5"
-        pathList.append(pathName)
+        pathList.append([pathName, str((startYear + i))])
     return pathList
 
 def getChildFolderNames(folderPath):
