@@ -76,17 +76,20 @@ File Name,LOC,Comment Percentage,Number Of Functions,CycloComplexity,Max Depth,W
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12418056/c4_3player.py,481,29.383484162895922,24,211,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12350151/final.py,341,20.776679544428276,9,42,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12409503/Final.py,558,22.468228752978558,26,251,6
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12436127/final.py,495,31.27107652399481,29,169,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12412187/final.py,385,35.08918259976902,10,72,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12403657/final.py,339,13.498304039469621,9,78,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12411506/final.py,514,23.38354272183122,22,193,7
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12309940/final.py,1222,37.49094781682641,35,235,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12366819/final.py,464,54.190790541637355,11,69,6
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12437008/final.py,756,21.6833232223251,11,104,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12328267/final.py,457,33.42210386151797,11,66,4
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12328267/CS5 Final project Grutor.py,403,36.19953305620409,11,60,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12389420/final.py,379,28.568167985392577,14,50,7
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12389420/porter.py,357,37.273737694506195,17,241,7
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12409168/final.py,301,14.72555205047319,15,89,8
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12407496/final.py,317,31.431166900652407,10,70,6
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12417269/final.py,702,13.890751205184692,26,299,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12417894/final.py,467,38.156202502046064,13,93,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12312908/final.py,381,29.156777886360462,9,100,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12412121/final.py,413,23.905030355594103,9,77,5
@@ -98,6 +101,7 @@ File Name,LOC,Comment Percentage,Number Of Functions,CycloComplexity,Max Depth,W
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12427978/final.py,1662,15.694387208439798,36,504,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12416851/final.py,744,15.033819120005576,21,165,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12444849/final.py,346,30.496350364963497,13,60,5
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12321255/final.py,482,28.46984896924264,12,62,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12409219/final.py,395,51.5478164731896,24,172,7
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12407526/final.py,337,33.14996412341545,7,70,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12406052/final.py,686,35.84440983665931,27,358,6
@@ -113,6 +117,7 @@ File Name,LOC,Comment Percentage,Number Of Functions,CycloComplexity,Max Depth,W
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12360238/final.py,481,22.46004041888664,15,80,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12413189/final.py,279,12.154829374170983,23,134,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12406464/final.py,369,28.607666290868096,9,70,4
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12437145/final.py,368,23.569392677044508,20,74,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12397263/final.py,496,20.85136717755487,14,124,4
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12436256/final.py,548,66.43204637201117,32,254,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12411679/final.py,344,24.859423811176672,8,88,5
@@ -133,6 +138,8 @@ File Name,LOC,Comment Percentage,Number Of Functions,CycloComplexity,Max Depth,W
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12436049/final.py,811,11.68964083538555,22,448,7
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12384635/final.py,317,22.44268926989019,14,70,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12413534/final.py,449,32.65097850882459,9,76,5
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12403938/final-2.py,465,31.82466991792554,11,90,5
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12418573/final.py,534,20.30805205368036,8,56,4
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12390452/final.py,569,31.813846076610275,28,224,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12413159/final.py,417,21.80744994815347,25,144,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12309425/final.py,303,22.39875761557759,14,49,5
@@ -159,8 +166,10 @@ File Name,LOC,Comment Percentage,Number Of Functions,CycloComplexity,Max Depth,W
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12325199/final.py,477,28.468915565689755,27,153,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12310045/final.py,350,32.10565729457417,11,74,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12419572/final.py,603,13.789930999233324,30,303,7
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12417272/final.py,702,13.890751205184692,26,299,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12413414/final.py,398,34.291050136474645,20,144,6
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12413414/editedVersion.py,405,33.47826086956521,20,144,6
+/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm/submission_12302914/final.py,373,20.72782946649393,9,68,5
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2019 pre llm/submission_26586591/final.py,1038,19.290074277449566,31,498,7
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2019 pre llm/submission_26665142/final.py,318,57.16253443526171,17,76,8
 /Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2019 pre llm/submission_26628179/final.py,345,24.53192072335373,15,71,6

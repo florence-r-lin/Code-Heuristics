@@ -78,8 +78,8 @@ for i in metricsList:
     weeksUsedList.append(i[5])
 
 #print(weeksUsedList)
-makeHistogram(weeksUsedList, 6, 'Weeks Used', 'Num Weeks')
-makeHistogram(Comments, 30, 'Comments', 'Percentages')
-makeHistogram(FuncNum, 15, 'Ambition', 'Number Of Functions')
-makeHistogram(Cyclo, 30, 'Cyclomatic complexity', 'Cyclomatic complexity')
-makeHistogram(Lines, 30, 'Volume', 'Lines Of Code')
+makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram.png')
+makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram.png')
+makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram.png')
+makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram.png')
+makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram.png')

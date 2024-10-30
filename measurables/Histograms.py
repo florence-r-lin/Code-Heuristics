@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import norm
 
+# Update default font settings for better aesthetics
 plt.rcParams.update({
     'font.family': 'serif',
     'font.size': 14,
@@ -13,7 +14,7 @@ plt.rcParams.update({
     'ytick.direction': 'in'
 })
 
-def makeHistogram(inputList, numBins=10, graphName='', xaxis='', color=(148, 181, 242), fitLine=True):
+def makeHistogram(inputList, numBins=10, graphName='', xaxis='', color=(148, 181, 242), fitLine=True, filename=None):
     # Normalize RGB values if provided as a tuple with values from 0 to 255
     if isinstance(color, tuple) and all(0 <= val <= 255 for val in color):
         color = tuple(val / 255 for val in color)
@@ -37,4 +38,8 @@ def makeHistogram(inputList, numBins=10, graphName='', xaxis='', color=(148, 181
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.tight_layout()
     
-    plt.show()
+    # Save the figure to a file if a filename is provided
+    if filename:
+        plt.savefig(filename, format='png')  # Save the figure with the fitted curve included
+    
+    plt.show()  # Show the plot
