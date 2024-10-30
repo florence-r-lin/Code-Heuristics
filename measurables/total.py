@@ -9,7 +9,7 @@ import fileinput
 
 
 
-yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre llm'#summer cs5 2024 section 1'
+yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5'#/2018 pre llm'#summer cs5 2024 section 1'
 #jennyFilePath = ''
 #florenceFilePath = ''
 
