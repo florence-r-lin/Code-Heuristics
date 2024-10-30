@@ -16,7 +16,6 @@ jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5'
 #print(fileParsing.getPathsForYears("/Users/yuan/Desktop/CS5 data/pre-LLM data/", 2018, 2022))
 
 print(fileParsing.getPathsForYears("/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/", 2018, 2023))
-
 filePath = jennyFilePath
 metricsList = []
 
@@ -84,6 +83,7 @@ for i in metricsList:
 statsCsv = 'histogram_stats.csv'
 with open(statsCsv, 'w') as f:
     f.write('')
+
 makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram.png',csv_filename = statsCsv)
 makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram.png', csv_filename = statsCsv)
 makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram.png', csv_filename = statsCsv)
