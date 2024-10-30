@@ -13,6 +13,8 @@ yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5'#/2018 pre llm'#su
 #jennyFilePath = ''
 #florenceFilePath = ''
 
+print(fileParsing.getPathsForYears("/Users/yuan/Desktop/CS5 data/pre-LLM data/", 2018, 2022))
+
 filePath = yuanFilePath
 metricsList = []
 
