@@ -13,6 +13,8 @@ import fileinput
 jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5'
 #florenceFilePath = ''
 
+#print(fileParsing.getPathsForYears("/Users/yuan/Desktop/CS5 data/pre-LLM data/", 2018, 2022))
+
 print(fileParsing.getPathsForYears("/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/", 2018, 2023))
 
 filePath = jennyFilePath
