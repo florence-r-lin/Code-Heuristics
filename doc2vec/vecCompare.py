@@ -1,10 +1,16 @@
+# ---------------------------------------
+# Notes
+# Compare each project to base "good example" projects
+# create histogram that shows cosine similarity for comparisons
+# ^one histogram for each project
+
 from gensim.models.doc2vec import Doc2Vec
 from nltk.tokenize import word_tokenize
 
 model = Doc2Vec.load("prellm d2v model")
 
 # to find the vector of a document which is not in training data
-test_data = word_tokenize("This example accepts an integer N and returns a list of integers from 0 to N-1, **each divided by 2** NOTE: this is floating-point division...!".lower())
+test_data = word_tokenize("This example accepts an integer N and returns a list of integers from 0 to N-1, **each divided by 2** NOTE: this is floating-point division...!")
 v1 = model.infer_vector(test_data)
 print("V1_infer", v1)
 
