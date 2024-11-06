@@ -11,6 +11,16 @@ from scipy.stats import norm
 import pandas as pd  # Make sure to import pandas for CSV handling
 import fileinput
 
+
+yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/'
+jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5'
+#florenceFilePath = ''
+
+# print(fileParsing.getPathsForYears(yuanFilePath, 2018, 2022))
+
+#print(fileParsing.getPathsForYears("/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/", 2018, 2023))
+
+
 def metricsOnFilepath(inputFilepath, year):
     filePath = inputFilepath
     metricsList = []
@@ -84,3 +94,6 @@ def metricsOnFilepath(inputFilepath, year):
     makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram_' + str(year) + '.png', csv_filename = statsCsv)
     makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename = statsCsv)
     makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+
+for i in fileParsing.getPathsForYears(yuanFilePath, 2018, 2022):
+    metricsOnFilepath(i[0], i[1])
