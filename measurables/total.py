@@ -17,7 +17,7 @@ yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/'
 jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5'
 #florenceFilePath = ''
 
-print(fileParsing.getPathsForYears(yuanFilePath, 2018, 2022))
+# print(fileParsing.getPathsForYears(yuanFilePath, 2018, 2022))
 
 #print(fileParsing.getPathsForYears("/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/", 2018, 2023))
 
@@ -96,4 +96,5 @@ def metricsOnFilepath(inputFilepath, year):
     makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename = statsCsv)
     makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram_' + str(year) + '.png', csv_filename = statsCsv)
 
-metricsOnFilepath('/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2019 pre LLM', 2019)
+for i in fileParsing.getPathsForYears(yuanFilePath, 2018, 2022):
+    metricsOnFilepath(i[0], i[1])
