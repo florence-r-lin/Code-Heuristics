@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import norm
-import pandas as pd  # Make sure to import pandas for CSV handling
-
+#import pandas as pd  # Make sure to import pandas for CSV handling
+import pandas as pd
 # Update default font settings for better aesthetics
 plt.rcParams.update({
     'font.family': 'serif',

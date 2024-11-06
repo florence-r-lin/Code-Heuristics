@@ -57,7 +57,7 @@ def metricsOnFilepath(inputFilepath, year):
         fieldDict["Weeks Covered"].append(i[5])       # Assuming i[6] is Weeks Covered
 
 
-    with open('Metrics Score ' + year + '.csv', 'w', newline='') as file:
+    with open('Metrics Score ' + str(year) + '.csv', 'w', newline='') as file:
         file.truncate(0) # clear file 
         writer = csv.writer(file)
         writer.writerow(fieldDict.keys())
@@ -90,10 +90,10 @@ def metricsOnFilepath(inputFilepath, year):
     statsCsv = 'histogram_stats.csv'
     with open(statsCsv, 'w') as f:
         f.write('')
-    makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram_' + year + '.png',csv_filename = statsCsv)
-    makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram_' + year + '.png', csv_filename = statsCsv)
-    makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram_' + year + '.png', csv_filename = statsCsv)
-    makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram_' + year + '.png', csv_filename = statsCsv)
-    makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram_' + year + '.png', csv_filename = statsCsv)
+    makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram_' + str(year) + '.png',csv_filename = statsCsv)
+    makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+    makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+    makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+    makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram_' + str(year) + '.png', csv_filename = statsCsv)
 
-metricsOnFilepath('/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2018 pre LLM', 2018)
+metricsOnFilepath('/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/2019 pre LLM', 2019)
