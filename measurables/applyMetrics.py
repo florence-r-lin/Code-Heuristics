@@ -11,9 +11,10 @@ from scipy.stats import norm
 import pandas as pd  # Make sure to import pandas for CSV handling
 import fileinput
 
-def metricsOnFilepath(inputFilepath, year):
+def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
     filePath = inputFilepath
     metricsList = []
+    binNums = [6, 30, 7, 30, 30] if binNumsInput == None else binNumsInput
 
     finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
 
@@ -79,8 +80,8 @@ def metricsOnFilepath(inputFilepath, year):
     statsCsv = 'histogram_stats.csv'
     with open(statsCsv, 'w') as f:
         f.write('')
-    makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram_' + str(year) + '.png',csv_filename = statsCsv)
-    makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram_' + str(year) + '.png', csv_filename = statsCsv)
-    makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram_' + str(year) + '.png', csv_filename = statsCsv)
-    makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename = statsCsv)
-    makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+    makeHistogram(weeksUsedList, numBins=binNums[0], graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram_' + str(year) + '.png',csv_filename = statsCsv)
+    makeHistogram(Comments, numBins=binNums[1], graphName='Comments', xaxis='Percentages', filename='comments_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+    makeHistogram(FuncNum, numBins=binNums[2], graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+    makeHistogram(Cyclo, numBins=binNums[3], graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+    makeHistogram(Lines, numBins=binNums[4], graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram_' + str(year) + '.png', csv_filename = statsCsv)
