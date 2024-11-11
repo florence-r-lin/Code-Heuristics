@@ -66,11 +66,12 @@ class CallChain:
                     nestedFunc = funcs[names.index(name)]
                     # Recursively call findBranches for the nested function
                     nestedPath = self.findBranches(nestedFunc, funcs, names, currentPath.copy())
-
+                    tempPath = []
                     # Extend currentPath with unique elements from nestedPath
                     for func_in_path in nestedPath:
                         if func_in_path not in currentPath:
-                            currentPath.append(func_in_path)
+                            tempPath.append(func_in_path)
+                    currentPath.append(tempPath)
             return currentPath
 
         
@@ -89,7 +90,7 @@ class CallChain:
 
         longestPath = max(allPaths, key=lambda x: self.findMaxDepth(x))
         # print('longest chain length is', self.findMaxDepth(longestPath))
-        # print('Longest chain contains: ', longestPath)
+        print('Longest chain contains: ', longestPath)
         return self.findMaxDepth(longestPath)[0], self.findMaxDepth(longestPath)[1]
 
     def findMaxDepth(self, nestedList, currentDepth=1):
@@ -140,34 +141,34 @@ class CallChain:
 
 
 
-# cc = CallChain()
-# fsf = """
-# def f(x):
-#   z(42)
-#   y(14)
-# """
-# fsz = """
-# def z(x):
-#   g(42)
-#   f(8)
-# """
-# fsy = """
-# def y(x):
-#   z(42)
-#   y(h(14))
-# """
+cc = CallChain()
+fsf = """
+def f(x):
+  z(42)
+  y(14)
+"""
+fsz = """
+def z(x):
+  g(42)
+  f(8)
+"""
+fsy = """
+def y(x):
+  z(42)
+  y(h(14))
+"""
 
-# res = cc.findBranches(fsz, [fsf,fsz,fsy], ['f','z','y'], [])
-# print(f"{res=}")
+res = cc.findBranches(fsz, [fsf,fsz,fsy], ['f','z','y'], [])
+print(f"{res=}")
 
 # ob = 77
 # import ast
-# tree = ast.parse(fs, filename="localstr")
+# tree = ast.parse(fsz, filename="localstr")
 # functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
 # for f in functions:
 #     print(f"{f.name=}")
 #     for ob in f.body:
 #         print(f"    {ob.value.func.id=}")
-#res = cc.findMaxDepth(fs, ['f','z','y'])
+# res = cc.findMaxDepth(fsz, ['f','z','y'])
 
 #get a list of things that z calls FIRST and then run the func on those
