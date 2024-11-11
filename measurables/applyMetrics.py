@@ -1,6 +1,7 @@
 import HardMetrics
 import fileParsing
-from Histograms import makeHistogram
+import shutil
+from Histograms import makeHistogram, makeMulHistograms
 import os
 from os import listdir
 from os.path import isfile, join
@@ -42,7 +43,7 @@ def metricsOnFilepath(inputFilepath, year):
         fieldDict["Comment Percentage"].append(i[2])  # Assuming i[2] is Comment Percentage
         fieldDict["Number Of Functions"].append(i[3]) # Assuming i[3] is Number Of Functions
         fieldDict["CycloComplexity"].append(i[4])     # Assuming i[4] is Cyclomatic Complexity
-        fieldDict["Max Depth"].append(i[5])           # Assuming i[5] is Max Depth
+        # fieldDict["Max Depth"].append(i[5])           # Assuming i[5] is Max Depth
         fieldDict["Weeks Covered"].append(i[5])       # Assuming i[6] is Weeks Covered
 
 
@@ -54,19 +55,12 @@ def metricsOnFilepath(inputFilepath, year):
         for i in metricsList:
             writer.writerow(x for x in i)
 
-    # depthList = []
-    # for i in fileList:
-    #     depthList.append(i[5][0])
-
-
     Lines = []
     Comments = []
     FuncNum = []
     Cyclo =[]
     Depth = []
     weeksUsedList = []
-
-
 
 
     for i in metricsList:
@@ -77,10 +71,15 @@ def metricsOnFilepath(inputFilepath, year):
         weeksUsedList.append(i[5])
 
     statsCsv = 'histogram_stats.csv'
+    outFolder = 'data'
+    shutil.rmtree(outFolder, ignore_errors=True)
     with open(statsCsv, 'w') as f:
         f.write('')
-    makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram_' + str(year) + '.png',csv_filename = statsCsv)
-    makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram_' + str(year) + '.png', csv_filename = statsCsv)
-    makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram_' + str(year) + '.png', csv_filename = statsCsv)
-    makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename = statsCsv)
-    makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram_' + str(year) + '.png', csv_filename = statsCsv)
+
+    makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), fitLine=True, filename='weeks_used_histogram_' + str(year) + '.png',csv_filename = statsCsv, output_dir=outFolder)
+    makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', filename='comments_histogram_' + str(year) + '.png', csv_filename = statsCsv, output_dir=outFolder)
+    makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', filename='ambition_histogram_' + str(year) + '.png', csv_filename = statsCsv, output_dir=outFolder)
+    makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename = statsCsv, output_dir=outFolder)
+    makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', filename='volume_histogram_' + str(year) + '.png', csv_filename = statsCsv, output_dir=outFolder)
+
+    # makeMulHistograms(fieldDict, titles = fieldDict.keys num_bins={6,30,7,30,30})

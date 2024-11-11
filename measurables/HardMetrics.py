@@ -173,9 +173,9 @@ def allMetrics(scriptPath):
     functions = funcName(scriptPath)
     totalCC = calculate_cyclomatic_complexity(open(scriptPath, "r").read())
     lenFuncs = len(functions)
-    #depthChain = CallChain()
-    #depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
-    #ambitionScore = depthChain.depth
+    # depthChain = CallChain()
+    # depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
+    # ambitionScore = depthChain.depth
     # getting into weekstested
     weeksTesting = []
     weeksTesting.append(findIfOrVar(noCommentsinputfile))
@@ -190,7 +190,7 @@ def allMetrics(scriptPath):
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
 
-    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC, weeksUsed]#ambitionScore, weeksUsed]
+    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC,ambitionScore, weeksUsed]#ambitionScore, weeksUsed]
     #fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
     return outputList#fullList,outputList
     # return fieldDict

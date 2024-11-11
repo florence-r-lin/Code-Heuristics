@@ -20,31 +20,60 @@ class CallChain:
         self.averageCalls = self.totalFuncCalls/len(self.names)
         
 
-    def findBranches(self, func, funcs, names, currentPath):
-        funcBody = func.split(':', 1)[1].strip()  # get everything behind the colon
+    # def findBranches(self, func, funcs, names, currentPath):
+    #     funcBody = func.split(':', 1)[1].strip()  # get everything behind the colon
 
-        funcName = re.search("def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)  # before colon
-        # print("Function name is\n", funcName)
-        # print("Function Body is\n", funcBody)
+    #     funcName = re.search("def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)  # before colon
+    #     # print("Function name is\n", funcName)
+    #     # print("Function Body is\n", funcBody)
+    #     isRecursive = funcName in funcBody
+        
+    #     if funcName in currentPath:
+    #         return currentPath
+
+    #     currentPath.append(funcName)
+    #     # base case: if there is no function call in the function
+    #     if isRecursive or not any(name in funcBody for name in names):  # if function doesn't have another function call or function is recursive, terminate
+    #         return currentPath
+    #     else:
+    #         for name in names:
+    #             if name in funcBody and name not in currentPath:  # Only add if not already in path
+    #                 # Find function corresponding to the name
+    #                 nestedFunc = funcs[names.index(name)]
+    #                 # Recursively call findBranches for the nested function
+    #                 nestedPath = self.findBranches(nestedFunc, funcs, names, currentPath.copy())
+    #                 if nestedPath:  # If nested call is non-empty, add it
+    #                     currentPath.append(nestedPath)
+    #         return currentPath
+        
+
+    def findBranches(self, func, funcs, names, currentPath):
+        funcBody = func.split(':', 1)[1].strip()  # Get function body
+        funcName = re.search(r"def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)  # Extract function name
+
+        if funcName in currentPath:
+            return currentPath  # Terminate if function already in currentPath to avoid infinite recursion
+
+        currentPath.append(funcName)
         isRecursive = funcName in funcBody
-        # base case: if there is no function call in the function
-        if isRecursive or not any(name in funcBody for name in names):  # if function doesn't have another function call or function is recursive, terminate
-            # print("was recursive? ", isRecursive)
-            # print('returning path', currentPath)
+
+        # Base case: if no further function call or function is recursive, terminate
+        if isRecursive or not any(name in funcBody for name in names):
             return currentPath
         else:
-            for name in names:  # if yes, add it to the current path
-                if name in funcBody and not isRecursive:
-                    newPath = [name]
-                    # print("MADE IT TO THE ELSE")
-                    # print('current name in path =', name)
-                    nextFunc = funcs[names.index(name)]  # go to function that just got called
-                    # print(nextFunc)
-                    nestedPath = self.findBranches(nextFunc, funcs, names, [])
-                    print(nestedPath)
-                    newPath.extend(nestedPath)  # Extend the current path with the nested path
-                    currentPath.append(newPath)
+            for name in names:
+                if name in funcBody and name not in currentPath:  # Only add if not already in path
+                    nestedFunc = funcs[names.index(name)]
+                    # Recursively call findBranches for the nested function
+                    nestedPath = self.findBranches(nestedFunc, funcs, names, currentPath.copy())
+
+                    # Extend currentPath with unique elements from nestedPath
+                    for func_in_path in nestedPath:
+                        if func_in_path not in currentPath:
+                            currentPath.append(func_in_path)
             return currentPath
+
+        
         
     def findLongestBranch(self):  # longest chain of dependencies without recursion, takes in function list and function names list
         allPaths = []
@@ -107,3 +136,38 @@ class CallChain:
         # print('The most function calls within a function', maxCallsList)
         # print('The function with the most calls in it is', maxCallsList[0])
         return maxCalls, maxCallsList
+
+
+
+
+# cc = CallChain()
+# fsf = """
+# def f(x):
+#   z(42)
+#   y(14)
+# """
+# fsz = """
+# def z(x):
+#   g(42)
+#   f(8)
+# """
+# fsy = """
+# def y(x):
+#   z(42)
+#   y(h(14))
+# """
+
+# res = cc.findBranches(fsz, [fsf,fsz,fsy], ['f','z','y'], [])
+# print(f"{res=}")
+
+# ob = 77
+# import ast
+# tree = ast.parse(fs, filename="localstr")
+# functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
+# for f in functions:
+#     print(f"{f.name=}")
+#     for ob in f.body:
+#         print(f"    {ob.value.func.id=}")
+#res = cc.findMaxDepth(fs, ['f','z','y'])
+
+#get a list of things that z calls FIRST and then run the func on those
