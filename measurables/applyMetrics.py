@@ -12,9 +12,10 @@ from scipy.stats import norm
 import pandas as pd  # Make sure to import pandas for CSV handling
 import fileinput
 
-def metricsOnFilepath(inputFilepath, year):
+def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
     filePath = inputFilepath
     metricsList = []
+    binNums = [6, 30, 7, 30, 30] if binNumsInput == None else binNumsInput
 
     finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
 
