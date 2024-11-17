@@ -72,44 +72,42 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
         Depth.append(i[5])
         weeksUsedList.append(i[6])
 
-    statsCsv = 'histogram_stats.csv'
-    outFolder = 'data'
+    statsCsv = 'histogram_stats.csv'+ year
+    outFolder = 'data' + year
+
+    #To erase contents of folder, uncomment below
     shutil.rmtree(outFolder, ignore_errors=True)
     with open(statsCsv, 'w') as f:
         f.write('')
 
     # Individual histograms
-    # makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), 
-    #               fitLine=True, filename='weeks_used_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-    # makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', 
-    #               filename='comments_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-    # makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', 
-    #               filename='ambition_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-    # makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', 
-    #               filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-    # makeHistogram(Depth, numBins=5, graphName='Max Depth', xaxis='Depth', 
-    #               filename='maximum_depth_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-    # makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', 
-    #               filename='volume_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
+    makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), 
+                  fitLine=True, filename='weeks_used_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
+    makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', 
+                  filename='comments_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
+    makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', 
+                  filename='ambition_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
+    makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', 
+                  filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
+    makeHistogram(Depth, numBins=5, graphName='Max Depth', xaxis='Depth', 
+                  filename='maximum_depth_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
+    makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', 
+                  filename='volume_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
     
-    # Prepare data lists for makeMultipleHistograms
     inputList = [weeksUsedList, Comments, FuncNum, Cyclo, Depth, Lines]
     numBins = [6, 30, 7, 30, 5, 30]
     graphNames = ['Weeks Used', 'Comments', 'Ambition', 'Cyclomatic Complexity', 'Max Depth', 'Volume']
     xaxis = ['Num Weeks', 'Percentages', 'Number Of Functions', 'Cyclomatic Complexity', 'Depth', 'Lines Of Code']
     colors = [(217, 167, 202), (148, 181, 242), (120, 160, 240), (180, 140, 220), (230, 200, 250), (150, 180, 230)]
-    filename = 'Combined Histogram'
-    fitLine = [True] * len(inputList)  # Assuming you want all histograms to fit a line
-
-    # Now call makeMultipleHistograms with the prepared lists
+    filename = 'Combined Histogram' + year
+    fitLine = [True] * len(inputList)  # all histograms to fit a line
     makeMultipleHistograms(
         inputList=inputList,
         numBins=numBins,
         graphName=graphNames,
         xaxis=xaxis,
         color=colors,
-        fitLine=fitLine,  # Passing the list of fitLine values
+        fitLine=fitLine,  
         filename=filename,
-        csv_filename=statsCsv,
         output_dir=outFolder
     )

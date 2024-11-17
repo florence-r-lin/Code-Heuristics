@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import csv
+import math
 from scipy.stats import norm
 #import pandas as pd  # Make sure to import pandas for CSV handling
 import pandas as pd
@@ -77,30 +78,29 @@ def makeHistogram(inputList, numBins=10, graphName='', xaxis='', color=(148, 181
         stats_df = pd.DataFrame(stats_data)
         stats_df.to_csv(os.path.join(output_dir, csv_filename), mode='a', header=False, index=False)
 
-def makeMultipleHistograms(inputList, numBins, graphName, xaxis, color, fitLine, filename, csv_filename, output_dir):
+def makeMultipleHistograms(inputList, numBins, graphName, xaxis, color, fitLine, filename, output_dir):
     num_histograms = len(inputList)
+    num_cols = 2  # Fixed to 2 columns
+    num_rows = (num_histograms + 1) // num_cols  # Calculate rows needed for 2 columns
 
-    # Create subplots with a horizontal layout
-    fig, axes = plt.subplots(1, num_histograms, figsize=(5 * num_histograms, 5), squeeze=False)
+    # Create subplots
+    fig, axes = plt.subplots(num_rows, num_cols, figsize=(10, 5 * num_rows), squeeze=False)
 
-    for i, ax in enumerate(axes[0]):
-        data = inputList[i]
+    for i, data in enumerate(inputList):
+        ax = axes[i // num_cols][i % num_cols]
         bins = numBins[i]
         title = graphName[i]
         xlabel = xaxis[i]
         current_color = tuple(val / 255 for val in color[i])
         show_fit = fitLine[i]
 
-        # Calculate statistics
-        mean = round(np.mean(data), 2)
-        median = round(np.median(data), 2)
-        std_dev = round(np.std(data), 2)
-
         # Plot histogram
         counts, bins, patches = ax.hist(data, bins=bins, edgecolor='black', color=current_color, density=True)
 
-        # Fit line if required
+        # Add a fit line if required
         if show_fit:
+            mean = np.mean(data)
+            std_dev = np.std(data)
             x_values = np.linspace(min(bins), max(bins), 100)
             fitted_curve = norm.pdf(x_values, mean, std_dev)
             ax.plot(x_values, fitted_curve, color='red', linestyle='--', linewidth=2)
@@ -111,12 +111,9 @@ def makeMultipleHistograms(inputList, numBins, graphName, xaxis, color, fitLine,
         ax.set_ylabel('Frequency', fontsize=12)
         ax.grid(axis='y', linestyle='--', alpha=0.7)
 
-        # Display stats
-        # stats_text = (f'Mean: {mean}\n'
-        #               f'Median: {median}\n'
-        #               f'Std Dev: {std_dev}')
-        # ax.text(0.95, 0.95, stats_text, fontsize=10, ha='right', va='top', transform=ax.transAxes,
-        #         bbox=dict(boxstyle='round,pad=0.3', edgecolor='white', facecolor='lightgrey', alpha=0.8))
+    # Hide unused subplots
+    for j in range(num_histograms, num_rows * num_cols):
+        axes[j // num_cols][j % num_cols].axis('off')
 
     # Adjust layout
     plt.tight_layout()
@@ -127,7 +124,5 @@ def makeMultipleHistograms(inputList, numBins, graphName, xaxis, color, fitLine,
         save_path = os.path.join(output_dir, f"{filename}.png")
     else:
         save_path = f"{filename}.png"
-
     plt.savefig(save_path)
     plt.show()
-    print(f"Combined histogram saved at: {save_path}")
