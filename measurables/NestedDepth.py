@@ -9,15 +9,18 @@ class CallChain:
         self.names = funcNames
         self.depth = self.findLongestBranch()[0]
         self.longestChain = self.findLongestBranch()[1]
-        self.funcLongestChain = self.longestChain[0]
+
         self.totalFuncCalls = 0 # gets updated after self.maxFunctionCalls is initialized
 
         self.maxFunctionCalls = self.findFunctionCalls()[0] 
         self.maxFunctionCallsList = self.findFunctionCalls()[1] # list of function calls in function with the most calls
-        self.functionMostCalls = self.maxFunctionCallsList[0] # function with the most calls
+        if self.maxFunctionCalls == 0:
+            self.functionMostCalls = ''
+        else:
+            self.functionMostCalls = self.maxFunctionCallsList[0] # function with the most calls
         # broken until I put [0] in ???
-        self.averageDepth = self.depth/len(self.names)
-        self.averageCalls = self.totalFuncCalls/len(self.names)
+        # self.averageDepth = self.depth/len(self.names)
+        # self.averageCalls = self.totalFuncCalls/len(self.names)
         
 
     # def findBranches(self, func, funcs, names, currentPath):
@@ -72,10 +75,9 @@ class CallChain:
                         if func_in_path not in currentPath:
                             tempPath.append(func_in_path)
                     currentPath.append(tempPath)
+            # print('the current path is', currentPath)
             return currentPath
 
-        
-        
     def findLongestBranch(self):  # longest chain of dependencies without recursion, takes in function list and function names list
         allPaths = []
         
@@ -83,14 +85,16 @@ class CallChain:
             currentPath = []
             # print("\n\n\nCURRENT FUNCTION!!", func)
             currentPath.append(re.search("def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)) 
-            path = self.findBranches(func, self.functions, self.names, currentPath)
+            path = self.findBranches(func, self.functions, self.names, [])
             # print('currentPath appending', path)
             allPaths.append(path)
             # print('allPaths =', allPaths)
 
+        if allPaths is None or allPaths == []:
+            return 0,[]
         longestPath = max(allPaths, key=lambda x: self.findMaxDepth(x))
         # print('longest chain length is', self.findMaxDepth(longestPath))
-        print('Longest chain contains: ', longestPath)
+
         return self.findMaxDepth(longestPath)[0], self.findMaxDepth(longestPath)[1]
 
     def findMaxDepth(self, nestedList, currentDepth=1):
@@ -130,36 +134,39 @@ class CallChain:
                     currentPath.append(name)
                     self.totalFuncCalls += 1
                     currentNumCalls += 1
-            
             maxCalls = max(maxCalls, currentNumCalls)
             callsList.append(currentPath)
-        maxCallsList = max(callsList, key=len)
+        if callsList == [] or callsList is None:
+            return 0, []
+        else:
+            maxCallsList = max(callsList, key=len)
         # print('The most function calls within a function', maxCallsList)
         # print('The function with the most calls in it is', maxCallsList[0])
-        return maxCalls, maxCallsList
+            return maxCalls, maxCallsList
 
 
 
+# fsf = """
+# def f(x):
+#   z(42)
+#   y(14)
+# """
+# fsz = """
+# def z(x):
+#   g(42)
+#   f(8)
+# """
+# fsy = """
+# def y(x):
+#   z(42)
+#   y(h(14))
+# """
+# cc = CallChain([fsf,fsz,fsy], ['f','z','y'])
 
-cc = CallChain()
-fsf = """
-def f(x):
-  z(42)
-  y(14)
-"""
-fsz = """
-def z(x):
-  g(42)
-  f(8)
-"""
-fsy = """
-def y(x):
-  z(42)
-  y(h(14))
-"""
+# res = cc.findBranches(fsz, [fsf,fsz,fsy], ['f','z','y'], [])
+# print(f"{res=}")
 
-res = cc.findBranches(fsz, [fsf,fsz,fsy], ['f','z','y'], [])
-print(f"{res=}")
+# print('longest branch', cc.findLongestBranch())
 
 # ob = 77
 # import ast

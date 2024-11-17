@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import csv
 from scipy.stats import norm
 #import pandas as pd  # Make sure to import pandas for CSV handling
 import pandas as pd
@@ -45,7 +46,7 @@ def makeHistogram(inputList, numBins=10, graphName='', xaxis='', color=(148, 181
     # Set titles and labels with improved aesthetics
     plt.title(graphName, fontsize=18, weight='bold')
     plt.xlabel(xaxis, fontsize=14)
-    plt.ylabel('Frequency' if not fitLine else 'Density', fontsize=14)
+    plt.ylabel('Frequency', fontsize=14)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
 
     # Add statistics text to the plot if display_stats is True
@@ -76,15 +77,57 @@ def makeHistogram(inputList, numBins=10, graphName='', xaxis='', color=(148, 181
         stats_df = pd.DataFrame(stats_data)
         stats_df.to_csv(os.path.join(output_dir, csv_filename), mode='a', header=False, index=False)
 
+def makeMultipleHistograms(inputList, numBins, graphName, xaxis, color, fitLine, filename, csv_filename, output_dir):
+    num_histograms = len(inputList)
 
-def makeMulHistograms(data_dict, num_bins, titles = None, colors = None, fitLine=True, output_dir=None, year=None, statsCsv=None):
-    num_histograms = len(data_dict)
-    fig, axes = plt.subplots(1, num_histograms, figsize=(20, 5), constrained_layout=True)
-    
-    for ax, (title, data), bins, color in zip(axes, data_dict.items(), num_bins, colors):
-        makeHistogram(data, numBins=bins, graphName=title, xaxis=title, color=color,
-                      fitLine=fitLine, filename=f"{title.lower().replace(' ', '_')}_histogram_{year}.png",
-                      csv_filename=statsCsv, output_dir=output_dir, ax=ax)
-    
+    # Create subplots with a horizontal layout
+    fig, axes = plt.subplots(1, num_histograms, figsize=(5 * num_histograms, 5), squeeze=False)
+
+    for i, ax in enumerate(axes[0]):
+        data = inputList[i]
+        bins = numBins[i]
+        title = graphName[i]
+        xlabel = xaxis[i]
+        current_color = tuple(val / 255 for val in color[i])
+        show_fit = fitLine[i]
+
+        # Calculate statistics
+        mean = round(np.mean(data), 2)
+        median = round(np.median(data), 2)
+        std_dev = round(np.std(data), 2)
+
+        # Plot histogram
+        counts, bins, patches = ax.hist(data, bins=bins, edgecolor='black', color=current_color, density=True)
+
+        # Fit line if required
+        if show_fit:
+            x_values = np.linspace(min(bins), max(bins), 100)
+            fitted_curve = norm.pdf(x_values, mean, std_dev)
+            ax.plot(x_values, fitted_curve, color='red', linestyle='--', linewidth=2)
+
+        # Add titles and labels
+        ax.set_title(title, fontsize=14, weight='bold')
+        ax.set_xlabel(xlabel, fontsize=12)
+        ax.set_ylabel('Frequency', fontsize=12)
+        ax.grid(axis='y', linestyle='--', alpha=0.7)
+
+        # Display stats
+        # stats_text = (f'Mean: {mean}\n'
+        #               f'Median: {median}\n'
+        #               f'Std Dev: {std_dev}')
+        # ax.text(0.95, 0.95, stats_text, fontsize=10, ha='right', va='top', transform=ax.transAxes,
+        #         bbox=dict(boxstyle='round,pad=0.3', edgecolor='white', facecolor='lightgrey', alpha=0.8))
+
+    # Adjust layout
+    plt.tight_layout()
+
+    # Save the figure
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
+        save_path = os.path.join(output_dir, f"{filename}.png")
+    else:
+        save_path = f"{filename}.png"
+
+    plt.savefig(save_path)
     plt.show()
-
+    print(f"Combined histogram saved at: {save_path}")
