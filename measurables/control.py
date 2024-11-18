@@ -4,8 +4,8 @@ import applyMetrics
 import shutil
 from Histograms import makeHistogram, makeMultipleHistograms
 
-# yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/'
-jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5/'
+yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/'
+# jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5/'
 #florenceFilePath = ''
 
 yearsLines = []
@@ -15,12 +15,24 @@ yearsCyclo =[]
 yearsDepth = []
 yearsweeksUsedList = []
 
+yearsTotal = []
+
 # applyMetrics.metricsOnFilepath(jennyFilePath, 2024)
-pathList = fileParsing.getPathsForYears(jennyFilePath, 2018, 2023)
+pathList = fileParsing.getPathsForYears(yuanFilePath, 2018, 2023)
 for i in pathList:
-    yearsDepth.append(applyMetrics.metricsOnFilepath(i[0], i[1]))
-    print(yearsDepth)
-applyMetrics.metricsOnFilepath(pathList[2][0], pathList[2][1], [6, 8, 6, 8, 8])
+    yearsTotal.append(applyMetrics.metricsOnFilepath(i[0], i[1]))
+    #print(yearsTotal)
+#applyMetrics.metricsOnFilepath(pathList[2][0], pathList[2][1], [6, 8, 6, 8, 8])
+
+for i in yearsTotal:
+    yearsLines.append([i[0],i[1][0]])
+    yearsComments.append([i[0],i[1][1]])
+    yearsFuncNum.append([i[0],i[1][2]])
+    yearsCyclo.append([i[0],i[1][3]])
+    yearsDepth.append([i[0],i[1][4]])
+    yearsweeksUsedList.append([i[0],i[1][5]])
+
+print(yearsLines)
 
 statsCsv = 'histogram_stats.csv'
 outFolder = 'data'
