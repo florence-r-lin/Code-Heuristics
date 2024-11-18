@@ -2,6 +2,7 @@ import re
 import ast
 # import pygame
 from Cyclomatic import *
+import fileParsing
 from NestedDepth import CallChain 
 
 def commentCheck(comment): #fix becauyse it works now
@@ -137,28 +138,6 @@ def noCommentsFromFile(scriptPath):
     file = open(scriptPath, "r")
     return(removeComments(file.read()))
 
-def commentOnlyCheck(inputStr):
-    nonCommentList = []
-    for i in inputStr:
-        if not(i == "\n"):
-           nonCommentList.append(i)
-    if len(nonCommentList) == 0:
-        raise Exception ("Comment only file")
-
-
-
-
-
-
-
-# CHANGE THE SCRIPT HERE
-# ---------------------------
-
-# scriptPath = "measurables/LOC.py"
-
-# scriptPath = "CodeMeasure/LOC.py"
-
-# ---------------------------
 
 def replaceInFile(scriptPath, toBeReplaced, replacer):
     f = open(scriptPath,'r')
@@ -171,14 +150,18 @@ def replaceInFile(scriptPath, toBeReplaced, replacer):
     f.write(newdata)
     f.close()
 
+
 def allMetrics(scriptPath):
+    parseable = fileParsing.doesItParse(scriptPath)
+    if (not parseable):
+        print(scriptPath, "is not parseable")
+        return
     commentList = []
     totalScriptList = []
     # opening file
     inputfile = open(scriptPath, "r")
     inputfiletest2 = open(scriptPath, "r")
     noCommentsinputfile = removeComments(inputfiletest2.read())
-    commentOnlyCheck(noCommentsinputfile)
     # making two line by line lists of the file, both full and only comments
     for x in inputfile:
         totalScriptList.append(x)
@@ -188,11 +171,12 @@ def allMetrics(scriptPath):
     totalLOC = len(totalScriptList)
     commentPercentage = (1 - (len(noCommentsinputfile) / len(open(scriptPath, "r").read()))) * 100
     functions = funcName(scriptPath)
-    lenFuncs = len(functions)
     totalCC = calculate_cyclomatic_complexity(open(scriptPath, "r").read())
-    #depthChain = CallChain()
-    #depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
-    #ambitionScore = depthChain.depth
+    lenFuncs = len(functions)
+    depthChain = CallChain()
+    depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
+    ambitionScore = depthChain.depth
+    # print(depthChain.longestChain)
     # getting into weekstested
     weeksTesting = []
     weeksTesting.append(findIfOrVar(noCommentsinputfile))
@@ -207,90 +191,7 @@ def allMetrics(scriptPath):
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
 
-    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC, weeksUsed]#ambitionScore, weeksUsed]
+    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC,ambitionScore, weeksUsed]#ambitionScore, weeksUsed]
     #fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
     return outputList#fullList,outputList
     # return fieldDict
-
-# print(HardMetrics("studentScripts/throw.py"))
-# commentList = []
-# totalScriptList = []
-# inputfile = open(scriptPath, "r")
-# inputfiletest2 = open(scriptPath, "r")
-# noCommentsinputfile = removeComments(inputfiletest2.read())
-# for x in inputfile:
-#     totalScriptList.append(x)
-#     commentList.append(commentCheck(x))
-# commentList = [z for z in commentList if z != ""]
-
-# def bold_colored_text(text, color_code):
-#     return f"\033[1;{color_code}m{text}\033[0m"
-
-
-
-# alignment_width = 43  # Adjusted width for alignment
-
-
-
-
-
-
-# Color codes
-# pygame.init()
-# COLOR_BLUE = 34
-# COLOR_GREEN = 32
-# COLOR_RED = 31
-
-# def color_boolean(value):
-#     return bold_colored_text(value, COLOR_GREEN if value else COLOR_RED)
-
-# print(f"{'The total LOC is:':<{alignment_width}}" + bold_colored_text(len(totalScriptList), COLOR_BLUE))
-# # print(f"{'The Cyclomatic Complexity is:':<{alignment_width}}" + bold_colored_text(CyclomaticChicanery(noCommentsinputfile), COLOR_GREEN))
-
-# comment_percentage = (1 - (len(noCommentsinputfile) / len(open(scriptPath, "r").read()))) * 100
-# print(f"{'The percentage comments is:':<{alignment_width}}" + bold_colored_text(f"{comment_percentage:.3f} %", COLOR_BLUE))
-
-# print(f"{'There are functions present:':<{alignment_width}}" + bold_colored_text(len(funcName(scriptPath)), COLOR_BLUE))
-# print(f"{'These functions are:':<{alignment_width}}" + bold_colored_text(funcName(scriptPath), COLOR_GREEN))
-# print(f"{'The total Cyclomatic Complexity is:':<{alignment_width}}" + bold_colored_text(calculate_cyclomatic_complexity(open(scriptPath, "r").read()), COLOR_BLUE))
-
-# depthChain = CallChain()
-# depthChain = CallChain(splitFunc(scriptPath), funcName(scriptPath))
-# ambitionScore = depthChain.depth
-# print(f"{'The function with the longest call chain is: ':<{alignment_width}}" + bold_colored_text(depthChain.funcLongestChain, COLOR_BLUE)
-#       + ", which has depth of "+ bold_colored_text(ambitionScore, COLOR_BLUE))
-# # print(f"{'The highest level of function nesting is:':<{alignment_width}}" + bold_colored_text(ambitionScore, COLOR_BLUE))
-# # print(f"{'The longest chain of function calls is:':<{alignment_width}}" + bold_colored_text(depthChain.longestChain, COLOR_BLUE))
-# print(f"{'The calls in '+ bold_colored_text(depthChain.funcLongestChain, COLOR_BLUE):}" +" include " + bold_colored_text(depthChain.longestChain, COLOR_BLUE))
-
-# print(f"{'The most function calls within a function:':<{alignment_width}}" + bold_colored_text(depthChain.maxFunctionCalls, COLOR_BLUE))
-# print(f"{'The function with the most calls is:':<{alignment_width}}" + bold_colored_text(depthChain.functionMostCalls, COLOR_BLUE))
-# print(f"{'The calls in '+ bold_colored_text(depthChain.functionMostCalls, COLOR_BLUE):}" +" include " + bold_colored_text(depthChain.maxFunctionCallsList, COLOR_BLUE))
-
-# # print(f"{'The average depth is:':<{alignment_width}}" + bold_colored_text(f"{depthChain.averageDepth:.1f}", COLOR_BLUE))
-# # print(f"{'The average calls is: ':<{alignment_width}}" + bold_colored_text(f"{depthChain.averageCalls:.1f}", COLOR_BLUE))
-
-
-
-
-# weeksTesting = []
-# weeksTesting.append(findIfOrVar(noCommentsinputfile))
-# weeksTesting.append(findRecursion(scriptPath))
-# weeksTesting.append(findListComp(noCommentsinputfile))
-# weeksTesting.append(findSlicing(noCommentsinputfile))
-# weeksTesting.append(findBoolAlg(noCommentsinputfile))
-# weeksTesting.append(findLoops(scriptPath))
-# weeksTesting.append(findNestedLoops(scriptPath))
-# weeksTesting.append(findDictionaries(noCommentsinputfile))
-# weeksTesting.append(findOop(scriptPath))
-
-# print(f"{'Week 1: Has ifs or variables?':<{alignment_width}}" + color_boolean(findIfOrVar(noCommentsinputfile)))
-# print(f"{'Week 2: Has Recursion?':<{alignment_width}}" + color_boolean(findRecursion(scriptPath)))
-# print(f"{'Week 3: Has List Comprehension?':<{alignment_width}}" + color_boolean(findListComp(noCommentsinputfile)))
-# print(f"{'Week 4: Has Slicing?':<{alignment_width}}" + color_boolean(findSlicing(noCommentsinputfile)))
-# print(f"{'Week 5: Has Boolean Algebra?':<{alignment_width}}" + color_boolean(findBoolAlg(noCommentsinputfile)))
-# print(f"{'Week 7: Has Loops?':<{alignment_width}}" + color_boolean(findLoops(scriptPath)))
-# print(f"{'Week 8: Has Nested loops?':<{alignment_width}}" + color_boolean(findNestedLoops(scriptPath)))
-# print(f"{'Week 9: Has Dictionaries?':<{alignment_width}}" + color_boolean(findDictionaries(noCommentsinputfile)))
-# print(f"{'Week 10: Has OOP?':<{alignment_width}}" + color_boolean(findOop(scriptPath)))
-# print(f"{'This project encompasses':<{alignment_width}}" + bold_colored_text(sumTests(weeksTesting), COLOR_BLUE) + " out of " + bold_colored_text(len(weeksTesting), COLOR_BLUE) + " weeks tested in this course")
