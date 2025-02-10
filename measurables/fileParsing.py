@@ -65,4 +65,6 @@ def isOnlyComments(inputStr):
     if len(nonCommentList) == 0:
         raise Exception ("Comment only file")
 
+def backOneDir(filePath):
+    return filePath.split("/")[:-1]
 #print(getAllPythonFilesInPath('/Users/yuan/Desktop/CS5 data'))
