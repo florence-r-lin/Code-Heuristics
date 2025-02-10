@@ -1,0 +1,26 @@
+### Filtering User Input:
+
+The first thing done with user input is to filter it. Commas and other punctuation are taken out so we are left with a string of just the words### Database Loading
+
+We loaded in a database hosted on github and linked from a reference code project linked below.
+
+link: https://ramnarasimhan.medium.com/using-python-to-find-song-titles-43b175284c46
+        
+This database contains the top 100 songs for each year from 1964 to 2015. This database is ideal because it uses popular songs that the user is more likely to know. Selectively choosing our database allows us to cut down on computing time.
+
+The songs were loaded into a list with their titles and another containing artist name for easier reference. These lists were organized into a dictionary with the key being the song title.### Parsing Functions
+
+The functions below help parse through the song dictionary with one returning whether or not a song is actually in the list and the other returning the index of a song in the dictionary.### Greedy Matching
+
+The function below is self-contained so the input is taken in then filtered. Then the full sentence is checked for a possible song title match in a greedy approach, taking off the first word if no match is found. This approach worked in some cases, but misses some song titles embedded into the middle of sentence.### A new method
+
+This new method is an improvement on the previous greedy message. It takes each word in the inputted sentence and considers whether it could be the start of a song title, by iterating through the database. Each match found is recorded so that at the end only the best matching song titles are outputted. Right now, the best song titles are those that are the longest, but they could also be organized by how popular they are or other heuristics to cater to the user.### Testing the function
+The cells below show various tests of the previous function. Many of these inputs contain deliberate placement of song titles to ensure that matches are able to occur.### Consolidating the program into a function
+
+The function runSong below consolidates the previous work into one function that makes using the program easier. This will facilitate potential for future work in making this program in a website format to make it easier to interact with users.### Testing the song finding capabilities with our two funcitons ### Now that we can get the songs, we need a way to link the videos, this part will go to youtube and return urls of the songs that we found 
+
+Doing this is the first step to making the visual portion of the output. By having album covers and song video links, it actually connects the user with the song versus simply reporting back song titles. To do this, we use a library called youtubesearchpython. This library allows us to search youtube and we get a result back that contains information about the video. From the result, we can extract both the url of the videos and thumbnail images for the videos. ### Getting the URL links Consolidating the above code into a function that we can call for our final function### Getting Images
+
+We also want to display the thumbnail images of the videos that we searched for. Using the same structure as the code above, we can extract the url of the thumbnail images for each of the videos that we found. ### Displaying the images ### Consolidating the above functionalities into one function 
+
+With this we can give in a sentence and we will get the images associated with the songs in the sentence and also the URL links to the youtube videos ### Testing the Functionality with different sentences 
