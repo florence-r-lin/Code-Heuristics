@@ -17,6 +17,8 @@ yearsweeksUsedList = []
 
 yearsTotal = []
 
+print(HardMetrics.allMetrics("/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23/submission_185186492/final.py"))
+
 # applyMetrics.metricsOnFilepath(jennyFilePath, 2024)
 pathList = fileParsing.getPathsForYears(yuanFilePath, 2018, 2023)
 for i in pathList:

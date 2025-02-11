@@ -47,6 +47,19 @@ def getAllPythonFilesInPath(filePath):
     finalPyList = [f for f in pathList if f.endswith('.py')]
     return finalPyList
 
+def getAllNotebookFilesInPath(filePath):
+    pathList = []
+    result = list(os.walk(filePath))
+    for folder_tuple in result:
+        currentpath, subfolder, files = folder_tuple
+
+        if '__MACOSX' in currentpath: continue
+
+        for file in files:
+            pathList.append(currentpath + "/" + file)
+    finalPyList = [f for f in pathList if f.endswith('.ipynb')]
+    return finalPyList
+
 def doesItParse(scriptPath):
     try:
         with open(scriptPath, "r") as file:
@@ -66,5 +79,9 @@ def isOnlyComments(inputStr):
         raise Exception ("Comment only file")
 
 def backOneDir(filePath):
-    return filePath.split("/")[:-1]
+    return "/".join(filePath.split("/")[:-1])
+
+
+
 #print(getAllPythonFilesInPath('/Users/yuan/Desktop/CS5 data'))
+print(getAllNotebookFilesInPath('/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23')[0])

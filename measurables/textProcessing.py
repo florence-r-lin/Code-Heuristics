@@ -16,7 +16,7 @@ def notebookToPy(filePath):
         with open(filePath, 'r') as tFile:
             notebook = json.load(tFile)
             #newT = open(filePath[:-6] + "-code.py", 'w')
-            newT = open(fileParson.backOneDir(filePath) + "/final.py", "w")
+            newT = open(fileParsing.backOneDir(filePath) + "/final.py", "w")
             markT = open(filePath[:-6] + "-mark.txt", 'w')                
             for cell in notebook['cells']:
                 if cell['cell_type'] == 'code':
@@ -28,7 +28,5 @@ def notebookToPy(filePath):
                     markT.writelines(cell['source'])
             newT.close()
             markT.close()
-
-
-notebookToPy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks/final_project.ipynb") #Takes path to notebook
-                        
+        
+notebookToPy(fileParsing.getAllNotebookFilesInPath('/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23')[0])

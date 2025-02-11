@@ -153,9 +153,11 @@ def replaceInFile(scriptPath, toBeReplaced, replacer):
 
 def allMetrics(scriptPath):
     parseable = fileParsing.doesItParse(scriptPath)
+    '''
     if (not parseable):
         print(scriptPath, "is not parseable")
         return
+        '''
     commentList = []
     totalScriptList = []
     # opening file
