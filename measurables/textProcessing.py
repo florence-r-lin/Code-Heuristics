@@ -21,12 +21,11 @@ def notebookToPy(filePath):
             for cell in notebook['cells']:
                 if cell['cell_type'] == 'code':
                     filtLines = list(filter(isNotAlphaNumeric, cell['source']))
-                    if "d\n" in filtLines:
-                        print(list(filtLines))
+                    filtLines.append("\n\n\n")
                     newT.writelines(filtLines) 
                 else:
                     markT.writelines(cell['source'])
             newT.close()
             markT.close()
         
-notebookToPy(fileParsing.getAllNotebookFilesInPath('/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23')[0])
+notebookToPy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks/cs181yProject_final_pretty.ipynb")
