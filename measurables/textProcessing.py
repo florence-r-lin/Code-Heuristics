@@ -28,4 +28,5 @@ def notebookToPy(filePath):
             newT.close()
             markT.close()
         
-notebookToPy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks/cs181yProject_final_pretty.ipynb")
+#notebookToPy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks/cs181yProject_final_pretty.ipynb")
+#notebookToPy("/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23/submission_185159375/Source_Code.ipynb")
