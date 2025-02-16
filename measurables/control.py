@@ -19,7 +19,6 @@ yearsweeksUsedList = []
 yearsTotal = []
 
 #print(applyMetrics.metricsOnFilepath("/", 1999))
-print(len(fileParsing.getAllPythonFilesInPath(yuanFilePath)))
 
 #textProcessing.notebookToPyOnFilePath(yuanFilePath)
 

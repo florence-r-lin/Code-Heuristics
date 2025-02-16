@@ -39,19 +39,17 @@ WARNING THIS WILL ACTIVELY DELETE EVERY FILE WITH THE .IPYNB.PY ENDING TAG IN TH
 """
 
 def removeipynbpy(filePath):
-    check = input("WARNING THIS WILL ACTIVELY DELETE EVERY FILE WITH THE .IPYNB.PY ENDING TAG IN THE PATH DO NOT USE UNLESS YOU MEAN TO (press y to continue) ")  
-    if check == 'y':  
-        result = list(os.walk(filePath))
-        for folder_tuple in result:
-            currentpath, subfolder, files = folder_tuple
+    result = list(os.walk(filePath))
+    for folder_tuple in result:
+        currentpath, subfolder, files = folder_tuple
 
-            if '__MACOSX' in currentpath: continue
+        if '__MACOSX' in currentpath: continue
 
-            for file in files:
-                if file[-9:] == ".ipynb.py":
-                    print(file)
-                    os.remove(currentpath + "/" + file)
-    #notebookToPy("/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23/submission_185159375/Source_Code.ipynb")
+        for file in files:
+            if file[-9:] == ".ipynb.py":
+                print(file)
+                os.remove(currentpath + "/" + file)
 
-notebookToPyOnFilePath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
-removeipynbpy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
+
+#notebookToPyOnFilePath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
+#removeipynbpy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")

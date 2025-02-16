@@ -69,14 +69,16 @@ def doesItParse(scriptPath):
         return True
     except:
         return False
-    
+
 def isOnlyComments(inputStr):
     nonCommentList = []
     for i in inputStr:
         if not(i == "\n"):
            nonCommentList.append(i)
     if len(nonCommentList) == 0:
+        print("Comment only file")
         raise Exception ("Comment only file")
+
 
 def backOneDir(filePath):
     return "/".join(filePath.split("/")[:-1])
