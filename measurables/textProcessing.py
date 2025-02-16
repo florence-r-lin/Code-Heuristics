@@ -10,13 +10,15 @@ def isNotAlphaNumeric(s):
 
 def notebookToPy(filePath):
     #Take all text files, seperate markdown and python into seperate files
-    #for file in os.listdir(filePath):
+    # print(filePath)
+    # for file in os.listdir(filePath):
     if filePath[-1] == "b":
-        #print(filePath)
+    #print(filePath)
         with open(filePath, 'r') as tFile:
             notebook = json.load(tFile)
             #newT = open(filePath[:-6] + "-code.py", 'w')
-            newT = open(fileParsing.backOneDir(filePath) + "/final.py", "w")
+            currentNotebook = filePath.split("/")[-1]
+            newT = open(fileParsing.backOneDir(filePath) + "/final|" + currentNotebook + ".py", "w")
             markT = open(filePath[:-6] + "-mark.txt", 'w')                
             for cell in notebook['cells']:
                 if cell['cell_type'] == 'code':
@@ -28,5 +30,5 @@ def notebookToPy(filePath):
             newT.close()
             markT.close()
         
-#notebookToPy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks/cs181yProject_final_pretty.ipynb")
+[notebookToPy(i) for i in fileParsing.getAllNotebookFilesInPath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")]
 #notebookToPy("/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23/submission_185159375/Source_Code.ipynb")
