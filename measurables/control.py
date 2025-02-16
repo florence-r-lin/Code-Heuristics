@@ -21,17 +21,12 @@ yearsTotal = []
 #print(applyMetrics.metricsOnFilepath("/", 1999))
 print(len(fileParsing.getAllPythonFilesInPath(yuanFilePath)))
 
-textProcessing.notebookToPyOnFilePath(yuanFilePath)
+#textProcessing.notebookToPyOnFilePath(yuanFilePath)
 
-print(len(fileParsing.getAllPythonFilesInPath(yuanFilePath)))
-'''
-#print(HardMetrics.allMetrics("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks/final.py"))
 applyMetrics.metricsOnFilepath(yuanFilePath, 2024)
 pathList = fileParsing.getPathsForYears(yuanFilePath, 2018, 2023)
 for i in pathList:
     yearsTotal.append(applyMetrics.metricsOnFilepath(i[0], i[1]))
-    #print(yearsTotal)
-#applyMetrics.metricsOnFilepath(pathList[2][0], pathList[2][1], [6, 8, 6, 8, 8])
 
 for i in yearsTotal:
     yearsLines.append([i[0],i[1][0]])
@@ -50,4 +45,4 @@ outFolder = 'data'
 shutil.rmtree(outFolder, ignore_errors=True)
 with open(statsCsv, 'w') as f:
     f.write('')
-'''
+

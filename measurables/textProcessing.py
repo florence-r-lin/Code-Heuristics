@@ -18,6 +18,7 @@ def notebookToPy(filePath):
             notebook = json.load(tFile)
             #newT = open(filePath[:-6] + "-code.py", 'w')
             currentNotebook = filePath.split("/")[-1]
+            currentNotebook = currentNotebook.split(".")[0]
             newT = open(fileParsing.backOneDir(filePath) + "/final|" + currentNotebook + ".py", "w")
             markT = open(filePath[:-6] + "-mark.txt", 'w')                
             for cell in notebook['cells']:
