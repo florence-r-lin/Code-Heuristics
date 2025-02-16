@@ -30,5 +30,6 @@ def notebookToPy(filePath):
             newT.close()
             markT.close()
         
-[notebookToPy(i) for i in fileParsing.getAllNotebookFilesInPath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")]
+def notebookToPyOnFilePath(filePath):
+    [notebookToPy(i) for i in fileParsing.getAllNotebookFilesInPath(filePath)]
 #notebookToPy("/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23/submission_185159375/Source_Code.ipynb")

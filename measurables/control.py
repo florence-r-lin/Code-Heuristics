@@ -3,6 +3,7 @@ import fileParsing
 import applyMetrics
 import shutil
 from Histograms import makeHistogram, makeMultipleHistograms
+import textProcessing
 
 yuanFilePath = '/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/submissions_cs35_s23/'
 # jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5/'
@@ -18,7 +19,12 @@ yearsweeksUsedList = []
 yearsTotal = []
 
 #print(applyMetrics.metricsOnFilepath("/", 1999))
+print(len(fileParsing.getAllPythonFilesInPath(yuanFilePath)))
 
+textProcessing.notebookToPyOnFilePath(yuanFilePath)
+
+print(len(fileParsing.getAllPythonFilesInPath(yuanFilePath)))
+'''
 #print(HardMetrics.allMetrics("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks/final.py"))
 applyMetrics.metricsOnFilepath(yuanFilePath, 2024)
 pathList = fileParsing.getPathsForYears(yuanFilePath, 2018, 2023)
@@ -44,3 +50,4 @@ outFolder = 'data'
 shutil.rmtree(outFolder, ignore_errors=True)
 with open(statsCsv, 'w') as f:
     f.write('')
+'''
