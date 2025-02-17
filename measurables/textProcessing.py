@@ -20,15 +20,23 @@ def notebookToPy(filePath):
             currentNotebook = filePath.split("/")[-1]
             currentNotebook = currentNotebook.split(".")[0]
             newT = open(fileParsing.backOneDir(filePath) + "/final|" + currentNotebook + ".py", "w")
-            markT = open(filePath[:-6] + "-mark.txt", 'w')                
+            markT = open(filePath[:-6] + "-mark.txt", 'w')      
+            writtenInCode = False
+
             for cell in notebook['cells']:
-                if cell['cell_type'] == 'code':
+                if currentNotebook == "test":
+                    print(cell['source'])
+                if cell['cell_type'] == 'code' and len(cell['source']) > 0:
                     filtLines = list(filter(isNotAlphaNumeric, cell['source']))
                     filtLines.append("\n\n\n")
                     newT.writelines(filtLines) 
+                    writtenInCode = True
                 else:
                     markT.writelines(cell['source'])
-            newT.close()
+            if writtenInCode:
+                newT.close()
+            else:
+                os.remove(fileParsing.backOneDir(filePath) + "/final|" + currentNotebook + ".py")
             markT.close()
         
 def notebookToPyOnFilePath(filePath):
@@ -50,6 +58,22 @@ def removeipynbpy(filePath):
                 print(file)
                 os.remove(currentpath + "/" + file)
 
+def removeEmptyFile(filePath):
+    result = list(os.walk(filePath))
+    for folder_tuple in result:
+        currentpath, subfolder, files = folder_tuple
 
-#notebookToPyOnFilePath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
+        if '__MACOSX' in currentpath: continue
+
+        for file in files:
+            with open(currentpath + "/" + file, "r") as f:
+                lines = f.readlines()
+                lines = list(filter(lambda x: x != "\n", lines))
+                if not lines:
+                    os.remove(currentpath + "/" + file)
+
+
+notebookToPyOnFilePath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
+#print(removeCommentOnlyFile("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks"))
+
 #removeipynbpy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
