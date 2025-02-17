@@ -66,11 +66,12 @@ def removeEmptyFile(filePath):
         if '__MACOSX' in currentpath: continue
 
         for file in files:
-            with open(currentpath + "/" + file, "r") as f:
-                lines = f.readlines()
-                lines = list(filter(lambda x: x != "\n", lines))
-                if not lines:
-                    os.remove(currentpath + "/" + file)
+            if file[-1] == "y":
+                with open(currentpath + "/" + file, "r") as f:
+                    lines = f.readlines()
+                    lines = list(filter(lambda x: x != "\n", lines))
+                    if not lines:
+                        os.remove(currentpath + "/" + file)
 
 
 notebookToPyOnFilePath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")

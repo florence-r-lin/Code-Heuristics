@@ -26,6 +26,7 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
         #preproccessing portion
         fileParsing.replaceErrorsInFile(i)
         #calling all metrics portion
+        # TODO: put in isAPythonFinal function in here!
         result = HardMetrics.allMetrics(i)
         if (result != None):
             metricsList.append(result)

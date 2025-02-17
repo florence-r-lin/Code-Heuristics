@@ -20,7 +20,8 @@ yearsTotal = []
 
 #print(applyMetrics.metricsOnFilepath("/", 1999))
 
-#textProcessing.notebookToPyOnFilePath(yuanFilePath)
+# textProcessing.notebookToPyOnFilePath(yuanFilePath)
+# textProcessing.removeEmptyFile(yuanFilePath)
 
 applyMetrics.metricsOnFilepath(yuanFilePath, 2024)
 pathList = fileParsing.getPathsForYears(yuanFilePath, 2018, 2023)
@@ -44,4 +45,3 @@ outFolder = 'data'
 shutil.rmtree(outFolder, ignore_errors=True)
 with open(statsCsv, 'w') as f:
     f.write('')
-
