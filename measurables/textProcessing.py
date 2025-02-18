@@ -3,10 +3,20 @@ import json
 import fileParsing
 
 def isNotAlphaNumeric(s):
-    if "\n" == s[-1]:
+    if len(s) <= 0 or "\n" == s[-1]:
         return not s[:-1].isalnum()
     else:
         return not s.isalnum()
+
+def startsWithAlph(s):
+    if len(s) > 0:
+        return not s[0] in "%!"
+    return True
+    # if len(s) == 0:
+    #     return True
+    # if len(s) > 0 or "\n" != s[-1]:
+    #     return not s[0].isalnum()
+    # return False
 
 def notebookToPy(filePath):
     #Take all text files, seperate markdown and python into seperate files
@@ -28,6 +38,7 @@ def notebookToPy(filePath):
                     print(cell['source'])
                 if cell['cell_type'] == 'code' and len(cell['source']) > 0:
                     filtLines = list(filter(isNotAlphaNumeric, cell['source']))
+                    filtLines = list(filter(startsWithAlph, filtLines)) #New line filters for stuff like !pip and %matplotlib
                     filtLines.append("\n\n\n")
                     newT.writelines(filtLines) 
                     writtenInCode = True
@@ -66,15 +77,15 @@ def removeEmptyFile(filePath):
         if '__MACOSX' in currentpath: continue
 
         for file in files:
-            if file[-1] == "y":
+            if fileParsing.isAPythonFile(file):
                 with open(currentpath + "/" + file, "r") as f:
                     lines = f.readlines()
                     lines = list(filter(lambda x: x != "\n", lines))
                     if not lines:
                         os.remove(currentpath + "/" + file)
 
-
-notebookToPyOnFilePath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
+#print(startsWithNonAlph("%matplotlib"))
+#notebookToPyOnFilePath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
 #print(removeCommentOnlyFile("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks"))
 
 #removeipynbpy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")

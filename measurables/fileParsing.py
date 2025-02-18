@@ -71,6 +71,8 @@ def getAllNotebookFilesInPath(filePath):
     finalPyList = [f for f in pathList if f.endswith('.ipynb')]
     return finalPyList
 
+#print(getAllNotebookFilesInPath("/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/"))
+
 def doesItParse(scriptPath):
     try:
         with open(scriptPath, "r") as file:
@@ -91,9 +93,9 @@ def isOnlyComments(inputStr):
         raise Exception ("Comment only file")
 
 
-def isAPythonFinal(filePath):
+def isAPythonFile(filePath):
     fileName = filePath.split("/")[-1]
-    return fileName[0:6] == "final|" and fileName[-3:] == ".py"
+    return fileName[-3:] == ".py" #fileName[0:6] == "final|" and 
 
 def backOneDir(filePath):
     return "/".join(filePath.split("/")[:-1])

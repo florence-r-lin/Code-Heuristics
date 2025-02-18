@@ -21,13 +21,15 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
     # binNums = [6, 30, 7, 30, 30] if binNumsInput == None else binNumsInput
 
     finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
-
-    for i in finalPyList:
-        #preproccessing portion
+    # print(list(set(finalPyList)))
+    for i in list(set(finalPyList)):
+        # preproccessing portion
         fileParsing.replaceErrorsInFile(i)
-        #calling all metrics portion
+        # calling all metrics portion
         # TODO: put in isAPythonFinal function in here!
-        result = HardMetrics.allMetrics(i)
+        result = None
+        if(fileParsing.isAPythonFile(i)):
+            result = HardMetrics.allMetrics(i)
         if (result != None):
             metricsList.append(result)
 
