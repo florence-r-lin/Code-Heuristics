@@ -33,6 +33,17 @@ def replaceErrorsInFile(filePath):
                                "    if mag( wpos_noy - bpos_noy ) < smallest_dim or (-wLENGTH < b_axial < wLENGTH and -wWIDTH < b_perp < wWIDTH):")
     HardMetrics.replaceInFile(filePath, "       or (-wLENGTH < b_axial < wLENGTH and -wWIDTH < b_perp < wWIDTH):", "#")
     HardMetrics.replaceInFile(filePath, "else if", "elif")
+    HardMetrics.replaceInFile(filePath, "%matplotlib inline", "#")
+    HardMetrics.replaceInFile(filePath, "!git", "#")
+    HardMetrics.replaceInFile(filePath, "%cd", "#")
+    HardMetrics.replaceInFile(filePath, "!python", "#")
+    HardMetrics.replaceInFile(filePath, "!tar", "#")
+    HardMetrics.replaceInFile(filePath, "!pip", "#")
+    HardMetrics.replaceInFile(filePath, "pip", "#")
+    HardMetrics.replaceInFile(filePath, "%pwd", "#")
+    HardMetrics.replaceInFile(filePath, "cd ..", "#")
+
+
 
 def getAllPythonFilesInPath(filePath):
     pathList = []
@@ -47,6 +58,21 @@ def getAllPythonFilesInPath(filePath):
     finalPyList = [f for f in pathList if f.endswith('.py')]
     return finalPyList
 
+def getAllNotebookFilesInPath(filePath):
+    pathList = []
+    result = list(os.walk(filePath))
+    for folder_tuple in result:
+        currentpath, subfolder, files = folder_tuple
+
+        if '__MACOSX' in currentpath: continue
+
+        for file in files:
+            pathList.append(currentpath + "/" + file)
+    finalPyList = [f for f in pathList if f.endswith('.ipynb')]
+    return finalPyList
+
+#print(getAllNotebookFilesInPath("/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/"))
+
 def doesItParse(scriptPath):
     try:
         with open(scriptPath, "r") as file:
@@ -56,13 +82,25 @@ def doesItParse(scriptPath):
         return True
     except:
         return False
-    
+
 def isOnlyComments(inputStr):
     nonCommentList = []
     for i in inputStr:
         if not(i == "\n"):
            nonCommentList.append(i)
     if len(nonCommentList) == 0:
+        print("Comment only file")
         raise Exception ("Comment only file")
 
+
+def isAPythonFile(filePath):
+    fileName = filePath.split("/")[-1]
+    return fileName[-3:] == ".py" #fileName[0:6] == "final|" and 
+
+def backOneDir(filePath):
+    return "/".join(filePath.split("/")[:-1])
+
+
+
 #print(getAllPythonFilesInPath('/Users/yuan/Desktop/CS5 data'))
+

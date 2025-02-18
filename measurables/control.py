@@ -3,8 +3,9 @@ import fileParsing
 import applyMetrics
 import shutil
 from Histograms import makeHistogram, makeMultipleHistograms
+import textProcessing
 
-yuanFilePath = '/Users/yuan/Desktop/CS5 data/pre-LLM data/cs5/'
+yuanFilePath = '/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/'
 # jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5/'
 #florenceFilePath = ''
 
@@ -17,12 +18,16 @@ yearsweeksUsedList = []
 
 yearsTotal = []
 
-# applyMetrics.metricsOnFilepath(jennyFilePath, 2024)
+#print(applyMetrics.metricsOnFilepath("/", 1999))
+
+textProcessing.notebookToPyOnFilePath(yuanFilePath)
+# textProcessing.removeEmptyFile(yuanFilePath)
+
+
+applyMetrics.metricsOnFilepath(yuanFilePath, 2024)
 pathList = fileParsing.getPathsForYears(yuanFilePath, 2018, 2023)
 for i in pathList:
     yearsTotal.append(applyMetrics.metricsOnFilepath(i[0], i[1]))
-    #print(yearsTotal)
-#applyMetrics.metricsOnFilepath(pathList[2][0], pathList[2][1], [6, 8, 6, 8, 8])
 
 for i in yearsTotal:
     yearsLines.append([i[0],i[1][0]])

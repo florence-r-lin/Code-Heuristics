@@ -1,31 +1,361 @@
 File Name,LOC,Comment Percentage,Number Of Functions,CycloComplexity,Max Depth,Weeks Covered
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256946953/final.py,386,1.939347846753492,4,189,1,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256834044/finale.py,235,16.892911010558066,8,72,2,4
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256818071/final.py,182,8.612816879231621,11,24,4,7
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256941197/final.py,406,26.953611457036118,16,66,3,8
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256964538/dodds_poker_room.py,335,29.618392664509173,11,86,3,6
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256825475/Game Of Life-Original.py,691,41.3055173650547,11,79,2,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256825475/Game Of Life-HighLife.py,693,41.11064817570382,11,82,2,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256825475/Game Of Life-Majority Vote.py,703,40.20901447921532,11,97,2,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256825475/Game Of Life-Prime Destroyer.py,707,39.96329433356275,11,103,2,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256825475/Game Of Life-Coral.py,697,40.74490097546556,11,88,2,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256718192/gpt.py,345,98.8960667266334,0,2,0,2
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256961715/final.py,271,11.052995164314616,9,66,2,4
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256966565/final.py,240,8.330503678551215,2,60,1,4
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256984069/final.py,922,11.066586522406997,16,41,2,4
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256800845/final.py,175,35.67977915804003,9,41,3,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256880801/final.py,326,29.84470691163604,7,52,2,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256824330/final.py,312,32.68876611418048,7,46,2,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 1/submission_256938017/final.py,320,6.039488966318229,13,68,2,7
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258406373/finale.py,121,0.5389718076285188,6,51,3,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258399048/final.py,132,8.962739174219536,8,42,1,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258402548/final.py,382,10.533159947984394,2,148,1,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258483908/final.py,254,34.23057389537837,6,64,2,4
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258398573/final.py,477,10.384162496320283,9,93,1,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258443905/final.py,386,36.94876875176904,18,64,3,7
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258424713/final.py,141,0.1123090745732247,6,31,3,4
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258407496/final.py,220,19.39572586588062,7,50,2,5
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258436503/final.py,102,13.596623454929158,8,31,3,4
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258398523/final.py,238,13.605255954010397,10,52,3,6
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258406939/final.py,530,21.58396353465244,9,38,1,4
-/Users/jennyngo/Downloads/CS5 DATA/post-LLM data/cs5/summer cs5 2024 section 2/submission_258416046/final.py,240,17.195870900300537,17,42,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126551059/pythonfunctions.py,101,18.848167539267013,1,6,1,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18061744/animation.py,204,24.983918692911356,7,26,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/FlaskAppStarter/config.py,8,41.463414634146346,0,3,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7833514/Free_Fun_Finder_FINAL.py,218,16.66276346604215,7,12,5,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_122756022/final|hw9_project.py,143,25.91036414565826,2,24,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246907/final|c4_cleaner.py,152,65.87040907733652,0,4,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7848442/get_data.py,125,32.21737020863659,2,12,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125235323/flask_movie_rec/routes.py,53,1.2928891098955786,1,12,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125656902/final|AIMS.py,240,19.212510471935218,7,64,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18072140/data_generation.py,119,28.643724696356276,0,18,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7854491/sentiment.py,27,24.109263657957246,1,6,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18085971/project.py,248,59.955931810274855,8,28,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/final|merc_model_NNets.py,277,38.32538287722822,2,62,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40209991/finalprojpart3.py,450,41.05061131646289,7,24,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18267542/database.py,121,0.0,8,34,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18085971/melody.py,26,0.0,1,18,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125802890/app/pythonfunctions.py,46,4.350927246790304,2,6,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18315297/gifTopng.py,52,5.32445923460898,1,6,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7848442/scrape.py,95,9.053367217280817,3,8,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126441150/final|2017_cleaner_and_experimentation.py,180,49.385284660488,0,20,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/treys/go.py,54,20.663956639566393,0,2,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40169377/Final project.py,124,5.47530288909599,0,20,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40181991/iris.py,123,45.4102355808286,1,6,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_124745723/final|hw9_project_progress.py,294,23.7700739230181,8,12,1,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18038325/2_cleanup.py,23,33.27586206896552,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40173899/oeis_processor.py,47,0.0,5,10,2,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7727669/final|Project.py,1035,11.781672953183941,7,38,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126449356/final|nn_angle_velocity_predictor.py,427,42.35588972431078,4,22,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18058118/model.py,366,48.915106014355246,7,17,3,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/interface.py,230,5.486326001505393,13,46,4,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/treys/perf.py,60,0.43572984749454813,1,10,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18005767/Final/finalsoup.py,176,20.448332422088576,5,40,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129673962/final|speedymovie2k22.py,543,29.47227506517297,4,44,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125336353/final|sophie de castro mask2face final project.py,158,47.25872224739466,0,9,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7544920/Final Project/t.py,157,32.75992916772071,8,18,3,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18102456/cs35final.py,198,28.425821064552657,5,52,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126449226/final|exploratory_analysis.py,199,18.870755955730633,0,16,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125321132/train_dalle_mejia.py,874,8.345306513409966,11,137,2,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/deck.py,43,24.434389140271495,5,12,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_8043269/CS35-2.0-master/Final Project/NeuroPy/Neuropy.py,268,11.162748314197191,9,100,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7844310/2D Platformer/game.py,666,20.953847634631117,23,144,4,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125796191/config.py,8,41.463414634146346,0,3,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126549274/final|nrclex.py,25,11.538461538461542,0,4,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_123130932/script.py,57,7.794508414526124,3,24,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126347357/final|Copy_of_deepdream_colab.py,166,24.118529632408105,5,25,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/test.py,102,88.52280955829109,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/notepad.py,5,0.0,0,2,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125519840/final|hw9_project_progress.py,323,21.10671191553545,10,52,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18313840/startup.py,162,13.674560733384267,4,2,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18038325/1_get_data.py,98,38.599151000606426,3,10,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/interface.py,230,5.486326001505393,13,46,4,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/methods.py,144,11.181134376905877,13,64,4,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125626820/final|hw9_progress-1.py,793,22.08025554002795,19,127,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40182029/message_extraction.py,186,28.144472651742447,0,31,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125671324/final|preprocess.py,136,11.485348602222967,4,18,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/treysevaluator.py,27,3.7796976241900593,1,6,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125651139/convert.py,31,0.0,6,2,1,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_122877940/final|hw9_project_progress.py,7,95.45454545454545,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125223498/final|final_project.py,442,17.92388590451691,10,102,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84249015/final|NBA_player_plus_minus_modeler.py,295,33.912966722570395,3,34,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18231803/FinalProjectScript.py,163,27.462476547842396,2,20,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40156205/record.py,74,39.483707151925515,3,12,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/all_together.py,99,16.8798751950078,2,19,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_17522223/project/create_data.py,66,50.92838196286472,3,10,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18081011/BasketballPredictorFinal/nba_neural_net_classifier.py,175,44.812601846822375,1,14,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/lookup.py,274,35.056179775280896,6,42,2,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126439242/final2.py,20,18.776077885952713,2,2,1,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40181991/digits.py,99,33.565408574569446,0,8,0,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125671324/final|main.py,68,0.0,2,4,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/.ipynb_checkpoints/final|merc_model_DT_RF-checkpoint.py,618,43.60502926512031,3,68,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7613970/finalproject.py,2460,56.628105927117645,28,128,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126441150/final|2018_cleaner.py,133,29.913373037357882,0,24,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129742874/final|hw9_project_progress.py,829,41.80148495506057,1,26,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/__init__.py,3,0.0,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7688190/final.py,930,18.19931132266559,23,294,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129731625/final|final.py,329,19.348290598290596,7,32,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125651139/final|hw8pr1_project_exploring.py,37,24.034672970843186,0,2,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84260874/final|Final_Project.py,1003,17.1841857176526,16,102,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18266804/finalprojtrial.py,169,30.624065769805675,0,12,0,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7842713/PILProcessing.py,60,37.324766355140184,4,8,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/treys/__init__.py,1,0.0,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125463521/project.py,178,24.472720934286208,6,12,2,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_122932944/final|finalproject_notebook1.py,346,11.376286051610728,8,10,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125269908/final|hw9_Topic_Modeling_Recommendation_System.py,222,12.532722513089,6,18,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/card.py,214,44.778026189715746,13,19,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125235323/flask_movie_rec/__init__.py,14,0.0,1,2,1,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672285/final|finalSubmission.py,297,3.096288794038926,13,64,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125796191/project.py,122,37.73531089560753,9,8,4,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/notepad.py,5,0.0,0,2,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/treys/go.py,54,20.663956639566393,0,2,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18311538/TLCex.py,552,32.25602643856921,20,116,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84253108/final|final_project.py,446,46.041420893957266,2,22,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18077443/train_simple_nn.py,127,39.52455009997779,0,4,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18315297/train_simple_nn.py,131,43.502024291497975,0,4,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246907/final|c4_modeler.py,903,35.34864205065609,23,230,4,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246832/final|FinalFinalNotebookZachTaylor.py,379,29.48696096812681,3,24,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/Final Project/March-Madness-2017-master/.ipynb_checkpoints/final|Applying Deep Learning-checkpoint.py,106,8.275206087507925,2,14,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125436657/final|finalProject.py,363,4.971648440664234,16,97,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129680305/final|spotapp.py,193,23.680884676145343,5,18,3,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/__init__.py,3,0.0,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126440917/modelMaker.py,593,18.83472484064996,21,44,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129657558/final|hw9_project_progress.py,709,11.461961503208062,6,150,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18261441/gestureControl.py,28,31.756756756756754,0,14,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18083597/test.py,5,0.0,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126551059/__init__.py,14,15.953307392996107,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18077443/download_images.py,69,42.07589285714286,0,10,0,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18085971/m.py,74,44.003414425949636,1,7,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/Final Project/March-Madness-2017-master/.ipynb_checkpoints/final|Predictions for 2017 Bracket-checkpoint.py,438,4.343840708865921,13,39,4,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/deck.py,43,3.8083538083538038,6,4,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18081428/test_1_song.py,110,8.290333677330587,2,22,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125624930/final|project.py,510,40.3967160064721,11,50,6,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18062192/team_avg.py,67,26.818950930626063,1,18,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/lookup.py,274,35.056179775280896,6,42,2,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18077102/multiML.py,241,28.63377379076252,3,50,3,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18061744/feature_generation.py,214,25.953804908228506,5,22,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_124267108/final|hw9_trainer_generator.py,292,12.509525019050038,10,16,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/FlaskAppStarter/app/pythonfunctions.py,738,31.823452403216756,9,20,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7848442/analyze.py,323,29.242764071344652,4,26,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18085971/melody_parser.py,54,8.271051320378675,1,8,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_124812305/app.py,26,0.0,5,2,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40161313/cartpole_tflearn.py,185,23.37331879316612,4,34,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125770196/FlaskAppStarter/example-app.py,3,66.12903225806453,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18077443/namefile.py,60,38.0458919319023,2,10,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18267542/analysis.py,84,13.383637807783956,0,6,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40209991/finalprojtest1.py,103,12.283737024221452,8,10,1,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18311538/hw10pr2.py,82,39.30211202938476,4,16,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125321132/train_vae_mejia.py,360,6.729515595226154,2,38,1,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/renderer.py,134,2.3199023199023228,6,23,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40216499/picStuff.py,38,30.78947368421052,1,6,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126549274/parsing_earnings_calls_tsv.py,74,41.16710875331565,2,16,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/methods.py,144,11.181134376905877,13,64,4,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40161313/cartpole_keras.py,185,26.089364844903983,4,34,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7878747/Scatterplot_previous_year.py,228,10.343206393982129,5,52,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/deck.py,43,24.434389140271495,5,12,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_124682242/Project Final Deliverables/final|final_project_source.py,811,30.981078492883796,14,95,4,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125611388/final|cs181yProject_final_pretty.py,341,26.337494427106556,9,65,4,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18061744/models.py,86,9.710550887021475,0,8,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125646783/Project.py,67,0.0,2,18,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40156205/final|keystroke_dynamics.py,689,33.11631944444444,7,96,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_124267108/final|hw9_web_scraper.py,92,12.940705128205131,2,8,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125770196/FlaskAppStarter/app/model.py,74,12.655889145496534,1,20,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_123802816/final|final_project.py,122,18.974644747840617,6,18,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129695073/snakeGame.py,487,26.053617419808006,35,88,4,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40179638/finalproject/final|final_aapl.py,188,33.99923165578179,1,4,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18076817/flappyflap.py,361,33.179310344827584,23,36,5,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125281567/final|NFT_GAN-2.py,428,36.02205592753053,15,28,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18072140/ml_training.py,212,38.32979690815399,4,18,3,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/treys/perf.py,60,0.43572984749454813,1,10,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/card.py,46,19.16859122401847,9,9,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/card.py,214,44.778026189715746,13,19,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18085971/note.py,61,2.445302445302444,4,23,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/treys/setup.py,25,8.192090395480223,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126219749/final|Detector.py,275,24.337517433751742,2,10,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125651139/final|hw9_project_progress.py,137,20.928402832415415,4,8,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_17522223/project/make_images.py,91,39.2632241813602,6,21,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/treys/__init__.py,1,0.0,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125526066/final|cycleGAN2.py,577,15.06689256294912,19,28,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125770196/FlaskAppStarter/config.py,8,41.463414634146346,0,3,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18083597/xmp.py,11,66.0958904109589,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/table.py,75,29.411764705882348,11,8,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125770196/FlaskAppStarter/app/routes.py,43,11.535688536409516,2,4,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/Final Project/March-Madness-2017-master/final|Applying Deep Learning.py,106,8.275206087507925,2,14,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18043429/progress.py,191,12.91123525760397,5,54,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/test.py,102,88.52280955829109,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/card.py,46,19.16859122401847,9,9,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125671154/services/essay_service.py,76,5.521023765996347,3,10,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18081428/data_generation.py,119,28.643724696356276,0,18,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/Final Project/Test.py,30,3.1548757170172137,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125802890/config.py,8,41.463414634146346,0,3,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126545172/final|final.py,100,7.008670520231219,4,8,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125321132/final|final_cleaner.py,162,28.52774137177807,0,8,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129747839/final|hw9_final_project.py,625,24.85450066054915,15,100,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125623598/final|pokemonImagine_(Keras) (1).py,271,10.700197238658781,9,12,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126440917/fileWalker.py,237,40.60514612452351,7,35,4,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40216499/artscrapper.py,108,3.2969255663430452,3,8,2,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18005767/Final/finaldriver_v2.py,60,14.891518737672582,0,8,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7870878/nytimes_scraping-2.py,452,38.39984601565507,8,44,5,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126497432/final|hw9project_progress.py,1273,17.091057241800776,29,303,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/Final Project/final|March Madness 2017.py,842,25.194110542359237,25,76,4,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18079062/cs35finalproject-master/main.py,72,21.060762100926876,8,6,2,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18311538/utils.py,36,44.323790720631784,2,4,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129686595/final|hw9_project_progress.py,436,24.106745737583392,5,112,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18077102/miscFuns.py,311,44.19606046724691,7,75,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7854491/lyrics.py,65,29.22048997772828,2,10,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129697215/final|hw9_project_progress.py,263,31.96643659493842,10,54,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_123813320/final|BERTratingclassifier.py,534,18.76071193144364,6,28,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/clean_24000.py,18,23.576158940397352,1,6,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_123813320/final|BERTfandomclassifier.py,746,19.453480806766432,6,56,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18081011/BasketballPredictorFinal/defEffenciencies.py,1,0.0,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7870878/NTY_to_23_URLS.py,109,46.817082997582595,0,8,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18315297/predict.py,70,36.44314868804665,0,4,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126439242/final.py,19,0.0,0,4,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/FlaskAppStarter/app/routes.py,139,2.863102009859686,9,18,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18082496/project.py,246,43.758749416705555,3,22,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129694692/routes.py,72,38.06706114398422,2,13,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7855472/final_project/bible_pronoun_pnoun_analysis.py,334,21.62651967076946,9,48,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/evaluator.py,181,27.8322283078697,9,47,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126449356/custom_environment.py,368,32.0888685295465,9,50,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_122932944/final|finalproject_notebook2_style_transfer_II.py,232,8.8182092252035,11,18,3,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18076817/dino.py,340,23.640287769784173,25,38,5,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125802890/app/__init__.py,14,15.953307392996107,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126551059/final|Final-project-bts.py,181,18.876781223805526,1,18,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/NTY_to_23_URLS.py,109,46.817082997582595,0,8,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7512256/statscraper.py,34,12.27678571428571,2,12,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129680603/final|hw9_project_progress.py,316,23.43708076200698,0,4,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125796191/final|project.py,121,27.258167841127477,9,8,4,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125602551/final|final_project.py,119,14.96308915388983,6,23,1,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126449356/tuning.py,113,26.221001221001217,0,12,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125796191/routes.py,40,4.845814977973573,1,6,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40164513/process_dataset.py,87,38.012895662368116,4,20,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7870878/all_together.py,99,16.8798751950078,2,19,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_123813320/final|aO3_cleaner_model_2.py,1222,11.574465420619262,0,58,0,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18075840/final|FinalProjectCodeGAUMER.py,529,3.1132137894527845,0,8,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_124812305/data.py,89,0.0,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40227394/final|FP_SARIMAX.py,221,4.139970428782647,1,8,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125651139/final|random_forest_model.py,159,8.966461327857633,1,14,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18082496/project2.py,122,12.986184909670563,4,8,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/deck.py,43,3.8083538083538038,6,4,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/final|merc_model_DT_RF.py,623,43.29530779164873,3,68,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/final|TUTORIAL WE USED.py,102,34.85148514851485,0,4,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125651139/final|knn_model.py,125,29.36361235806707,1,10,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/FlaskAppStarter/app/__init__.py,14,15.953307392996107,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18005767/Final/finalmodel.py,141,27.651598676957,1,16,1,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7878747/Scatterplot_all_matches.py,222,19.948930737312477,5,44,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84164234/final|finale.py,231,30.170197134810827,13,22,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40164513/knn_final.py,202,54.72059198775197,4,40,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126449356/random_agent.py,68,27.028324531925108,0,12,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18058118/util.py,50,55.431754874651816,2,4,1,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/Final Project/2019_Matchups.py,63,35.73991031390135,4,12,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18083597/organize.py,42,69.09413854351686,0,6,0,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126440917/controls.py,238,79.49043938161107,0,114,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_8024510/scrapelyrics.py,140,41.35726072607261,6,30,4,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125604815/final|project.py,130,45.74507617985879,1,4,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129695030/final|Final_FINAL_Project.py,327,22.59619450317125,2,40,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18081428/ml_training (1).py,212,38.32979690815399,4,18,3,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125526066/final|final_project.py,236,19.040773653946687,9,14,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125651139/form.py,55,6.010171058714753,1,6,1,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126551059/example-app.py,3,66.12903225806453,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7879832/final_project_impute.py,624,62.492030239548235,10,20,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7512256/bot.py,205,19.8560436832961,5,30,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7854491/getbillboard.py,54,13.223140495867769,1,26,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125477362/final|final_project.py,143,0.0,0,2,0,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_17522223/project/ML_mlp.py,122,30.47912713472486,0,16,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7864835/jump_test.py,135,32.683198662580104,2,30,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18079062/cs35finalproject-master/snake.py,162,43.780977106443245,9,30,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126551698/final|hw9_project_progress.py,172,6.777597402597402,8,42,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125802890/app/routes.py,68,22.164502164502164,4,12,2,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/URLS_to_first_word.py,102,32.205201282508014,1,12,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125577715/final|final_deliverable.py,390,27.949906481255592,12,27,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18315297/pngTojpg.py,28,0.0,1,4,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18081011/BasketballPredictorFinal/averageGames.py,40,3.76007162041182,4,6,3,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126493981/final|MuddNet.py,125,3.341740226986134,6,18,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/FlaskAppStarter/app/mer_model_NNets_A.py,179,34.54765193370166,2,58,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/dataframe_builder.py,55,4.229607250755285,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40179638/finalproject/final|SamsungFInal.py,183,32.32994526974199,1,4,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18058118/__init__.py,13,97.81879194630872,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18048462/summarizer.py,404,21.189731931419907,8,46,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40209991/finalprojpart2.py,778,24.688879967884382,29,193,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126449356/3D_simulator.py,200,17.434210526315784,1,52,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_17522223/project/ML_rf.py,133,44.125560538116595,0,20,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18076815/project2.py,122,12.986184909670563,4,8,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7798152/airdrum.py,188,37.72810864337247,3,32,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/Final Project/2019.py,55,35.364041604754824,3,12,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126441150/final|2019_cleaner.py,136,27.722772277227726,0,26,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7848442/chrome_driver_test.py,11,31.951219512195117,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18077443/predict.py,72,46.95121951219512,0,4,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125782071/server.py,129,23.985102420856606,3,32,1,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/.ipynb_checkpoints/final|merc_model_NNets-checkpoint.py,277,38.32538287722822,2,62,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18038325/3_merge_data.py,39,9.527559055118108,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126449226/final|predicting_profitability.py,585,45.935448577680525,3,22,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_123130932/example_app.py,1,0.0,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/player.py,59,14.730694354315377,11,4,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40173899/seq_nn.py,114,14.54404546628778,4,28,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125463521/final|hw9_project_progress.py,256,1.6498054474708201,5,16,1,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40173899/seq_data_gen.py,3,0.0,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84164234/final|finale_cleaner.py,327,32.568131598330474,16,99,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18302233/Final_Project/Final_Project.py,686,29.08786710884049,26,154,5,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40231078/mask_detection.py,249,39.71190860548863,3,26,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125770196/FlaskAppStarter/app/create_objects.py,82,14.55137145513714,0,10,0,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125802890/yelp-app.py,3,66.12903225806453,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/constants.py,12,13.70449678800857,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84246355/final_project/FlaskAppStarter/my_app.py,2,0.0,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18058118/task.py,208,23.02872062663185,2,21,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18076817/flappy.py,361,32.383619180959045,24,34,5,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7836254/finalproject.py,1016,19.14630374265388,47,114,4,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126441150/final|final_modeling.py,471,42.551950419248996,1,26,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125796191/example-app.py,1,0.0,0,2,0,1
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18315297/concatenate.py,7,0.0,0,4,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7870878/final|TUTORIAL WE USED.py,102,34.85148514851485,0,4,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40181991/titanic.py,145,40.33613445378151,1,8,1,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/Final Project/March-Madness-2017-master/final|Predictions for 2017 Bracket.py,460,4.151861766853249,13,39,4,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/Treys/treys/setup.py,25,8.192090395480223,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126441322/final|final_project.py,106,31.408573928258964,3,9,3,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7878747/Scatterplot_previous_5_years.py,226,9.666719317643347,5,52,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40179638/finalproject/.ipynb_checkpoints/final|final_aapl-checkpoint.py,144,21.383147853736084,1,4,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129681120/final|monthregesor.py,332,33.34068843777581,0,66,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125634857/main.py,90,28.023507578100837,2,22,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_8043269/CS35-2.0-master/Final Project/NeuroPy/attentionAnalysis.py,130,35.098591549295776,4,20,2,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125526066/final|cycleGAN.py,577,15.067772844122462,19,28,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40181991/war.py,229,38.91365362390622,3,20,1,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/player.py,59,14.730694354315377,11,4,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7864835/final.py,63,59.618104667609614,0,11,0,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18038325/4_analysis_final.py,160,47.3647100299665,3,10,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125770196/FlaskAppStarter/app/__init__.py,14,15.953307392996107,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_123130932/__init__.py,8,0.0,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125235323/flask_movie_rec/netflix.py,132,18.805002315886988,8,14,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125651139/final|data_cleaning.py,92,0.0,6,2,1,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125582176/final|hw9_final_project.py,176,3.526517222525971,2,12,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18072140/test_1_song.py,110,8.290333677330587,2,22,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125796191/markov.py,174,43.48666408967916,7,20,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126555890/final|final_project.py,288,19.852627082443398,9,55,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125672029/treysevaluator.py,27,3.7796976241900593,1,6,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_8002908/filament.py,174,40.517553384002895,3,36,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_17522223/project/ML_knn.py,157,57.001972386587774,0,12,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125796191/lstm.py,91,5.076521089958941,1,10,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125671950/final|CS181YFinal.py,453,16.12742967148978,0,34,0,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126551059/config.py,8,41.463414634146346,0,3,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/nyt_api_data_extraction.py,99,30.6503772906935,0,8,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18052517/March-Madness-2017-master/final|Applying Deep Learning.py,106,8.275206087507925,2,14,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s20/submission_40221356/finalproject.py,264,31.02356665494196,7,42,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/table.py,75,29.411764705882348,11,8,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18077102/beatbox_classification_script.py,27,64.84543493889288,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/get_lat_and_lng.py,37,49.751655629139066,1,4,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18062192/finalRF.py,212,16.89489596300907,0,18,0,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7870878/URLS_to_first_word.py,102,32.205201282508014,1,12,1,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125770196/FlaskAppStarter/app/pythonfunctions.py,131,60.95972992524716,3,25,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18077102/Beatboxing_Detection.py,733,34.53032855939343,14,138,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7878747/worldcup.py,617,15.418005524550427,16,140,3,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7864835/jump.py,341,36.161177691799566,14,61,4,8
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126453977/final|resolution.py,396,30.10522561084359,18,84,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/renderer.py,134,2.3199023199023228,6,23,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126549274/final|pysentiment2.py,132,37.766524520255864,0,2,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18058118/wals.py,161,48.224623697414124,4,10,2,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129647087/final|hw9_project_progress (1).py,660,30.453244715222006,0,122,0,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18081011/BasketballPredictorFinal/getData.py,123,14.689136870872243,5,31,3,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/constants.py,12,13.70449678800857,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_123130932/final|final_project.py,667,40.97967314047716,15,30,2,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125796191/__init__.py,12,0.0,0,2,0,2
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s21/submission_84177529/final|final_project_code.py,853,27.46343847513064,21,97,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7879832/user_interface.py,271,20.267450682852804,8,92,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125152436/Treys/evaluator.py,181,27.8322283078697,9,47,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18315297/getImages.py,64,36.85185185185185,0,10,0,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18315297/train_vgg.py,130,37.59203118233001,0,4,0,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_s22/submission_129681120/final|initial.py,268,53.03339418017825,2,14,1,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7847778/graphs.py,216,21.270718232044196,4,110,2,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125321132/final|ds_generator.py,365,49.525404801786706,5,26,3,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18076815/project.py,222,28.396796402978786,3,20,2,4
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7878747/biggest_win_margin.py,58,14.375876577840108,2,14,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18076817/flappym.py,359,32.49860491071429,24,34,5,5
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_8024510/rnn.py,112,21.432476763258613,2,14,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125794568/final|Final Project.py,222,19.388266755808125,3,48,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp19/submission_18079062/cs35finalproject-master/pacman.py,272,33.63937770976791,12,49,3,5
+"/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126443433/final|Ashmun, Ford CSCI181Y Final Project.py",281,24.47957252588222,7,25,3,7
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_126551059/routes.py,69,25.62699498404013,4,12,2,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7870878/clean_24000.py,18,23.576158940397352,1,6,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125670308/final|nbascrape2.py,449,23.509541306151473,6,82,2,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7871310/nytimes_scraping-2.py,452,38.39984601565507,8,44,5,6
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp18/submission_7870878/get_lat_and_lng.py,37,49.751655629139066,1,4,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125671154/app.py,19,0.0,1,6,1,3
+/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/submissions_cs35_sp22/submission_125337866/Final Project/final|hw9_project_progress.py,278,13.634719710669074,7,66,2,6
