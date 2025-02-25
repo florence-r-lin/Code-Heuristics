@@ -56,6 +56,12 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
     Semester = []
     Year = []
 
+    # if it's cs35, Project Type is cs35
+    if ("cs35" in inputFilepath):
+        for i in metricsList:
+            metricsList[7] = "cs35"
+
+
     #initializing fieldDict
     for i in metricsList:
         fieldDict["File Name"].append(i[0])           # Assuming i[0] is File Name

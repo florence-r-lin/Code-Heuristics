@@ -136,7 +136,7 @@ def identify_project(script_path):
         'textGame_keywords': ["board", "win", "host", "card", "play", "ai", "hand", "game", "opponent", "hangman", "jotto", "chomp", "tic", "tac", "toe", "mancala", "battleship", "mastermind", "dice"]
     }
 
-    text_path = script_path.replace('.py', '.txt')
+    text_path = script_path[:-3] + '_metrics.txt'
     
     with open(script_path, 'r', encoding='utf-8') as file:
         script_text = file.read().lower()
