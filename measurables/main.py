@@ -2,7 +2,7 @@ import HardMetrics
 import fileParsing
 import applyMetrics
 import shutil
-#from Histograms import makeHistogram, makeMultipleHistograms
+from Histograms import makeHistogram, makeMultipleHistograms
 import textProcessing
 
 yuanFilePath = '/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs35/'
@@ -15,12 +15,10 @@ yearsFuncNum = []
 yearsCyclo =[]
 yearsDepth = []
 yearsweeksUsedList = []
-
 yearsTotal = []
 
 #print(applyMetrics.metricsOnFilepath("/", 1999))
-print((fileParsing.getAllPythonFilesInPath(yuanFilePath)))
-'''
+
 textProcessing.notebookToPyOnFilePath(yuanFilePath)
 # textProcessing.removeEmptyFile(yuanFilePath)
 
@@ -47,4 +45,3 @@ outFolder = 'data'
 shutil.rmtree(outFolder, ignore_errors=True)
 with open(statsCsv, 'w') as f:
     f.write('')
-'''

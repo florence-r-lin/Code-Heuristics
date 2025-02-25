@@ -100,7 +100,10 @@ def isAPythonFile(filePath):
 def backOneDir(filePath):
     return "/".join(filePath.split("/")[:-1])
 
+def getYearYuanSpecific(filePath):
+    return  "20"+''.join([char for char in filePath.split("/")[10].split("_")[-1] if char.isdigit()])
 
-
+def getSemesterYuanSpecific(filePath):
+    return filePath.split("/")[10].split("_")[-1]
 #print(getAllPythonFilesInPath('/Users/yuan/Desktop/CS5 data'))
 

@@ -213,8 +213,10 @@ def allMetrics(scriptPath):
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
     project = identify_project(scriptPath)
+    Year = fileParsing.getYearYuanSpecific(scriptPath)
+    Semester = fileParsing.getSemesterYuanSpecific(scriptPath)
 
-    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC,ambitionScore, weeksUsed, project]#ambitionScore, weeksUsed]
+    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC,ambitionScore, weeksUsed, project, Semester, Year]#ambitionScore, weeksUsed]
     #fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
     return outputList#fullList,outputList
     # return fieldDict
