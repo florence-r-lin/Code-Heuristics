@@ -40,7 +40,10 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
             "Number Of Functions": [], 
             "CycloComplexity": [],
             "Max Depth": [] , 
-            "Weeks Covered": [] 
+            "Weeks Covered": [], 
+            "Project Type": [],
+            "Semester": [],
+            "Year": []
             }
 
     Lines = []
@@ -49,6 +52,16 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
     Cyclo =[]
     Depth = []
     weeksUsedList = []
+    projectType = []
+    Semester = []
+    Year = []
+
+    # if it's cs35, Project Type is cs35
+    if ("cs35" in inputFilepath):
+        for i in metricsList:
+            i[7] = "cs35"
+            print(i)
+
 
     #initializing fieldDict
     for i in metricsList:
@@ -59,6 +72,9 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
         fieldDict["CycloComplexity"].append(i[4])     # Assuming i[4] is Cyclomatic Complexity
         fieldDict["Max Depth"].append(i[5])           # Assuming i[5] is Max Depth
         fieldDict["Weeks Covered"].append(i[6])       # Assuming i[6] is Weeks Covered
+        fieldDict["Project Type"].append(i[7])       # Assuming i[7] is Project Type
+        fieldDict["Semester"].append(i[8])
+        fieldDict["Year"].append(i[9])
 
     with open('Metrics Score ' + str(year) + '.csv', 'w', newline='') as file:
         file.truncate(0) # clear file 
@@ -75,8 +91,11 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
         Cyclo.append(i[4])
         Depth.append(i[5])
         weeksUsedList.append(i[6])
+        projectType.append(i[7])
+        Semester.append(i[8])
+        Year.append(i[9])
 
-    return [year, [Lines, Comments, FuncNum, Cyclo, Depth, weeksUsedList]]
+    return [year, [Lines, Comments, FuncNum, Cyclo, Depth, weeksUsedList, projectType, Semester, Year]]
 
 
 # statsCsv = 'histogram_stats.csv'

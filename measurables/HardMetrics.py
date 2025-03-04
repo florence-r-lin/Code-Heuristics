@@ -127,6 +127,28 @@ def findOop(scriptPath):
 
     return hasClass and hasMethod
 
+def identify_project(script_path):
+    project_keywords = {
+        'textID': ["cleanstring", "makewordlength", "textmodel", "makewords", "makestems", "makepunctuation", "myparameter", "rawtext", "tmintro", "dictionary", "smallestvalue", "comparedictionaries", "twomodels", "comapretext", "encode", "punctuation"],
+        'picoBot': ["randomize", "surrounding", "crossover", "xxxx", "nxxx", "nxwx", "xxxS", "bot", "pico", "program", "world", "unsortedkeys", "possible", "mutate", "getmove", "visitedcells", "evaluatefitness", "trials", "GA", "savetofile", "average"],
+        'gameOfLife': ["lifeboard", "life", "gen", "generation", "longevity", "cell", "neighbors", "corner", "population", "glider", "dance", "demo"],
+        'vPython': ["vpython", "velocity", "make_", "box", "sphere", "cylinder", "pos", "vel", "autoscale", "glowscript", "axis", "cone", "compound", "vec", "origin", "event"],
+        'textGame_keywords': ["board", "win", "host", "card", "play", "ai", "hand", "game", "opponent", "hangman", "jotto", "chomp", "tic", "tac", "toe", "mancala", "battleship", "mastermind", "dice"]
+    }
+
+    text_path = script_path[:-3] + '_metrics.txt'
+    
+    with open(script_path, 'r', encoding='utf-8') as file:
+        script_text = file.read().lower()
+    
+    with open(text_path, 'w', encoding='utf-8') as text_file:
+        text_file.write(script_text)
+    
+    project_scores = {project: sum(script_text.count(keyword) for keyword in keywords) for project, keywords in project_keywords.items()}
+    
+    best_match = max(project_scores, key=project_scores.get)
+    return best_match
+
 def sumTests(boolList):
     total = 0
     for i in boolList:
@@ -190,8 +212,11 @@ def allMetrics(scriptPath):
     weeksTesting.append(findOop(scriptPath))
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
+    project = identify_project(scriptPath)
+    Year = fileParsing.getYearYuanSpecific(scriptPath)
+    Semester = fileParsing.getSemesterYuanSpecific(scriptPath)
 
-    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC,ambitionScore, weeksUsed]#ambitionScore, weeksUsed]
+    outputList = [scriptPath, totalLOC, commentPercentage, lenFuncs, totalCC,ambitionScore, weeksUsed, project, Semester, Year]#ambitionScore, weeksUsed]
     #fullList = [totalLOC, commentPercentage, functions, totalCC, ambitionScore, depthChain.longestChain, depthChain.functionMostCalls, depthChain.maxFunctionCallsList, weeksUsed, totalWeekstested]
     return outputList#fullList,outputList
     # return fieldDict
