@@ -7,7 +7,7 @@ import textProcessing
 import warnings
 warnings.filterwarnings('ignore')
 
-yuanFilePath = '/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-LLM data/cs5/'
+yuanFilePath = '/Users/yuan/Desktop/Work/School/Research/CS5 DATA/post-LLM data/cs35/'
 
 # jennyFilePath = '/Users/jennyngo/Downloads/CS5 DATA/pre-LLM data/cs5/'
 #florenceFilePath = ''
@@ -22,8 +22,8 @@ yearsTotal = []
 
 #print(applyMetrics.metricsOnFilepath("/", 1999))
 
-# textProcessing.notebookToPyOnFilePath(yuanFilePath)
-# textProcessing.removeEmptyFile(yuanFilePath)
+textProcessing.notebookToPyOnFilePath(yuanFilePath)
+textProcessing.removeEmptyFile(yuanFilePath)
 
 
 applyMetrics.metricsOnFilepath(yuanFilePath, 2024)

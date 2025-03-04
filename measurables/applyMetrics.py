@@ -59,7 +59,8 @@ def metricsOnFilepath(inputFilepath, year, binNumsInput = None):
     # if it's cs35, Project Type is cs35
     if ("cs35" in inputFilepath):
         for i in metricsList:
-            metricsList[7] = "cs35"
+            i[7] = "cs35"
+            print(i)
 
 
     #initializing fieldDict
