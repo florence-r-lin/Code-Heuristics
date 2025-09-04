@@ -38,7 +38,7 @@ def notebookToPy(filePath):
                     print(cell['source'])
                 if cell['cell_type'] == 'code' and len(cell['source']) > 0:
                     filtLines = list(filter(isNotAlphaNumeric, cell['source']))
-                    filtLines = list(filter(startsWithAlph, filtLines)) #New line filters for stuff like !pip and %matplotlib
+                    filtLines = list(filter(startsWithAlph, filtLines)) #New line filters for stuff like # and %matplotlib
                     filtLines.append("\n\n\n")
                     newT.writelines(filtLines) 
                     writtenInCode = True
