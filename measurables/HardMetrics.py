@@ -9,7 +9,7 @@ import multiprocessing
 
 
 def removeComment(code):
-    # remove # comments
+    # remove single-line comments (starting with #)
     return re.sub(r'#.*', '', code)
 
 def removeDocstring(code):
@@ -18,13 +18,17 @@ def removeDocstring(code):
     return re.sub(docstring_regex, '', code, flags=re.DOTALL)
 
 def removeblank(code):
+    # remove empty lines
     nonblankLine = [line for line in code.splitlines() if line.strip() != ""]
     return '\n'.join(nonblankLine)
 
 def countComment(code):
+    # count number of single-line comments (starting with #)
     return sum(1 for line in code.splitlines() if '#' in line and not line.strip().startswith('#!'))
 
+
 def countDocstring(code):
+    # counts the number of docstrings in a file using regex
     docstring_regex = r"'''(.*?)'''|\"\"\"(.*?)\"\"\""
     matches = re.findall(docstring_regex, code, flags=re.DOTALL)
     total_lines = 0
@@ -34,9 +38,11 @@ def countDocstring(code):
     return total_lines
 
 def countblank(code):
+    # counts the number of blank lines in a script
     return sum(1 for line in code.splitlines() if line.strip() == "")
 
 def calculatePercentage(scriptPath):
+    # calculates percentage of lines which are docstrings, comments, blank lines
     with open(scriptPath, 'r') as file:
         code = file.read()
 
@@ -56,6 +62,7 @@ def calculatePercentage(scriptPath):
     return commentPercentage, docstringPercentage, blankPercentage
 
 def findFunc(cleanFile):
+    # returns all functions in a script using ASTs
     try:
         tree = ast.parse(cleanFile)
         functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
@@ -64,6 +71,7 @@ def findFunc(cleanFile):
         return []
 
 def getFunctionSource(scriptPath, func_node):
+    # returns the text of a particular function
     with open(scriptPath, "r") as file:
         lines = file.readlines()
 
@@ -73,6 +81,7 @@ def getFunctionSource(scriptPath, func_node):
     return "".join(lines[start_line:end_line])
 
 def splitFunc(cleanFile):
+    # returns a list of the text of each function in a script
     funcList = []
     try:
         tree = ast.parse(cleanFile)
@@ -88,6 +97,7 @@ def splitFunc(cleanFile):
         return []
  
 def funcName(cleanFile):
+    # returns a list of the names of all functions in cleanFile
     try:
         tree = ast.parse(cleanFile)
         functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
@@ -96,6 +106,7 @@ def funcName(cleanFile):
         return []
 
 def avgFunc(cleanFile):
+    # returns the average number of lines per function in cleanFile
     try:
         tree = ast.parse(cleanFile)
         functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
@@ -112,6 +123,7 @@ def avgFunc(cleanFile):
         return 0
 
 def countLoops(cleanFile):
+    # counts the total number of for or while loops of all functions in cleanFile
     try:
         tree = ast.parse(cleanFile)
         return sum(isinstance(node, (ast.For, ast.While)) for node in ast.walk(tree))
@@ -119,6 +131,7 @@ def countLoops(cleanFile):
         return 0
 
 def avgLoop(cleanFile):
+    # returns average number of lines in a loop in cleanFile
     try:
         tree = ast.parse(cleanFile)
         loop_lengths = []
@@ -136,6 +149,8 @@ def avgLoop(cleanFile):
         return 0
 
 def findIfOrVar(cleanFile):
+    # returns whether a file contains an if statement or a variable assignment
+    # (note from Aidan: wouldn't it almost definitely? why are ifs and assignments combined here?)
     try:
         tree = ast.parse(cleanFile)
 
@@ -147,6 +162,7 @@ def findIfOrVar(cleanFile):
         return False
 
 def findBoolAlg(cleanFile):
+    # returns whether a file contains a boolean operator (if, and, not)
     try: 
         tree = ast.parse(cleanFile)
 
@@ -160,6 +176,7 @@ def findBoolAlg(cleanFile):
         return False
 
 def findDictionaries(cleanFile):
+    # returns whether any dictionaries are made in cleanFile 
     try: 
         tree = ast.parse(cleanFile)
 
@@ -171,6 +188,7 @@ def findDictionaries(cleanFile):
         return False
 
 def findSlicing(cleanFile):
+    # returns whether any objects in cleanFile are sliced and/or have an index accessed
     try: 
         tree = ast.parse(cleanFile)
         for node in ast.walk(tree):
@@ -181,6 +199,7 @@ def findSlicing(cleanFile):
         return False
 
 def findNestedLoops(scriptPath):
+    # returns whether the file scriptPath contains any nested loops
     try: 
         with open(scriptPath, "r") as file:
             tree = ast.parse(file.read(), filename=scriptPath)
@@ -195,6 +214,7 @@ def findNestedLoops(scriptPath):
         return False
 
 def findLoops(scriptPath):
+    # returns whether the file scriptPath contains any loops
     try: 
         with open(scriptPath, "r") as file:
             tree = ast.parse(file.read(), filename=scriptPath)
@@ -207,6 +227,7 @@ def findLoops(scriptPath):
         return False
         
 def findRecursion(scriptPath):
+    # returns whether the file scriptPath contains any recursive calls
     try:
         with open(scriptPath, "r") as file:
             ast.parse(file.read(), filename=scriptPath)
@@ -225,6 +246,7 @@ def findRecursion(scriptPath):
         return False
 
 def findListComp(cleanFile):
+    # returns whether any list comprehension is used in cleanFile
     try:
         tree = ast.parse(cleanFile)
 
@@ -236,6 +258,7 @@ def findListComp(cleanFile):
         return False
     
 def findOop(scriptPath):
+    # returns whether a class AND method are found in scriptPath
     try:
         with open(scriptPath, "r") as file:
             tree = ast.parse(file.read(), filename=scriptPath)
@@ -254,6 +277,9 @@ def findOop(scriptPath):
         return False
 
 def identify_project(script_path):
+    # returns which project the file likely corresponds to
+    # (Aidan's note: the whole methodology here should probably be reworked)
+    # (could we just use the file name?)
     project_keywords = {
         'textID': ["cleanstring", "makewordlength", "textmodel", "makewords", "makestems", "makepunctuation", "myparameter", "rawtext", "tmintro", "dictionary", "smallestvalue", "comparedictionaries", "twomodels", "comapretext", "encode", "punctuation"],
         'picoBot': ["randomize", "surrounding", "crossover", "xxxx", "nxxx", "nxwx", "xxxS", "bot", "pico", "program", "world", "unsortedkeys", "possible", "mutate", "getmove", "visitedcells", "evaluatefitness", "trials", "GA", "savetofile", "average"],
@@ -276,6 +302,7 @@ def identify_project(script_path):
     return best_match
 
 def sumTests(boolList):
+    # returns number of true values in boolList
     total = 0
     for i in boolList:
         if i:
@@ -283,6 +310,8 @@ def sumTests(boolList):
     return total
 
 def executeFile(path, return_dict):
+    # adds whether path was successfully executed to return_dict
+    # (Aidan's note: this feels odd)
     try:
         with open(path, 'r') as f:
             filedata = f.read()
@@ -292,6 +321,7 @@ def executeFile(path, return_dict):
         return_dict['result'] = str(e)
 
 def testTimeout(scriptPath, timeout):
+    # returns whether scriptPath was executed in < timeout
     manager = multiprocessing.Manager()
     return_dict = manager.dict()
 
@@ -307,6 +337,8 @@ def testTimeout(scriptPath, timeout):
     return return_dict.get('result', 'Execution Completed')
 
 def findExecutionTime(scriptPath, timeout=5):
+    # return the amount of time it takes ot execute scriptPath
+    # (or the amount of time before "timing out")
     try:
         startTime = time.time()
         result = testTimeout(scriptPath, timeout)
@@ -318,10 +350,12 @@ def findExecutionTime(scriptPath, timeout=5):
         return endTime - startTime
     
     except Exception as e:
+        # TODO: RAISE ERRORS AND HANDLE
         return 'error'
 
 
 def allMetrics(scriptPath):
+    # returns pretty much all the above metrics for scriptPath
     parseable = fileParsing.doesItParse(scriptPath)
     if not parseable:
         print(scriptPath, 'is not parseable')
@@ -353,6 +387,7 @@ def allMetrics(scriptPath):
 
     executionTime = findExecutionTime(scriptPath)
 
+    # TODO: PUT THIS BACK IN
     """
     weeksTesting = [
             findIfOrVar(codeOnlyFile),

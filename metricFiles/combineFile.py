@@ -41,4 +41,5 @@ def roundData(csvPath, columns, decimals):
 
 columns = ['Comment Percentage', 'Execution Time']
 
-roundData(output, columns, 3)
+numberOfDigitsToRound = 3
+roundData(output, columns, numberOfDigitsToRound)
