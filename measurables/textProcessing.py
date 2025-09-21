@@ -83,9 +83,3 @@ def removeEmptyFile(filePath):
                     lines = list(filter(lambda x: x != "\n", lines))
                     if not lines:
                         os.remove(currentpath + "/" + file)
-
-#print(startsWithNonAlph("%matplotlib"))
-#notebookToPyOnFilePath("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
-#print(removeCommentOnlyFile("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks"))
-
-#removeipynbpy("/home/edonson/METRICLab/Code-Heuristics/studentScripts/notebooks")
