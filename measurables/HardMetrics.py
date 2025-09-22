@@ -320,21 +320,60 @@ def executeFile(path, return_dict):
     except Exception as e:
         return_dict['result'] = str(e)
 
+# def testTimeout(scriptPath, timeout):
+#     # returns whether scriptPath was executed in < timeout
+#     manager = multiprocessing.Manager()
+#     return_dict = manager.dict()
+
+#     process = multiprocessing.Process(target=executeFile, args=(scriptPath, return_dict))
+#     process.start()
+#     process.join(timeout)
+
+#     if process.is_alive():
+#         process.terminate()
+#         process.join()
+#         return "Execution Timed Out"
+
+#     return return_dict.get('result', 'Execution Completed')
+
+def _execute_file_worker(scriptPath, conn):
+    """Child process: run the file and send back a status string."""
+    try:
+        with open(scriptPath, 'r', encoding='utf-8', errors='ignore') as f:
+            code = f.read()
+        exec(code, {})
+        conn.send("Execution Completed")
+    except Exception as e:
+        conn.send(str(e))
+    finally:
+        conn.close()
+
 def testTimeout(scriptPath, timeout):
-    # returns whether scriptPath was executed in < timeout
-    manager = multiprocessing.Manager()
-    return_dict = manager.dict()
+    """
+    Run scriptPath in a separate process with a time limit.
+    Returns one of:
+      - "Execution Completed"
+      - an exception string from the child
+      - "Execution Timed Out"
+    """
+    parent_conn, child_conn = multiprocessing.Pipe(duplex=False)
+    p = multiprocessing.Process(target=_execute_file_worker, args=(scriptPath, child_conn))
+    p.start()
+    child_conn.close()  # close child end in parent process
 
-    process = multiprocessing.Process(target=executeFile, args=(scriptPath, return_dict))
-    process.start()
-    process.join(timeout)
-
-    if process.is_alive():
-        process.terminate()
-        process.join()
+    p.join(timeout)
+    if p.is_alive():
+        p.terminate()
+        p.join()
+        parent_conn.close()
         return "Execution Timed Out"
 
-    return return_dict.get('result', 'Execution Completed')
+    # Child finished; try to receive its message (if any)
+    status = "Execution Completed"
+    if parent_conn.poll():          # message waiting?
+        status = parent_conn.recv() # str sent by worker
+    parent_conn.close()
+    return status
 
 def findExecutionTime(scriptPath, timeout=5):
     # return the amount of time it takes ot execute scriptPath
@@ -342,7 +381,6 @@ def findExecutionTime(scriptPath, timeout=5):
     try:
         startTime = time.time()
         result = testTimeout(scriptPath, timeout)
-        
         if result == "Execution Timed Out":
             return 'timeout'
 
@@ -385,10 +423,13 @@ def allMetrics(scriptPath):
     depthChain = CallChain(splitFunc(cleanFile), funcName(cleanFile))
     ambitionScore = depthChain.depth
 
-    executionTime = findExecutionTime(scriptPath)
+    # execution time is on timeout because it multiplies the runtime by 60
+    # executionTime = findExecutionTime(scriptPath)
+    executionTime = 0.0
 
     # TODO: PUT THIS BACK IN
     """
+
     weeksTesting = [
             findIfOrVar(codeOnlyFile),
             findRecursion(scriptPath),
@@ -409,6 +450,7 @@ def allMetrics(scriptPath):
     Semester = fileParsing.getSemesterFromFilepath(scriptPath)
     Year = fileParsing.getYearFromFilepath(scriptPath)
 
+    # I think this output should be a dictionary...
     outputList = [scriptPath, totalLOC, commentPercentage, docstringPercentage, blankPercentage, lenFuncs, avgFuncLen, numLoops, avgLoopLen, totalCC, ambitionScore, executionTime, Class, Semester, Year]
     return outputList
 
