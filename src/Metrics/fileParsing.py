@@ -2,8 +2,6 @@ from Histograms import makeHistogram
 import os
 from os import listdir
 from os.path import isfile, join
-import csv
-import fileinput
 import ast
 
 
