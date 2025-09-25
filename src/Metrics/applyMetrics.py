@@ -1,6 +1,5 @@
 import HardMetrics
 import fileParsing
-import shutil
 from Histograms import makeHistogram, makeMultipleHistograms
 import os
 from os import listdir
