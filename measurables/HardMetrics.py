@@ -320,21 +320,6 @@ def executeFile(path, return_dict):
     except Exception as e:
         return_dict['result'] = str(e)
 
-# def testTimeout(scriptPath, timeout):
-#     # returns whether scriptPath was executed in < timeout
-#     manager = multiprocessing.Manager()
-#     return_dict = manager.dict()
-
-#     process = multiprocessing.Process(target=executeFile, args=(scriptPath, return_dict))
-#     process.start()
-#     process.join(timeout)
-
-#     if process.is_alive():
-#         process.terminate()
-#         process.join()
-#         return "Execution Timed Out"
-
-#     return return_dict.get('result', 'Execution Completed')
 
 def _execute_file_worker(scriptPath, conn):
     """Child process: run the file and send back a status string."""
