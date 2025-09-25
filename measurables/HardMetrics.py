@@ -61,14 +61,12 @@ def calculatePercentage(scriptPath):
 
     return commentPercentage, docstringPercentage, blankPercentage
 
-def findFunc(cleanFile):
+def findFunc(sub):
     # returns all functions in a script using ASTs
-    try:
-        tree = ast.parse(cleanFile)
-        functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
-        return functions
-    except:
+    if not sub.tree:
         return []
+    functions = [node for node in ast.walk(sub.tree) if isinstance(node, ast.FunctionDef)]
+    return functions
 
 def getFunctionSource(scriptPath, func_node):
     # returns the text of a particular function
@@ -80,201 +78,188 @@ def getFunctionSource(scriptPath, func_node):
 
     return "".join(lines[start_line:end_line])
 
-def splitFunc(cleanFile):
+def splitFunc(sub):
     # returns a list of the text of each function in a script
+    
+    if not sub.tree:
+        return []
+    
     funcList = []
-    try:
-        tree = ast.parse(cleanFile)
-        functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
-        lines = cleanFile.splitlines(keepends=True)
-        for func in functions:
-            start_line = func.lineno - 1
-            end_line = func.end_lineno
-            func_source = "".join(lines[start_line:end_line])
-            funcList.append(func_source)
-        return funcList
-    except Exception as e:
-        return []
+    functions = [node for node in ast.walk(sub.tree) if isinstance(node, ast.FunctionDef)]
+    lines = cleanFile.splitlines(keepends=True)
+    for func in functions:
+        start_line = func.lineno - 1
+        end_line = func.end_lineno
+        func_source = "".join(lines[start_line:end_line])
+        funcList.append(func_source)
+    return funcList
+
  
-def funcName(cleanFile):
+def funcName(sub):
     # returns a list of the names of all functions in cleanFile
-    try:
-        tree = ast.parse(cleanFile)
-        functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
-        return [func.name for func in functions]
-    except:
+    if not sub.tree:
         return []
+    
+    functions = [node for node in ast.walk(sub.tree) if isinstance(node, ast.FunctionDef)]
+    return [func.name for func in functions]
 
-def avgFunc(cleanFile):
+def avgFunc(sub):
     # returns the average number of lines per function in cleanFile
-    try:
-        tree = ast.parse(cleanFile)
-        functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
-        if len(functions) == 0:
-            return 0
-        total_lines = 0
-        for func in functions:
-            if hasattr(func, 'end_lineno'):
-                total_lines += func.end_lineno - func.lineno + 1
-            else:
-                total_lines += 1  # fallback
-        return total_lines / len(functions)
-    except:
+    if not sub.tree:
         return 0
-
-def countLoops(cleanFile):
-    # counts the total number of for or while loops of all functions in cleanFile
-    try:
-        tree = ast.parse(cleanFile)
-        return sum(isinstance(node, (ast.For, ast.While)) for node in ast.walk(tree))
-    except:
+    functions = [node for node in ast.walk(sub.tree) if isinstance(node, ast.FunctionDef)]
+    if len(functions) == 0:
         return 0
-
-def avgLoop(cleanFile):
-    # returns average number of lines in a loop in cleanFile
-    try:
-        tree = ast.parse(cleanFile)
-        loop_lengths = []
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.For, ast.While)):
-                if hasattr(node, 'end_lineno'):
-                    loop_lengths.append(node.end_lineno - node.lineno + 1)
-                else:
-                    loop_lengths.append(1)
-        if loop_lengths:
-            return sum(loop_lengths) / len(loop_lengths)
+    total_lines = 0
+    for func in functions:
+        if hasattr(func, 'end_lineno'):
+            total_lines += func.end_lineno - func.lineno + 1
         else:
-            return 0
-    except:
+            total_lines += 1  # fallback
+    return total_lines / len(functions)
+
+
+def countLoops(sub):
+    # counts the total number of for or while loops of all functions in cleanFile
+    if not sub.tree:
+        return 0
+    
+    return sum(isinstance(node, (ast.For, ast.While)) for node in ast.walk(sub.tree))
+
+def avgLoop(sub):
+    # returns average number of lines in a loop in cleanFile
+    if not sub.tree:
         return 0
 
-def findIfOrVar(cleanFile):
+    loop_lengths = []
+    for node in ast.walk(sub.tree):
+        if isinstance(node, (ast.For, ast.While)):
+            if hasattr(node, 'end_lineno'):
+                loop_lengths.append(node.end_lineno - node.lineno + 1)
+            else:
+                loop_lengths.append(1)
+    if loop_lengths:
+        return sum(loop_lengths) / len(loop_lengths)
+  
+
+def findIfOrVar(sub):
     # returns whether a file contains an if statement or a variable assignment
     # (note from Aidan: wouldn't it almost definitely? why are ifs and assignments combined here?)
-    try:
-        tree = ast.parse(cleanFile)
-
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.If, ast.Assign)):
-                return True
-        return False
-    except: 
-        return False
-
-def findBoolAlg(cleanFile):
-    # returns whether a file contains a boolean operator (if, and, not)
-    try: 
-        tree = ast.parse(cleanFile)
-
-        for node in ast.walk(tree):
-            if isinstance(node, ast.BoolOp):
-                return True
-            if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.Not):
-                return True
-        return False
-    except:
-        return False
-
-def findDictionaries(cleanFile):
-    # returns whether any dictionaries are made in cleanFile 
-    try: 
-        tree = ast.parse(cleanFile)
-
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Dict):
-                return True
-        return False
-    except: 
-        return False
-
-def findSlicing(cleanFile):
-    # returns whether any objects in cleanFile are sliced and/or have an index accessed
-    try: 
-        tree = ast.parse(cleanFile)
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Slice):
-                return True
-        return False
-    except: 
-        return False
-
-def findNestedLoops(scriptPath):
-    # returns whether the file scriptPath contains any nested loops
-    try: 
-        with open(scriptPath, "r") as file:
-            tree = ast.parse(file.read(), filename=scriptPath)
-
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.For, ast.While)):
-                for child in ast.iter_child_nodes(node):
-                    if isinstance(child, (ast.For, ast.While)):
-                        return True
-        return False
-    except: 
-        return False
-
-def findLoops(scriptPath):
-    # returns whether the file scriptPath contains any loops
-    try: 
-        with open(scriptPath, "r") as file:
-            tree = ast.parse(file.read(), filename=scriptPath)
-
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.For, ast.While)):
-                return True
-        return False
-    except:
-        return False
-        
-def findRecursion(scriptPath):
-    # returns whether the file scriptPath contains any recursive calls
-    try:
-        with open(scriptPath, "r") as file:
-            ast.parse(file.read(), filename=scriptPath)
-        
-        functions = findFunc(scriptPath)
-        for func in functions: 
-            func_name = func.name
-            for node in ast.walk(func):
-                if isinstance(node, ast.Call):
-                    if isinstance(node.func, ast.Name) and node.func.id == func_name:
-                        return True
-                    if isinstance(node.func, ast.Attribute) and node.func.attr == func_name:
-                        return True
-        return False
-    except: 
-        return False
-
-def findListComp(cleanFile):
-    # returns whether any list comprehension is used in cleanFile
-    try:
-        tree = ast.parse(cleanFile)
-
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ListComp):
-                return True
-        return False
-    except:
+    if not sub.tree:
         return False
     
-def findOop(scriptPath):
-    # returns whether a class AND method are found in scriptPath
-    try:
-        with open(scriptPath, "r") as file:
-            tree = ast.parse(file.read(), filename=scriptPath)
-        hasClass = False
-        hasMethod = False
+    for node in ast.walk(sub.tree):
+        if isinstance(node, (ast.If, ast.Assign)):
+            return True
+    return False
+  
 
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ClassDef):
-                hasClass = True
-                for child in node.body:
-                    if isinstance(child, ast.FunctionDef):
-                        hasMethod = True
-
-        return hasClass and hasMethod
-    except: 
+def findBoolAlg(sub):
+    # returns whether a file contains a boolean operator (if, and, not)
+    if not sub.tree:
         return False
+
+    for node in ast.walk(sub.tree):
+        if isinstance(node, ast.BoolOp):
+            return True
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.Not):
+            return True
+    return False
+
+def findDictionaries(sub):
+    # returns whether any dictionaries are made in sub
+    if not sub.tree:
+        return False
+
+    for node in ast.walk(sub.tree):
+        if isinstance(node, ast.Dict):
+            return True
+    return False
+
+
+def findSlicing(sub):
+    # returns whether any objects in cleanFile are sliced and/or have an index accessed
+    if not sub.tree:
+        return False
+
+    for node in ast.walk(sub.tree):
+        if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Slice):
+            return True
+    return False
+
+
+def findNestedLoops(sub):
+    # returns whether sub contains any nested loops
+    if not sub.tree:
+        return False
+
+    for node in ast.walk(sub.tree):
+        if isinstance(node, (ast.For, ast.While)):
+            for child in ast.iter_child_nodes(node):
+                if isinstance(child, (ast.For, ast.While)):
+                    return True
+    return False
+
+
+def findLoops(sub):
+    # returns whether sub contains any loops
+
+    if not sub.tree:
+        return False
+
+    for node in ast.walk(sub.tree):
+        if isinstance(node, (ast.For, ast.While)):
+            return True
+    return False
+
+        
+def findRecursion(sub):
+    # returns whether sub contains any recursive calls
+    if not sub.tree:
+        return False
+        
+    functions = findFunc(sub)
+    for func in functions: 
+        func_name = func.name
+        for node in ast.walk(func):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Name) and node.func.id == func_name:
+                    return True
+                if isinstance(node.func, ast.Attribute) and node.func.attr == func_name:
+                    return True
+    return False
+
+
+def findListComp(sub):
+    # returns whether any list comprehension is used in cleanFile
+
+    if not sub.tree:
+        return False
+  
+    for node in ast.walk(sub.tree):
+        if isinstance(node, ast.ListComp):
+            return True
+    return False
+
+    
+def findOop(sub):
+    # returns whether a class AND method are found in sub
+    if not sub.tree:
+        return False
+    
+  
+    hasClass = False
+    hasMethod = False
+
+    for node in ast.walk(sub.tree):
+        if isinstance(node, ast.ClassDef):
+            hasClass = True
+            for child in node.body:
+                if isinstance(child, ast.FunctionDef):
+                    hasMethod = True
+
+    return hasClass and hasMethod
+
 
 def identify_project(script_path):
     # returns which project the file likely corresponds to
@@ -391,7 +376,7 @@ def findExecutionTime(scriptPath, timeout=5):
         # TODO: RAISE ERRORS AND HANDLE
         return 'error'
 
-
+# TODO will need to adjust allMetrics
 def allMetrics(scriptPath):
     # returns pretty much all the above metrics for scriptPath
     parseable = fileParsing.doesItParse(scriptPath)
@@ -412,6 +397,8 @@ def allMetrics(scriptPath):
     totalLOC = len(originalCode.splitlines())
     commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
 
+
+ # TODO adjust these now that parameters are sub
     functions = findFunc(cleanFile)
     lenFuncs = len(functions)
     avgFuncLen = avgFunc(cleanFile)
