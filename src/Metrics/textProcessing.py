@@ -12,11 +12,6 @@ def startsWithAlph(s):
     if len(s) > 0:
         return not s[0] in "%!"
     return True
-    # if len(s) == 0:
-    #     return True
-    # if len(s) > 0 or "\n" != s[-1]:
-    #     return not s[0].isalnum()
-    # return False
 
 def notebookToPy(filePath):
     #Take all text files, seperate markdown and python into seperate files

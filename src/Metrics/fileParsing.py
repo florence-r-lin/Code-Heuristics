@@ -50,7 +50,6 @@ def replaceErrorsInFile(filePath):
     replaceInFile(filePath, "cd ..", "#")
 
 
-
 def getAllPythonFilesInPath(filePath):
     pathList = []
     result = list(os.walk(filePath))
@@ -158,5 +157,3 @@ def cleanParseFile(scriptPath):
 
     cleanFile = '\n'.join(clean_lines)
     return cleanFile
-
-# print(doesItParse('/Users/summer-2024/Desktop/code metrics 25/All-Data/CS35-Data/assignments postllm/submissions_cs35_sp2025/submission_351/final|hw4pr1 .py'))

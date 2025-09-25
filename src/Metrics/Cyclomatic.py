@@ -45,6 +45,3 @@ def calculate_cyclomatic_complexity(source_code):
     visitor.edges += visitor.nodes
     complexity = visitor.edges - visitor.nodes + 2
     return complexity
-
-#print(open("LOC.py", "r").read())
-#print(calculate_cyclomatic_complexity(open("LOC.py", "r").read()))

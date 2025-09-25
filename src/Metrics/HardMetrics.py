@@ -1,11 +1,8 @@
 import re  
 import ast
-# import pygame
 from Cyclomatic import *
 import fileParsing
-from NestedDepth import CallChain 
-import time
-import multiprocessing
+from NestedDepth import CallChain
 
 
 def removeComment(code):
@@ -309,74 +306,6 @@ def sumTests(boolList):
             total += 1
     return total
 
-def executeFile(path, return_dict):
-    # adds whether path was successfully executed to return_dict
-    # (Aidan's note: this feels odd)
-    try:
-        with open(path, 'r') as f:
-            filedata = f.read()
-        exec(filedata, {})
-        return_dict['result'] = 'completed'
-    except Exception as e:
-        return_dict['result'] = str(e)
-
-
-def _execute_file_worker(scriptPath, conn):
-    """Child process: run the file and send back a status string."""
-    try:
-        with open(scriptPath, 'r', encoding='utf-8', errors='ignore') as f:
-            code = f.read()
-        exec(code, {})
-        conn.send("Execution Completed")
-    except Exception as e:
-        conn.send(str(e))
-    finally:
-        conn.close()
-
-def testTimeout(scriptPath, timeout):
-    """
-    Run scriptPath in a separate process with a time limit.
-    Returns one of:
-      - "Execution Completed"
-      - an exception string from the child
-      - "Execution Timed Out"
-    """
-    parent_conn, child_conn = multiprocessing.Pipe(duplex=False)
-    p = multiprocessing.Process(target=_execute_file_worker, args=(scriptPath, child_conn))
-    p.start()
-    child_conn.close()  # close child end in parent process
-
-    p.join(timeout)
-    if p.is_alive():
-        p.terminate()
-        p.join()
-        parent_conn.close()
-        return "Execution Timed Out"
-
-    # Child finished; try to receive its message (if any)
-    status = "Execution Completed"
-    if parent_conn.poll():          # message waiting?
-        status = parent_conn.recv() # str sent by worker
-    parent_conn.close()
-    return status
-
-def findExecutionTime(scriptPath, timeout=5):
-    # return the amount of time it takes ot execute scriptPath
-    # (or the amount of time before "timing out")
-    try:
-        startTime = time.time()
-        result = testTimeout(scriptPath, timeout)
-        if result == "Execution Timed Out":
-            return 'timeout'
-
-        endTime = time.time()
-        return endTime - startTime
-    
-    except Exception as e:
-        # TODO: RAISE ERRORS AND HANDLE
-        return 'error'
-
-
 def allMetrics(scriptPath):
     # returns pretty much all the above metrics for scriptPath
     parseable = fileParsing.doesItParse(scriptPath)
@@ -389,9 +318,6 @@ def allMetrics(scriptPath):
 
     cleanFile = fileParsing.cleanParseFile(scriptPath)
     codeOnlyFile = removeblank(removeDocstring(removeComment(originalCode)))
-
-    totalLOC = len(originalCode.splitlines())
-    commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
 
     # setting up all portions of list
     totalLOC = len(originalCode.splitlines())

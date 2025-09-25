@@ -18,37 +18,6 @@ class CallChain:
             self.functionMostCalls = ''
         else:
             self.functionMostCalls = self.maxFunctionCallsList[0] # function with the most calls
-        # broken until I put [0] in ???
-        # self.averageDepth = self.depth/len(self.names)
-        # self.averageCalls = self.totalFuncCalls/len(self.names)
-        
-
-    # def findBranches(self, func, funcs, names, currentPath):
-    #     funcBody = func.split(':', 1)[1].strip()  # get everything behind the colon
-
-    #     funcName = re.search("def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)  # before colon
-    #     # print("Function name is\n", funcName)
-    #     # print("Function Body is\n", funcBody)
-    #     isRecursive = funcName in funcBody
-        
-    #     if funcName in currentPath:
-    #         return currentPath
-
-    #     currentPath.append(funcName)
-    #     # base case: if there is no function call in the function
-    #     if isRecursive or not any(name in funcBody for name in names):  # if function doesn't have another function call or function is recursive, terminate
-    #         return currentPath
-    #     else:
-    #         for name in names:
-    #             if name in funcBody and name not in currentPath:  # Only add if not already in path
-    #                 # Find function corresponding to the name
-    #                 nestedFunc = funcs[names.index(name)]
-    #                 # Recursively call findBranches for the nested function
-    #                 nestedPath = self.findBranches(nestedFunc, funcs, names, currentPath.copy())
-    #                 if nestedPath:  # If nested call is non-empty, add it
-    #                     currentPath.append(nestedPath)
-    #         return currentPath
-        
 
     def findBranches(self, func, funcs, names, currentPath):
         funcBody = func.split(':', 1)[1].strip()  # Get function body
@@ -140,42 +109,4 @@ class CallChain:
             return 0, []
         else:
             maxCallsList = max(callsList, key=len)
-        # print('The most function calls within a function', maxCallsList)
-        # print('The function with the most calls in it is', maxCallsList[0])
             return maxCalls, maxCallsList
-
-
-
-# fsf = """
-# def f(x):
-#   z(42)
-#   y(14)
-# """
-# fsz = """
-# def z(x):
-#   g(42)
-#   f(8)
-# """
-# fsy = """
-# def y(x):
-#   z(42)
-#   y(h(14))
-# """
-# cc = CallChain([fsf,fsz,fsy], ['f','z','y'])
-
-# res = cc.findBranches(fsz, [fsf,fsz,fsy], ['f','z','y'], [])
-# print(f"{res=}")
-
-# print('longest branch', cc.findLongestBranch())
-
-# ob = 77
-# import ast
-# tree = ast.parse(fsz, filename="localstr")
-# functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
-# for f in functions:
-#     print(f"{f.name=}")
-#     for ob in f.body:
-#         print(f"    {ob.value.func.id=}")
-# res = cc.findMaxDepth(fsz, ['f','z','y'])
-
-#get a list of things that z calls FIRST and then run the func on those
