@@ -1,17 +1,17 @@
-"""Run HardMetrics across a set of Python files and export per-year CSV summaries.
+"""Compute and export metrics produced by `HardMetrics`.
 
-This module focuses on clarity and safety:
-- Accepts either the legacy list output or newer dict output from HardMetrics.allMetrics.
-- Groups metrics by year using dicts for readability.
-- Writes CSVs using csv.DictWriter for column-safe output.
+This module assumes `HardMetrics.allMetrics(path)` returns a `MetricRecord` dataclass.
+It provides a small dict/attribute fallback for backward compatibility. The module
+is intentionally small and focuses on: discovering files, invoking `allMetrics`,
+normalizing the result to a canonical CSV row, grouping by year, and writing CSVs.
 """
 
 from __future__ import annotations
 
 import csv
+from dataclasses import is_dataclass, asdict
 from pathlib import Path
-from typing import Any, Dict, List
-import dataclasses
+from typing import Any, Dict, List, Optional
 
 import fileParsing
 import HardMetrics
@@ -36,121 +36,121 @@ FIELDNAMES = [
 ]
 
 
-def _normalize_metrics(raw: Any) -> Dict[str, Any]:
-    """Normalize different shapes (MetricRecord/dataclass, dict, list) to a flat dict keyed by FIELDNAMES."""
-    if raw is None:
+def _to_row(obj: Any) -> Dict[str, Any]:
+    """Convert a MetricRecord (or legacy dict/obj) to a canonical CSV row dict.
+
+    Prefer dataclass conversion. If a dict is provided, use its keys.
+    If an object with attributes is provided, attempt to read common attribute names.
+    """
+    if obj is None:
         return {}
 
-    # If it's a dataclass (MetricRecord), convert to dict first
-    if dataclasses.is_dataclass(raw):
-        data = dataclasses.asdict(raw)
-    elif isinstance(raw, dict):
-        data = raw
-    elif isinstance(raw, (list, tuple)):
-        # legacy list order
-        try:
-            keys = [
-                "File Name",
-                "LOC",
-                "Comment Percentage",
-                "Docstring Percentage",
-                "Blank Percentage",
-                "Number Of Functions",
-                "Average Function Length",
-                "Number of Loops",
-                "Average Loop Length",
-                "CycloComplexity",
-                "Max Depth",
-                "Execution Time",
-                "Class",
-                "Semester",
-                "Year",
-            ]
-            data = dict(zip(keys, raw))
-        except Exception:
-            return {}
+    if is_dataclass(obj):
+        data = asdict(obj)
+    elif isinstance(obj, dict):
+        data = obj
     else:
-        return {}
+        data = {}
+        for attr in (
+            "file",
+            "loc",
+            "comment_pct",
+            "doc_pct",
+            "blank_pct",
+            "num_funcs",
+            "avg_func_len",
+            "num_loops",
+            "avg_loop_len",
+            "cyclo",
+            "max_depth",
+            "exec_time",
+            "class_name",
+            "semester",
+            "year",
+        ):
+            if hasattr(obj, attr):
+                data[attr] = getattr(obj, attr)
 
-    # mapping of canonical FIELDNAMES to candidate keys in `data`
-    key_candidates = {
-        "File Name": ["File Name", "file", "scriptPath"],
-        "LOC": ["LOC", "loc"],
-        "Comment Percentage": ["Comment Percentage", "comment_pct"],
-        "Docstring Percentage": ["Docstring Percentage", "doc_pct"],
-        "Blank Percentage": ["Blank Percentage", "blank_pct"],
-        "Number Of Functions": ["Number Of Functions", "num_funcs"],
-        "Average Function Length": ["Average Function Length", "avg_func_len"],
-        "Number of Loops": ["Number of Loops", "num_loops"],
-        "Average Loop Length": ["Average Loop Length", "avg_loop_len"],
-        "CycloComplexity": ["CycloComplexity", "cyclo"],
-        "Max Depth": ["Max Depth", "max_depth"],
-        "Execution Time": ["Execution Time", "exec_time"],
-        "Class": ["Class", "class_name", "class"],
-        "Semester": ["Semester", "semester"],
-        "Year": ["Year", "year"],
+    mapping = {
+        "File Name": ("File Name", "file", "scriptPath"),
+        "LOC": ("LOC", "loc"),
+        "Comment Percentage": ("Comment Percentage", "comment_pct"),
+        "Docstring Percentage": ("Docstring Percentage", "doc_pct"),
+        "Blank Percentage": ("Blank Percentage", "blank_pct"),
+        "Number Of Functions": ("Number Of Functions", "num_funcs"),
+        "Average Function Length": ("Average Function Length", "avg_func_len"),
+        "Number of Loops": ("Number of Loops", "num_loops"),
+        "Average Loop Length": ("Average Loop Length", "avg_loop_len"),
+        "CycloComplexity": ("CycloComplexity", "cyclo"),
+        "Max Depth": ("Max Depth", "max_depth"),
+        "Execution Time": ("Execution Time", "exec_time"),
+        "Class": ("Class", "class_name", "class"),
+        "Semester": ("Semester", "semester"),
+        "Year": ("Year", "year"),
     }
 
     out: Dict[str, Any] = {}
-    for canonical, candidates in key_candidates.items():
+    for canonical, candidates in mapping.items():
+        val = None
         for c in candidates:
             if c in data and data[c] is not None:
-                out[canonical] = data[c]
+                val = data[c]
                 break
-        else:
-            out[canonical] = None
+        out[canonical] = val
     return out
 
 
-def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[Any]]:
-    """Compute metrics across Python files under input_filepath and optionally write per-year CSVs.
+def _write_per_year(metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]], output_dir: Optional[Path] = None) -> None:
+    """Write one CSV file per-year containing the metric rows."""
+    if output_dir is None:
+        output_dir = Path.cwd()
 
-    Returns a list [[year, [metrics_dicts...]], ...]
+    for year, rows in metrics_by_year.items():
+        filename = output_dir / f"Metrics Score {year if year is not None else 'unknown'}.csv"
+        with filename.open("w", newline="", encoding="utf-8") as fh:
+            writer = csv.DictWriter(fh, fieldnames=FIELDNAMES)
+            writer.writeheader()
+            for r in rows:
+                writer.writerow({k: r.get(k) for k in FIELDNAMES})
+
+
+def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[Any]]:
+    """Discover Python files under `input_filepath`, compute metrics and group by year.
+
+    Returns: list of [year, rows] pairs where rows are canonical dicts matching FIELDNAMES.
     """
     base = Path(input_filepath)
     all_files = fileParsing.getAllPythonFilesInPath(str(base))
     files = sorted(set(all_files))
 
-    metrics_by_year: Dict[Any, List[Dict[str, Any]]] = {}
+    metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]] = {}
 
     for fp in files:
         if not fileParsing.isAPythonFile(fp):
             continue
 
-        # attempt to clean file in-place as previous code did
         try:
             fileParsing.replaceErrorsInFile(fp)
         except Exception:
-            # non-fatal
+            # ignore and continue
             pass
 
         raw = HardMetrics.allMetrics(fp)
-        nm = _normalize_metrics(raw)
-        if not nm:
+        row = _to_row(raw)
+        if not row:
             continue
 
-        year = nm.get("Year")
-        metrics_by_year.setdefault(year, []).append(nm)
+        year = row.get("Year")
+        metrics_by_year.setdefault(year, []).append(row)
 
     if write_csv:
-        for year, rows in metrics_by_year.items():
-            out = Path(f"Metrics Score {year}.csv")
-            with out.open("w", newline="", encoding="utf-8") as fh:
-                writer = csv.DictWriter(fh, fieldnames=FIELDNAMES)
-                writer.writeheader()
-                for r in rows:
-                    # ensure all fields present
-                    row = {k: r.get(k) for k in FIELDNAMES}
-                    writer.writerow(row)
+        _write_per_year(metrics_by_year)
 
     return [[year, rows] for year, rows in metrics_by_year.items()]
 
 
 def sortDataByYear(metrics_list: List[Dict[str, Any]]) -> Dict[Any, List[Dict[str, Any]]]:
-    """Utility: group already-normalized metric dicts by Year.
-
-    Accepts a list of metric dicts (as returned by _normalize_metrics) and groups them.
-    """
+    """Group a list of normalized metric dicts by Year."""
     by_year: Dict[Any, List[Dict[str, Any]]] = {}
     for m in metrics_list:
         year = m.get("Year")
