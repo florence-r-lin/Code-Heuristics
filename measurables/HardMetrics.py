@@ -244,7 +244,7 @@ def findListComp(tree):
 
     
 def findOop(tree):
-    # returns whether a class AND method are found in tree
+    # returns whether a class and a method are found in tree
     if not tree:
         return False
     
@@ -378,7 +378,7 @@ def findExecutionTime(scriptPath, timeout=5):
         return 'error'
 
 # TODO will need to adjust allMetrics
-def allMetrics(scriptPath):
+def allMetrics(scriptPath, tree):
     # returns pretty much all the above metrics for scriptPath
     parseable = fileParsing.doesItParse(scriptPath)
     if not parseable:
@@ -391,8 +391,6 @@ def allMetrics(scriptPath):
     cleanFile = fileParsing.cleanParseFile(scriptPath)
     codeOnlyFile = removeblank(removeDocstring(removeComment(originalCode)))
 
-    # make the tree here!!
-
 
     totalLOC = len(originalCode.splitlines())
     commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
@@ -403,13 +401,13 @@ def allMetrics(scriptPath):
 
 
  # TODO adjust these now that parameters are tree
-    functions = findFunc(cleanFile)
-    lenFuncs = len(functions)
-    avgFuncLen = avgFunc(cleanFile)
-    numLoops = countLoops(cleanFile)
-    avgLoopLen = avgLoop(cleanFile)
+    functions = findFunc(tree)
+    lenFuncs = len(parseable) # hmm....
+    avgFuncLen = avgFunc(tree)
+    numLoops = countLoops(tree)
+    avgLoopLen = avgLoop(tree)
 
-    totalCC = calculate_cyclomatic_complexity(cleanFile)
+    totalCC = calculate_cyclomatic_complexity(cleanFile) # hmm...
 
     depthChain = CallChain(splitFunc(cleanFile), funcName(cleanFile))
     ambitionScore = depthChain.depth
@@ -418,7 +416,7 @@ def allMetrics(scriptPath):
     # executionTime = findExecutionTime(scriptPath)
     executionTime = 0.0
 
-    # TODO: PUT THIS BACK IN
+    # TODO: PUT THIS BACK IN (from HSer)
     """
 
     weeksTesting = [
