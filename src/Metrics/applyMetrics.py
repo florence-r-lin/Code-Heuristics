@@ -1,150 +1,161 @@
-import HardMetrics
-import fileParsing
-from Histograms import makeHistogram, makeMultipleHistograms
-import os
-from os import listdir
-from os.path import isfile, join
+"""Run HardMetrics across a set of Python files and export per-year CSV summaries.
+
+This module focuses on clarity and safety:
+- Accepts either the legacy list output or newer dict output from HardMetrics.allMetrics.
+- Groups metrics by year using dicts for readability.
+- Writes CSVs using csv.DictWriter for column-safe output.
+"""
+
+from __future__ import annotations
+
 import csv
-import matplotlib.pyplot as plt
-import numpy as np
-from scipy.stats import norm
-import pandas as pd  # Make sure to import pandas for CSV handling
-import fileinput
+from pathlib import Path
+from typing import Any, Dict, List
+import dataclasses
+
+import fileParsing
+import HardMetrics
 
 
-def metricsOnFilepath(inputFilepath, binNumsInput = None):
-    filePath = inputFilepath
-    metricsList = []
-    # binNums = [6, 30, 7, 30, 30] if binNumsInput == None else binNumsInput
-
-    finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
-    # print(list(set(finalPyList)))    
-    for i in list(set(finalPyList)):
-        # preproccessing portion
-        fileParsing.replaceErrorsInFile(i)
-        # calling all metrics portion
-        # TODO: put in isAPythonFinal function in here!
-        result = None
-        if(fileParsing.isAPythonFile(i)):
-            result = HardMetrics.allMetrics(i)
-        if (result != None):
-            metricsList.append(result)
-
-    dataByYear = {}
-
-    for i in metricsList:
-        year = i[14] # change year !!!
-        if year not in dataByYear:
-            dataByYear[year] = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []] # 15
-
-        # scriptPath, totalLOC, commentPercentage, docstringPercentage, blankPercentage, lenFuncs, avgFuncLen, numLoops, avgLoopLen, totalCC, ambitionScore, executionTime, Class, Semester, Year
-        dataByYear[year][0].append(i[0]) # File Name
-        dataByYear[year][1].append(i[1]) # LOC
-        dataByYear[year][2].append(i[2]) # Comment Percentage
-        dataByYear[year][3].append(i[3]) # Docstring Percentage
-        dataByYear[year][4].append(i[4]) # Blank Percentage
-        dataByYear[year][5].append(i[5]) # Number of Functions
-        dataByYear[year][6].append(i[6]) # Average Function Length
-        dataByYear[year][7].append(i[7]) # Number of Loops
-        dataByYear[year][8].append(i[8]) # Average Loop Length
-        dataByYear[year][9].append(i[9]) # Cyclo Complexity
-        dataByYear[year][10].append(i[10]) # Max Depth
-        dataByYear[year][11].append(i[11]) # Execution Time
-        dataByYear[year][12].append(i[12]) # Class
-        dataByYear[year][13].append(i[13]) # Semester
-        dataByYear[year][14].append(i[14]) # Year
-
-    dataByYearList = []
-    for year, data in dataByYear.items():
-        dataByYearList.append([year, data])
-
-    fieldDict = { # currently is only used for keys
-            "File Name": [], 
-            "LOC": [], 
-            "Comment Percentage": [], 
-            "Docstring Percentage": [],
-            "Blank Percentage": [], 
-            "Number Of Functions": [], 
-            "Average Function Length": [],
-            "Number of Loops": [],
-            "Average Loop Length": [],
-            "CycloComplexity": [],
-            "Max Depth": [], 
-            "Execution Time": [],
-            "Class": [],
-            "Semester": [],
-            "Year": []
-            }
-    
-    for year, data in dataByYear.items():
-        outputFile = f'Metrics Score {year}.csv'
-        with open(outputFile, 'w', newline='') as file:
-            file.truncate(0) # clear file 
-            writer = csv.writer(file)
-            writer.writerow(fieldDict.keys())
-
-            for i in range(len(data[0])):
-                writer.writerow([
-                    data[0][i], 
-                    data[1][i], 
-                    data[2][i], 
-                    data[3][i], 
-                    data[4][i], 
-                    data[5][i], 
-                    data[6][i], 
-                    data[7][i], 
-                    data[8][i],
-                    data[9][i],
-                    data[10][i],
-                    data[11][i],
-                    data[12][i],
-                    data[13][i],
-                    year
-                ])
-
-    return dataByYearList
-
-print(metricsOnFilepath('/Users/summer-2024/Desktop/code metrics 25/All-Data/CS35-Data/assignments postllm/submissions_cs35_sp2025/submission_351/final|hw4pr1 .py'))
-# ['filepath', 800, 24.75, 4.125, 37.25, 7, 12.857142857142858, 3, 3.0, 11, 1, 1.3178491592407227, 'CS35', 'sp2025', 2025]
-# ['filepath', 800, 24.75, 4.125, 37.25, 7, 12.857142857142858, 3, 3.0, 11, 1, 1.287416934967041, 'CS35', 'sp2025', 2025]
-
-# statsCsv = 'histogram_stats.csv'
-# outFolder = 'data'
-
-# #To erase contents of folder, uncomment below
-# shutil.rmtree(outFolder, ignore_errors=True)
-# with open(statsCsv, 'w') as f:
-#     f.write('')
+FIELDNAMES = [
+    "File Name",
+    "LOC",
+    "Comment Percentage",
+    "Docstring Percentage",
+    "Blank Percentage",
+    "Number Of Functions",
+    "Average Function Length",
+    "Number of Loops",
+    "Average Loop Length",
+    "CycloComplexity",
+    "Max Depth",
+    "Execution Time",
+    "Class",
+    "Semester",
+    "Year",
+]
 
 
-# # Individual histograms
-# makeHistogram(weeksUsedList, numBins=6, graphName='Weeks Used', xaxis='Num Weeks', color=(217, 167, 202), 
-#                 fitLine=True, filename='weeks_used_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-# makeHistogram(Comments, numBins=30, graphName='Comments', xaxis='Percentages', 
-#                 filename='comments_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-# makeHistogram(FuncNum, numBins=7, graphName='Ambition', xaxis='Number Of Functions', 
-#                 filename='ambition_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-# makeHistogram(Cyclo, numBins=30, graphName='Cyclomatic Complexity', xaxis='Cyclomatic Complexity', 
-#                 filename='cyclomatic_complexity_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-# makeHistogram(Depth, numBins=5, graphName='Max Depth', xaxis='Depth', 
-#                 filename='maximum_depth_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
-# makeHistogram(Lines, numBins=30, graphName='Volume', xaxis='Lines Of Code', 
-#                 filename='volume_histogram_' + str(year) + '.png', csv_filename=statsCsv, output_dir=outFolder)
+def _normalize_metrics(raw: Any) -> Dict[str, Any]:
+    """Normalize different shapes (MetricRecord/dataclass, dict, list) to a flat dict keyed by FIELDNAMES."""
+    if raw is None:
+        return {}
 
-# inputList = [weeksUsedList, Comments, FuncNum, Cyclo, Depth, Lines]
-# numBins = [6, 30, 7, 30, 5, 30]
-# graphNames = ['Weeks Used', 'Comments', 'Ambition', 'Cyclomatic Complexity', 'Max Depth', 'Volume']
-# xaxis = ['Num Weeks', 'Percentages', 'Number Of Functions', 'Cyclomatic Complexity', 'Depth', 'Lines Of Code']
-# colors = [(217, 167, 202), (148, 181, 242), (120, 160, 240), (180, 140, 220), (230, 200, 250), (150, 180, 230)]
-# filename = 'Combined Histogram' + year
-# fitLine = [True] * len(inputList)  # all histograms to fit a line
-# makeMultipleHistograms(
-#     inputList=inputList,
-#     numBins=numBins,
-#     graphName=graphNames,
-#     xaxis=xaxis,
-#     color=colors,
-#     fitLine=fitLine,  
-#     filename=filename,
-#     output_dir=outFolder
-# )
+    # If it's a dataclass (MetricRecord), convert to dict first
+    if dataclasses.is_dataclass(raw):
+        data = dataclasses.asdict(raw)
+    elif isinstance(raw, dict):
+        data = raw
+    elif isinstance(raw, (list, tuple)):
+        # legacy list order
+        try:
+            keys = [
+                "File Name",
+                "LOC",
+                "Comment Percentage",
+                "Docstring Percentage",
+                "Blank Percentage",
+                "Number Of Functions",
+                "Average Function Length",
+                "Number of Loops",
+                "Average Loop Length",
+                "CycloComplexity",
+                "Max Depth",
+                "Execution Time",
+                "Class",
+                "Semester",
+                "Year",
+            ]
+            data = dict(zip(keys, raw))
+        except Exception:
+            return {}
+    else:
+        return {}
+
+    # mapping of canonical FIELDNAMES to candidate keys in `data`
+    key_candidates = {
+        "File Name": ["File Name", "file", "scriptPath"],
+        "LOC": ["LOC", "loc"],
+        "Comment Percentage": ["Comment Percentage", "comment_pct"],
+        "Docstring Percentage": ["Docstring Percentage", "doc_pct"],
+        "Blank Percentage": ["Blank Percentage", "blank_pct"],
+        "Number Of Functions": ["Number Of Functions", "num_funcs"],
+        "Average Function Length": ["Average Function Length", "avg_func_len"],
+        "Number of Loops": ["Number of Loops", "num_loops"],
+        "Average Loop Length": ["Average Loop Length", "avg_loop_len"],
+        "CycloComplexity": ["CycloComplexity", "cyclo"],
+        "Max Depth": ["Max Depth", "max_depth"],
+        "Execution Time": ["Execution Time", "exec_time"],
+        "Class": ["Class", "class_name", "class"],
+        "Semester": ["Semester", "semester"],
+        "Year": ["Year", "year"],
+    }
+
+    out: Dict[str, Any] = {}
+    for canonical, candidates in key_candidates.items():
+        for c in candidates:
+            if c in data and data[c] is not None:
+                out[canonical] = data[c]
+                break
+        else:
+            out[canonical] = None
+    return out
+
+
+def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[Any]]:
+    """Compute metrics across Python files under input_filepath and optionally write per-year CSVs.
+
+    Returns a list [[year, [metrics_dicts...]], ...]
+    """
+    base = Path(input_filepath)
+    all_files = fileParsing.getAllPythonFilesInPath(str(base))
+    files = sorted(set(all_files))
+
+    metrics_by_year: Dict[Any, List[Dict[str, Any]]] = {}
+
+    for fp in files:
+        if not fileParsing.isAPythonFile(fp):
+            continue
+
+        # attempt to clean file in-place as previous code did
+        try:
+            fileParsing.replaceErrorsInFile(fp)
+        except Exception:
+            # non-fatal
+            pass
+
+        raw = HardMetrics.allMetrics(fp)
+        nm = _normalize_metrics(raw)
+        if not nm:
+            continue
+
+        year = nm.get("Year")
+        metrics_by_year.setdefault(year, []).append(nm)
+
+    if write_csv:
+        for year, rows in metrics_by_year.items():
+            out = Path(f"Metrics Score {year}.csv")
+            with out.open("w", newline="", encoding="utf-8") as fh:
+                writer = csv.DictWriter(fh, fieldnames=FIELDNAMES)
+                writer.writeheader()
+                for r in rows:
+                    # ensure all fields present
+                    row = {k: r.get(k) for k in FIELDNAMES}
+                    writer.writerow(row)
+
+    return [[year, rows] for year, rows in metrics_by_year.items()]
+
+
+def sortDataByYear(metrics_list: List[Dict[str, Any]]) -> Dict[Any, List[Dict[str, Any]]]:
+    """Utility: group already-normalized metric dicts by Year.
+
+    Accepts a list of metric dicts (as returned by _normalize_metrics) and groups them.
+    """
+    by_year: Dict[Any, List[Dict[str, Any]]] = {}
+    for m in metrics_list:
+        year = m.get("Year")
+        by_year.setdefault(year, []).append(m)
+    return by_year
+
+
+__all__ = ["metricsOnFilepath", "sortDataByYear"]

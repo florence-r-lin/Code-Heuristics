@@ -1,10 +1,8 @@
 import importlib.util
 from pathlib import Path
 import ast
-import io
 import textwrap
 import sys
-import pytest
 
 
 def load_hardmetrics():
@@ -210,8 +208,11 @@ def test_allMetrics_monkeypatched(tmp_path, monkeypatch):
 	monkeypatch.setattr(hm, 'CallChain', FakeChain)
 
 	out = hm.allMetrics(str(f))
-	assert isinstance(out, list)
-	assert out[0] == str(f)
-	assert out[5] == 1  # lenFuncs
-	assert out[9] == 5  # cyclomatic complexity we patched
+	# new behavior: allMetrics returns a MetricRecord dataclass
+	# dataclass may be present as the module's MetricRecord or a simple object with attributes
+	assert hasattr(out, 'file')
+	assert out.file == str(f)
+	assert out.num_funcs == 1
+	# depending on name, cyclomatic complexity is exposed as 'cyclo'
+	assert getattr(out, 'cyclo', None) == 5
 

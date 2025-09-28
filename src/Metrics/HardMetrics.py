@@ -1,8 +1,31 @@
 import re  
 import ast
+from dataclasses import dataclass
+from typing import Optional
+
 from Cyclomatic import *
 import fileParsing
 from NestedDepth import CallChain
+
+
+@dataclass
+class MetricRecord:
+    """Flat, typed record that represents metrics for a single file."""
+    file: str
+    loc: int
+    comment_pct: float
+    doc_pct: float
+    blank_pct: float
+    num_funcs: int
+    avg_func_len: float
+    num_loops: int
+    avg_loop_len: float
+    cyclo: float
+    max_depth: Optional[int]
+    exec_time: float
+    class_name: Optional[str]
+    semester: Optional[str]
+    year: Optional[int]
 
 
 def removeComment(code):
@@ -332,7 +355,7 @@ def allMetrics(scriptPath):
     totalCC = calculate_cyclomatic_complexity(cleanFile)
 
     depthChain = CallChain(splitFunc(cleanFile), funcName(cleanFile))
-    ambitionScore = depthChain.depth
+    maxDepth = depthChain.depth
 
     # execution time is on timeout because it multiplies the runtime by 60
     # executionTime = findExecutionTime(scriptPath)
@@ -361,9 +384,25 @@ def allMetrics(scriptPath):
     Semester = fileParsing.getSemesterFromFilepath(scriptPath)
     Year = fileParsing.getYearFromFilepath(scriptPath)
 
-    # I think this output should be a dictionary...
-    outputList = [scriptPath, totalLOC, commentPercentage, docstringPercentage, blankPercentage, lenFuncs, avgFuncLen, numLoops, avgLoopLen, totalCC, ambitionScore, executionTime, Class, Semester, Year]
-    return outputList
+    # Return a single flat, typed record describing the file metrics
+    rec = MetricRecord(
+        file=scriptPath,
+        loc=totalLOC,
+        comment_pct=commentPercentage,
+        doc_pct=docstringPercentage,
+        blank_pct=blankPercentage,
+        num_funcs=lenFuncs,
+        avg_func_len=avgFuncLen,
+        num_loops=numLoops,
+        avg_loop_len=avgLoopLen,
+        cyclo=totalCC,
+        max_depth=maxDepth,
+        exec_time=executionTime,
+        class_name=Class,
+        semester=Semester,
+        year=Year,
+    )
+    return rec
 
 # print(allMetrics('/Users/summer-2024/Desktop/code metrics 25/All-Data/CS35-Data/assignments postllm/submissions_cs35_sp2025/submission_351/final|hw4pr1 .py'))
 # ['filepath', 800, 24.75, 4.125, 37.25, 7, 12.857142857142858, 3, 3.0, 11, 1, 1.3178491592407227, 'CS35', 'sp2025', 2025]
