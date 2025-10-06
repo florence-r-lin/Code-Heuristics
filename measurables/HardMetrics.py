@@ -78,13 +78,9 @@ def getFunctionSource(scriptPath, func_node):
 
     return "".join(lines[start_line:end_line])
 
-# we need to revisit this one, maybe it shouldn't take in a tree
-def splitFunc(tree):
-    # returns a list of the text of each function in a script
-    
-    if not tree:
-        return []
-    
+def splitFunc(cleanFile):
+    # Returns list of function source code strings from source and its AST
+    tree = ast.parse(cleanFile)
     funcList = []
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
     lines = cleanFile.splitlines(keepends=True)
@@ -95,7 +91,7 @@ def splitFunc(tree):
         funcList.append(func_source)
     return funcList
 
- 
+
 def funcName(tree):
     # returns a list of the names of all functions in cleanFile
     if not tree:
@@ -378,67 +374,47 @@ def testTimeout(scriptPath, timeout):
 #         # TODO: RAISE ERRORS AND HANDLE
 #         return 'error'
 
-# TODO will need to adjust allMetrics
-def allMetrics(scriptPath):
-def allMetrics(scriptPath, tree):
-    # returns pretty much all the above metrics for scriptPath
+def allMetrics(scriptPath, tree=None):
     parseable = fileParsing.doesItParse(scriptPath)
     if not parseable:
         print(scriptPath, 'is not parseable')
         return
 
+    if tree is None:
+        tempCleanFile = fileParsing.cleanParseFile(scriptPath)
+        tree = ast.parse(tempCleanFile)
+    
     with open(scriptPath, 'r', encoding='utf-8-sig', errors='ignore') as f:
         originalCode = f.read()
 
-    sub = fileParsing.cleanParseFile(scriptPath)
-    codeOnlyFile = removeblank(removeDocstring(removeComment(originalCode)))
+    cleanFile = fileParsing.cleanParseFile(scriptPath)
 
-
-    totalLOC = len(originalCode.splitlines())
+    # Use the same tree consistently
     commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
 
-    functions = findFunc(sub)
-    lenFuncs = len(functions)
-    avgFuncLen = avgFunc(sub)
-    numLoops = countLoops(sub)
-    avgLoopLen = avgLoop(sub)
-    # setting up all portions of list
-    totalLOC = len(originalCode.splitlines())
-    commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
-
-
- # TODO adjust these now that parameters are tree
     functions = findFunc(tree)
-    lenFuncs = len(parseable) # hmm....
     avgFuncLen = avgFunc(tree)
     numLoops = countLoops(tree)
     avgLoopLen = avgLoop(tree)
 
-    totalCC = calculate_cyclomatic_complexity(sub)
-    depthChain = CallChain(splitFunc(sub), funcName(sub))
-    totalCC = calculate_cyclomatic_complexity(cleanFile) # hmm...
+    totalCC = calculate_cyclomatic_complexity(tree)  # assuming this takes AST tree
 
-    depthChain = CallChain(splitFunc(cleanFile), funcName(cleanFile))
+    depthChain = CallChain(splitFunc(fileParsing.cleanParseFile(scriptPath))), funcName(tree)
     ambitionScore = depthChain.depth
 
-    #executionTime = findExecutionTime(scriptPath, timeout=5)
-    # execution time is on timeout because it multiplies the runtime by 60
-    # executionTime = findExecutionTime(scriptPath)
-    executionTime = 0.0
+    executionTime = 0.0  # placeholder for now
 
-    # TODO: PUT THIS BACK IN (from HSer)
-    """
-
+    # Weeks testing
     weeksTesting = [
-        findIfOrVar(sub),
-        findRecursion(sub),
-        findListComp(sub),
-        findSlicing(sub),
-        findBoolAlg(sub),
-        findLoops(sub),
-        findNestedLoops(sub),
-        findDictionaries(sub),
-        findOop(sub)
+        findIfOrVar(tree),
+        findRecursion(tree),
+        findListComp(tree),
+        findSlicing(tree),
+        findBoolAlg(tree),
+        findLoops(tree),
+        findNestedLoops(tree),
+        findDictionaries(tree),
+        findOop(tree)
     ]
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
@@ -449,7 +425,7 @@ def allMetrics(scriptPath, tree):
 
     return {
         'filepath': scriptPath,
-        'totalLOC': totalLOC,
+        'totalLOC': len(originalCode.splitlines()),
         'commentPercentage': commentPercentage,
         'docstringPercentage': docstringPercentage,
         'blankPercentage': blankPercentage,
@@ -466,6 +442,7 @@ def allMetrics(scriptPath, tree):
         'semester': Semester,
         'year': Year
     }
+
 
 
 # print(allMetrics('/Users/summer-2024/Desktop/code metrics 25/All-Data/CS35-Data/assignments postllm/submissions_cs35_sp2025/submission_351/final|hw4pr1 .py'))

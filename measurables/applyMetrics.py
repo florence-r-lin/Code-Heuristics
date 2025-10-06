@@ -19,6 +19,8 @@ def metricsOnFilepath(inputFilepath, binNumsInput = None):
     # binNums = [6, 30, 7, 30, 30] if binNumsInput == None else binNumsInput
 
     finalPyList = fileParsing.getAllPythonFilesInPath(filePath)
+    print("finalPyList =", finalPyList) 
+
     # print(list(set(finalPyList)))    
     for i in list(set(finalPyList)):
         # preproccessing portion
