@@ -19,7 +19,7 @@ def startsWithAlph(s):
     # return False
 
 def notebookToPy(filePath):
-    #Take all text files, seperate markdown and python into seperate files
+    #Take all text files, seperate markdown and python into separate files
     # print(filePath)
     # for file in os.listdir(filePath):
     if filePath[-1] == "b":

@@ -393,16 +393,17 @@ def allMetrics(scriptPath, tree=None):
     commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
 
     functions = findFunc(tree)
+    numFunctions = len(functions)
     avgFuncLen = avgFunc(tree)
     numLoops = countLoops(tree)
     avgLoopLen = avgLoop(tree)
 
-    totalCC = calculate_cyclomatic_complexity(tree)  # assuming this takes AST tree
+    totalCC = calculate_cyclomatic_complexity(tree)  
 
-    depthChain = CallChain(splitFunc(fileParsing.cleanParseFile(scriptPath))), funcName(tree)
+    depthChain = CallChain(splitFunc(fileParsing.cleanParseFile(scriptPath)), funcName(tree))
     ambitionScore = depthChain.depth
 
-    executionTime = 0.0  # placeholder for now
+    executionTime = -3.0; #placeholder
 
     # Weeks testing
     weeksTesting = [
@@ -429,7 +430,7 @@ def allMetrics(scriptPath, tree=None):
         'commentPercentage': commentPercentage,
         'docstringPercentage': docstringPercentage,
         'blankPercentage': blankPercentage,
-        'numFunctions': lenFuncs,
+        'numFunctions': numFunctions,
         'avgFunctionLength': avgFuncLen,
         'numLoops': numLoops,
         'avgLoopLength': avgLoopLen,
