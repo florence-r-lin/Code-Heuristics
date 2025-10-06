@@ -361,40 +361,47 @@ def testTimeout(scriptPath, timeout):
     parent_conn.close()
     return status
 
-def findExecutionTime(scriptPath, timeout=5):
-    # return the amount of time it takes ot execute scriptPath
-    # (or the amount of time before "timing out")
-    try:
-        startTime = time.time()
-        result = testTimeout(scriptPath, timeout)
-        if result == "Execution Timed Out":
-            return 'timeout'
+# for now we're just going to ignore execution time. maybe we can add it back in later?
+# def findExecutionTime(scriptPath, timeout=5):
+#     # return the amount of time it takes ot execute scriptPath
+#     # (or the amount of time before "timing out")
+#     try:
+#         startTime = time.time()
+#         result = testTimeout(scriptPath, timeout)
+#         if result == "Execution Timed Out":
+#             return 'timeout'
 
-        endTime = time.time()
-        return endTime - startTime
+#         endTime = time.time()
+#         return endTime - startTime
     
-    except Exception as e:
-        # TODO: RAISE ERRORS AND HANDLE
-        return 'error'
+#     except Exception as e:
+#         # TODO: RAISE ERRORS AND HANDLE
+#         return 'error'
 
 # TODO will need to adjust allMetrics
+def allMetrics(scriptPath):
 def allMetrics(scriptPath, tree):
     # returns pretty much all the above metrics for scriptPath
     parseable = fileParsing.doesItParse(scriptPath)
     if not parseable:
         print(scriptPath, 'is not parseable')
         return
-    
+
     with open(scriptPath, 'r', encoding='utf-8-sig', errors='ignore') as f:
         originalCode = f.read()
 
-    cleanFile = fileParsing.cleanParseFile(scriptPath)
+    sub = fileParsing.cleanParseFile(scriptPath)
     codeOnlyFile = removeblank(removeDocstring(removeComment(originalCode)))
 
 
     totalLOC = len(originalCode.splitlines())
     commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
 
+    functions = findFunc(sub)
+    lenFuncs = len(functions)
+    avgFuncLen = avgFunc(sub)
+    numLoops = countLoops(sub)
+    avgLoopLen = avgLoop(sub)
     # setting up all portions of list
     totalLOC = len(originalCode.splitlines())
     commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
@@ -407,11 +414,14 @@ def allMetrics(scriptPath, tree):
     numLoops = countLoops(tree)
     avgLoopLen = avgLoop(tree)
 
+    totalCC = calculate_cyclomatic_complexity(sub)
+    depthChain = CallChain(splitFunc(sub), funcName(sub))
     totalCC = calculate_cyclomatic_complexity(cleanFile) # hmm...
 
     depthChain = CallChain(splitFunc(cleanFile), funcName(cleanFile))
     ambitionScore = depthChain.depth
 
+    #executionTime = findExecutionTime(scriptPath, timeout=5)
     # execution time is on timeout because it multiplies the runtime by 60
     # executionTime = findExecutionTime(scriptPath)
     executionTime = 0.0
@@ -420,28 +430,43 @@ def allMetrics(scriptPath, tree):
     """
 
     weeksTesting = [
-            findIfOrVar(codeOnlyFile),
-            findRecursion(scriptPath),
-            findListComp(codeOnlyFile),
-            findSlicing(codeOnlyFile),
-            findBoolAlg(codeOnlyFile),
-            findLoops(scriptPath),
-            findNestedLoops(scriptPath),
-            findDictionaries(codeOnlyFile),
-            findOop(scriptPath)
-        ]
+        findIfOrVar(sub),
+        findRecursion(sub),
+        findListComp(sub),
+        findSlicing(sub),
+        findBoolAlg(sub),
+        findLoops(sub),
+        findNestedLoops(sub),
+        findDictionaries(sub),
+        findOop(sub)
+    ]
     weeksUsed = sumTests(weeksTesting)
     totalWeekstested = len(weeksTesting)
-    """
 
-    # project = identify_project(scriptPath)
     Class = fileParsing.getClassFromFilepath(scriptPath)
     Semester = fileParsing.getSemesterFromFilepath(scriptPath)
     Year = fileParsing.getYearFromFilepath(scriptPath)
 
-    # I think this output should be a dictionary...
-    outputList = [scriptPath, totalLOC, commentPercentage, docstringPercentage, blankPercentage, lenFuncs, avgFuncLen, numLoops, avgLoopLen, totalCC, ambitionScore, executionTime, Class, Semester, Year]
-    return outputList
+    return {
+        'filepath': scriptPath,
+        'totalLOC': totalLOC,
+        'commentPercentage': commentPercentage,
+        'docstringPercentage': docstringPercentage,
+        'blankPercentage': blankPercentage,
+        'numFunctions': lenFuncs,
+        'avgFunctionLength': avgFuncLen,
+        'numLoops': numLoops,
+        'avgLoopLength': avgLoopLen,
+        'cyclomaticComplexity': totalCC,
+        'ambitionScore': ambitionScore,
+        'executionTime': executionTime,
+        'weeksUsed': weeksUsed,
+        'totalWeeksTested': totalWeekstested,
+        'class': Class,
+        'semester': Semester,
+        'year': Year
+    }
+
 
 # print(allMetrics('/Users/summer-2024/Desktop/code metrics 25/All-Data/CS35-Data/assignments postllm/submissions_cs35_sp2025/submission_351/final|hw4pr1 .py'))
 # ['filepath', 800, 24.75, 4.125, 37.25, 7, 12.857142857142858, 3, 3.0, 11, 1, 1.3178491592407227, 'CS35', 'sp2025', 2025]

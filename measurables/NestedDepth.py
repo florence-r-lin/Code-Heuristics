@@ -84,7 +84,7 @@ class CallChain:
         for func in self.functions:
             currentPath = []
             # print("\n\n\nCURRENT FUNCTION!!", func)
-            currentPath.append(re.search("def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)) 
+            currentPath.append(re.search(r"def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)) 
             path = self.findBranches(func, self.functions, self.names, [])
             # print('currentPath appending', path)
             allPaths.append(path)
@@ -127,7 +127,7 @@ class CallChain:
             currentNumCalls = 1
             # print("\n\n\nCURRENT FUNCTION!!", func)
             funcBody = func.split(':', 1)[1].strip()  # get everything behind the colon
-            funcName = re.search("def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)
+            funcName = re.search(r"def\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", func).group(1)
             currentPath = [funcName]
             for name in self.names:
                 if name in funcBody and name not in funcName and name not in currentPath:
