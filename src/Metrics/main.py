@@ -14,7 +14,7 @@ import pstats
 def main():
     stephanieFilePath = '/Users/summer-2024/Desktop/code metrics 25/All-Data/CS5-Data/assignments postllm/submissions_cs5_s2023'
     yuanFilePath = "/Users/yuan/Desktop/Work/School/Research/CS5 DATA/pre-llm data/cs5/2019 pre llm"
-    currentFilePath = yuanFilePath
+    currentFilePath = stephanieFilePath
 
     profiler = cProfile.Profile()
     profiler.enable()
