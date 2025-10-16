@@ -15,6 +15,7 @@ from typing import Any, Dict, List, Optional
 
 import fileParsing
 import HardMetrics
+from Submission import Submission
 
 
 FIELDNAMES = [
@@ -125,6 +126,7 @@ def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[
 
     metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]] = {}
 
+
     for fp in files:
         if not fileParsing.isAPythonFile(fp):
             continue
@@ -135,13 +137,15 @@ def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[
             # ignore and continue
             pass
 
-        raw = HardMetrics.allMetrics(fp)
+        submission = Submission(fp)
+        raw = submission.get_metrics()  
         row = _to_row(raw)
         if not row:
             continue
 
         year = row.get("Year")
         metrics_by_year.setdefault(year, []).append(row)
+
 
     if write_csv:
         _write_per_year(metrics_by_year)
