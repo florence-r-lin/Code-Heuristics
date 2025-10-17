@@ -10,6 +10,8 @@ warnings.filterwarnings('ignore')
 import cProfile
 import pstats
 
+# currently the AST strategy fails to collect metrics for any code that cannot be parsed
+# it looks like there are other ways to parse broken Python code which we might want to look into
 
 def main():
     stephanieFilePath = '/Users/summer-2024/Desktop/code metrics 25/All-Data/CS5-Data/assignments postllm/submissions_cs5_s2023'

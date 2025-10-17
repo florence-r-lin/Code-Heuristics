@@ -1,5 +1,5 @@
-#an example project for parsing
-#also completely chatGPT created
+# an example project for parsing
+# also completely chatGPT created
 def validate_input(n):
     """
     Validates that the input is a non-negative integer.
@@ -51,7 +51,7 @@ def fibonacci(n):
 
 # def function_with_list_comp():
 #     my_list = [1, 2, 3]
-#     squared_list = [x**2 for x in my_list]  # List comprehension
+#     squared_list = [x**2 for x in my_list]  List comprehension
 #     return squared_list
 
 def function_without_list_comp():

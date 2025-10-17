@@ -11,24 +11,27 @@ import multiprocessing
 import tokenize
 from io import StringIO
 
-# a little too simple
+# this should overcount
 def oldRemoveComment(code):
     # remove single-line comments (starting with #)
     return re.sub(r'#.*', '', code)
 
+# this should be slower on a large scale
 def removeComment(code):
     result = []
     tokens = tokenize.generate_tokens(StringIO(code).readline)
-    
-    for tok_type, tok_string, start, end, line in tokens:
-        if tok_type != tokenize.COMMENT:
-            result.append(tok_string)
-        elif start[1] == 0:
 
+    for tok_type, tok_string, start, end, line in tokens:
+        if tok_type == tokenize.COMMENT:
+            continue  # skip comments
+        elif tok_type == tokenize.NL or tok_type == tokenize.NEWLINE:
             result.append('\n')
+        else:
+            result.append(tok_string)
+
     return ''.join(result)
 
-# a little too simple, but will keep it until testing
+# a little too simple, but will keep it for now
 def removeDocstring(code):
     # remove triple-quoted docstrings
     docstring_regex = r"'''(.*?)'''|\"\"\"(.*?)\"\"\""
