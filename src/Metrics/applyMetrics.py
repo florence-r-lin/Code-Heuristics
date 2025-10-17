@@ -6,6 +6,8 @@ is intentionally small and focuses on: discovering files, invoking `allMetrics`,
 normalizing the result to a canonical CSV row, grouping by year, and writing CSVs.
 """
 
+# above docstring is outdated, we can rewrite it once the code is finalized
+
 from __future__ import annotations
 
 import csv
@@ -15,6 +17,7 @@ from typing import Any, Dict, List, Optional
 
 import fileParsing
 import HardMetrics
+from Submission import Submission
 
 
 FIELDNAMES = [
@@ -114,6 +117,7 @@ def _write_per_year(metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]], 
                 writer.writerow({k: r.get(k) for k in FIELDNAMES})
 
 
+# this is the main attraction
 def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[Any]]:
     """Discover Python files under `input_filepath`, compute metrics and group by year.
 
@@ -125,6 +129,7 @@ def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[
 
     metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]] = {}
 
+
     for fp in files:
         if not fileParsing.isAPythonFile(fp):
             continue
@@ -135,13 +140,15 @@ def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[
             # ignore and continue
             pass
 
-        raw = HardMetrics.allMetrics(fp)
+        submission = Submission(fp)
+        raw = submission.get_metrics()  
         row = _to_row(raw)
         if not row:
             continue
 
         year = row.get("Year")
         metrics_by_year.setdefault(year, []).append(row)
+
 
     if write_csv:
         _write_per_year(metrics_by_year)
