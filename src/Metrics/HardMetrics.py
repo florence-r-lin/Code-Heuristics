@@ -12,12 +12,12 @@ import tokenize
 from io import StringIO
 
 # this should overcount
-def oldRemoveComment(code):
+def removeComment(code):
     # remove single-line comments (starting with #)
     return re.sub(r'#.*', '', code)
 
 # this should be slower on a large scale
-def removeComment(code):
+def tokenizeRemoveComment(code):
     result = []
     tokens = tokenize.generate_tokens(StringIO(code).readline)
 
@@ -144,16 +144,12 @@ def calculatePercentage(scriptPath):
 # this basically works OK but could miss async functions
 def findFunc(tree):
     # returns all functions in a script using ASTs
-    if not tree:
-        return []
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
     return functions
 
 # fully vibecoded, not implementing it yet, looks reasonable though
 def newFindFunc(tree):
     # returns all functions in a script using ASTs
-    if not tree:
-        return []
     functions = [node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))]
     return functions
 
@@ -184,16 +180,11 @@ def splitFunc(cleanFile):
 
 def funcName(tree):
     # returns a list of the names of all functions in cleanFile
-    if not tree:
-        return []
-    
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
     return [func.name for func in functions]
 
 def avgFunc(tree):
     # returns the average number of lines per function in cleanFile
-    if not tree:
-        return 0
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
     if len(functions) == 0:
         return 0
@@ -210,17 +201,11 @@ def avgFunc(tree):
 # that seems fine to me but clashes with the comment, so idk
 def countLoops(tree):
     # counts the total number of for or while loops of all functions in cleanFile
-    if not tree:
-        return 0
-    
     return sum(isinstance(node, (ast.For, ast.While)) for node in ast.walk(tree))
 
 # did not originally return anything if there were no loops, so added fallback
 def avgLoop(tree):
     # returns average number of lines in a loop in cleanFile
-    if not tree:
-        return 0
-
     loop_lengths = []
     for node in ast.walk(tree):
         if isinstance(node, (ast.For, ast.While)):
@@ -236,9 +221,6 @@ def avgLoop(tree):
 
 def findIfOrVar(tree):
     # returns whether a file contains an if statement or a variable assignment
-    if not tree:
-        return False
-    
     for node in ast.walk(tree):
         if isinstance(node, (ast.If, ast.Assign)):
             return True
@@ -247,9 +229,6 @@ def findIfOrVar(tree):
 
 def findBoolAlg(tree):
     # returns whether a file contains a boolean operator (if, and, not)
-    if not tree:
-        return False
-
     for node in ast.walk(tree):
         if isinstance(node, ast.BoolOp):
             return True
@@ -259,9 +238,6 @@ def findBoolAlg(tree):
 
 def findDictionaries(tree):
     # returns whether any dictionaries are made in tree
-    if not tree:
-        return False
-
     for node in ast.walk(tree):
         if isinstance(node, ast.Dict):
             return True
@@ -270,9 +246,6 @@ def findDictionaries(tree):
 # (do we also want to check for index accessing? currently we don't)
 def findSlicing(tree):
     # returns whether any objects in cleanFile are sliced
-    if not tree:
-        return False
-
     for node in ast.walk(tree):
         if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Slice):
             return True
@@ -281,9 +254,6 @@ def findSlicing(tree):
 # this only catches nested loops in consecutive lines
 def oldFindNestedLoops(tree):
     # returns whether tree contains any nested loops
-    if not tree:
-        return False
-
     for node in ast.walk(tree):
         if isinstance(node, (ast.For, ast.While)):
             for child in ast.iter_child_nodes(node):
@@ -293,9 +263,6 @@ def oldFindNestedLoops(tree):
 
 # slightly vibecoded but looks good
 def findNestedLoops(tree):
-    if not tree:
-        return False
-
     for node in ast.walk(tree):
         if isinstance(node, (ast.For, ast.While)):
             # Check if there's any loop node nested *anywhere* inside this loop's body
@@ -308,10 +275,6 @@ def findNestedLoops(tree):
 
 def findLoops(tree):
     # returns whether tree contains any loops
-
-    if not tree:
-        return False
-
     for node in ast.walk(tree):
         if isinstance(node, (ast.For, ast.While)):
             return True
@@ -320,9 +283,6 @@ def findLoops(tree):
         
 def findRecursion(tree):
     # returns whether tree contains any recursive calls
-    if not tree:
-        return False
-        
     functions = findFunc(tree)
     for func in functions: 
         func_name = func.name
@@ -337,10 +297,6 @@ def findRecursion(tree):
 
 def findListComp(tree):
     # returns whether any list comprehension is used in cleanFile
-
-    if not tree:
-        return False
-  
     for node in ast.walk(tree):
         if isinstance(node, ast.ListComp):
             return True
@@ -349,10 +305,6 @@ def findListComp(tree):
 # I can optimize this slightly
 def oldFindOop(tree):
     # returns whether a class and a method are found in tree
-    if not tree:
-        return False
-    
-  
     hasClass = False
     hasMethod = False
 
@@ -367,9 +319,6 @@ def oldFindOop(tree):
 
 def findOop(tree):
     # returns whether a class and a method are found in tree
-    if not tree:
-        return False
-
     for node in ast.walk(tree):
         if isinstance(node, ast.ClassDef):
             for child in node.body:
