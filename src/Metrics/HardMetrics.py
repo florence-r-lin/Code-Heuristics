@@ -91,11 +91,15 @@ def oldCountComment(code):
 
 def countComment(code):
     count = 0
-    tokens = tokenize.generate_tokens(StringIO(code).readline)
-    for tok_type, tok_string, *_ in tokens:
-        if tok_type == tokenize.COMMENT:
-            count += 1
+    try:
+        tokens = tokenize.generate_tokens(StringIO(code).readline)
+        for tok_type, tok_string, *_ in tokens:
+            if tok_type == tokenize.COMMENT:
+                count += 1
+    except tokenize.TokenError as e:
+        raise ValueError(f"Token error in comment counting: {e}")
     return count
+
 
 
 def countDocstring(code):
@@ -125,7 +129,11 @@ def calculatePercentage(scriptPath):
     docstringPercentage = (countDocstring(code) / total_lines) * 100
 
     # comment percentage
-    commentPercentage = (countComment(code) / total_lines) * 100
+    try:
+        commentPercentage = (countComment(code) / total_lines) * 100
+    except ValueError as e:
+        print(f"Skipping file {scriptPath} due to comment count failure: {e}")
+        return None, None, None  # Or return a special object indicating skip
 
     # blank line percentage
     blankPercentage = (countblank(code) / total_lines) * 100
