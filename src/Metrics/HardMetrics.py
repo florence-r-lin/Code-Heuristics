@@ -519,10 +519,3 @@ def allMetrics(scriptPath, tree=None):
     'semester': Semester,
     'year': Year
 }
-
-
-
-
-
-# print(allMetrics('/Users/summer-2024/Desktop/code metrics 25/All-Data/CS35-Data/assignments postllm/submissions_cs35_sp2025/submission_351/final|hw4pr1 .py'))
-# ['filepath', 800, 24.75, 4.125, 37.25, 7, 12.857142857142858, 3, 3.0, 11, 1, 1.3178491592407227, 'CS35', 'sp2025', 2025]
