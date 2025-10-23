@@ -1,15 +1,32 @@
 import re  
 import ast
-# import pygame
+from dataclasses import dataclass
+from typing import Optional
+import tokenize
+
 from Cyclomatic import *
 import fileParsing
-from NestedDepth import CallChain 
-import time
-import multiprocessing
+from NestedDepth import CallChain
 
-# for new version of comment counting
-import tokenize
-from io import StringIO
+
+@dataclass
+class MetricRecord:
+    """Flat, typed record that represents metrics for a single file."""
+    file: str
+    loc: int
+    comment_pct: float
+    doc_pct: float
+    blank_pct: float
+    num_funcs: int
+    avg_func_len: float
+    num_loops: int
+    avg_loop_len: float
+    cyclo: float
+    max_depth: Optional[int]
+    exec_time: float
+    class_name: Optional[str]
+    semester: Optional[str]
+    year: Optional[int]
 
 # this should overcount
 def removeComment(code):
@@ -84,12 +101,11 @@ def removeblank(code):
 
 # the old version of this function didn't catch all single-line comments
 # idk if inline comments are supposed to be included here, but I am including them now
-def oldCountComment(code):
-
-    # count number of single-line comments (starting with #)
+def countComment(code):
     return sum(1 for line in code.splitlines() if '#' in line and not line.strip().startswith('#!'))
 
-def countComment(code):
+# this is slightly better but also slows the entire codebase by 50%
+def newCountComment(code):
     count = 0
     try:
         tokens = tokenize.generate_tokens(StringIO(code).readline)
@@ -447,7 +463,6 @@ def testTimeout(scriptPath, timeout):
 #         return endTime - startTime
     
 #     except Exception as e:
-#         # TODO: RAISE ERRORS AND HANDLE
 #         return 'error'
 
 def allMetrics(scriptPath, tree=None):
@@ -500,22 +515,20 @@ def allMetrics(scriptPath, tree=None):
     Semester = fileParsing.getSemesterFromFilepath(scriptPath)
     Year = fileParsing.getYearFromFilepath(scriptPath)
 
-    return {
-    'file': scriptPath,
-    'loc': len(originalCode.splitlines()),
-    'comment_pct': commentPercentage,
-    'doc_pct': docstringPercentage,
-    'blank_pct': blankPercentage,
-    'num_funcs': numFunctions,
-    'avg_func_len': avgFuncLen,
-    'num_loops': numLoops,
-    'avg_loop_len': avgLoopLen,
-    'cyclo': totalCC,
-    'max_depth': ambitionScore,
-    'exec_time': executionTime,
-    'weeks_used': weeksUsed,
-    'total_weeks_tested': totalWeekstested,
-    'class_name': Class,
-    'semester': Semester,
-    'year': Year
-}
+    return MetricRecord(
+    file=scriptPath,
+    loc=len(originalCode.splitlines()),
+    comment_pct=commentPercentage,
+    doc_pct=docstringPercentage,
+    blank_pct=blankPercentage,
+    num_funcs=numFunctions,
+    avg_func_len=avgFuncLen,
+    num_loops=numLoops,
+    avg_loop_len=avgLoopLen,
+    cyclo=totalCC,
+    max_depth=ambitionScore,
+    exec_time=executionTime,
+    class_name=Class,
+    semester=Semester,
+    year=Year
+)
