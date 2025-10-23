@@ -102,11 +102,15 @@ def _to_row(obj: Any) -> Dict[str, Any]:
         out[canonical] = val
     return out
 
-
+# vibecoded
 def _write_per_year(metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]], output_dir: Optional[Path] = None) -> None:
-    """Write one CSV file per-year containing the metric rows."""
+    """Write one CSV file per-year containing the metric rows into a dedicated output folder."""
     if output_dir is None:
-        output_dir = Path.cwd()
+        output_dir = Path.cwd().parent.parent / "CSVs" # goes outside of src directory
+
+
+    # Ensure the output directory exists
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     for year, rows in metrics_by_year.items():
         filename = output_dir / f"Metrics Score {year if year is not None else 'unknown'}.csv"
@@ -115,7 +119,6 @@ def _write_per_year(metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]], 
             writer.writeheader()
             for r in rows:
                 writer.writerow({k: r.get(k) for k in FIELDNAMES})
-
 
 # this is the main attraction
 def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[Any]]:
