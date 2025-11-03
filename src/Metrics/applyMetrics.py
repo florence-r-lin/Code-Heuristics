@@ -17,7 +17,8 @@ from typing import Any, Dict, List, Optional
 
 import fileParsing
 import HardMetrics
-from Submission import Submission
+from submission import Submission
+
 
 
 FIELDNAMES = [
