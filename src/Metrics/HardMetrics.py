@@ -1,40 +1,36 @@
 import re  
 import ast
-from dataclasses import dataclass
-from typing import Optional
-import tokenize
-
 from Cyclomatic import *
 import fileParsing
-from NestedDepth import CallChain
+from NestedDepth import CallChain 
+import time
+import multiprocessing
+import tokenize
+from io import StringIO
 
-
-@dataclass
-class MetricRecord:
-    """Flat, typed record that represents metrics for a single file."""
-    file: str
-    loc: int
-    comment_pct: float
-    doc_pct: float
-    blank_pct: float
-    num_funcs: int
-    avg_func_len: float
-    num_loops: int
-    avg_loop_len: float
-    cyclo: float
-    max_depth: Optional[int]
-    exec_time: float
-    class_name: Optional[str]
-    semester: Optional[str]
-    year: Optional[int]
-
-# this should overcount
 def removeComment(code):
-    # remove single-line comments (starting with #)
+    """Removes single-line comments from a script.
+    This is a more lightweight version of the function which is slightly
+    less accurate than tokenizeRemoveComment, but much faster.
+
+    :param code: Inputted script
+    :type code: String
+    :return: The same script, excepting single-line comments
+    :rtype: String
+    """
     return re.sub(r'#.*', '', code)
 
 # this should be slower on a large scale
 def tokenizeRemoveComment(code):
+    """Removes single-line comments from a script.
+    This is a slightly more precise version of the function,
+    but much slower, so by default it is not used.
+
+    :param code: Inputted script
+    :type code: String
+    :return: The same script, excepting single-line comments
+    :rtype: String
+    """
     result = []
     tokens = tokenize.generate_tokens(StringIO(code).readline)
 
@@ -50,6 +46,16 @@ def tokenizeRemoveComment(code):
 
 # a little too simple, but will keep it for now
 def removeDocstring(code):
+    """Removes docstrings from a script.
+    This is a more lightweight version of the function which is slightly
+    less accurate than tokenizeRemoveDocstring, but much faster.
+
+    :param code: Inputted script
+    :type code: String
+    :return: The same script, excepting triple-quoted docstrings
+    :rtype: String
+    """
+
     # remove triple-quoted docstrings
     docstring_regex = r"'''(.*?)'''|\"\"\"(.*?)\"\"\""
     return re.sub(docstring_regex, '', code, flags=re.DOTALL)
@@ -57,7 +63,16 @@ def removeDocstring(code):
 
 # fully AI-generated, need to test
 # we can simplify this using the AST we've already generated, ideally
-def newRemoveDocstring(code):
+def tokenizeRemoveDocstring(code):
+    """Removes single-line comments from a script.
+    This is a slightly more precise version of the function,
+    but much slower, so by default it is not used.
+
+    :param code: Inputted script
+    :type code: String
+    :return: The same script, excepting triple-quoted docstrings
+    :rtype: String
+    """
     class DocstringRemover(ast.NodeTransformer):
         def visit_FunctionDef(self, node):
             self.generic_visit(node)
@@ -95,17 +110,39 @@ def newRemoveDocstring(code):
 
 
 def removeblank(code):
-    # remove empty lines
+    """Removes blank lines from a script.
+
+    :param code: Inputted script
+    :type code: String
+    :return: The same script, excepting blank lines
+    :rtype: String
+    """
     nonblankLine = [line for line in code.splitlines() if line.strip() != ""]
     return '\n'.join(nonblankLine)
 
-# the old version of this function didn't catch all single-line comments
-# idk if inline comments are supposed to be included here, but I am including them now
+
 def countComment(code):
+    """Counts the number of single-line comments in a script.
+    This is a more lightweight version of tokenizedCountComment.
+
+    :param code: Inputted script
+    :type code: String
+    :return: Number of single-line comments in the script
+    :rtype: int
+    """
+
+    # count number of single-line comments (starting with #)
     return sum(1 for line in code.splitlines() if '#' in line and not line.strip().startswith('#!'))
 
-# this is slightly better but also slows the entire codebase by 50%
-def newCountComment(code):
+def tokenizedCountComment(code):
+    """Counts the number of single-line comments in a script with tokenization.
+
+    :param code: Inputted script
+    :type code: String
+    :return: Number of single-line comments in the script
+    :rtype: int
+    """
+
     count = 0
     try:
         tokens = tokenize.generate_tokens(StringIO(code).readline)
@@ -119,7 +156,13 @@ def newCountComment(code):
 
 
 def countDocstring(code):
-    # counts the number of docstrings in a file using regex
+    """Counts the number of docstrings in a script.
+
+    :param code: Inputted script
+    :type code: String
+    :return: Number of single-line comments in the script
+    :rtype: int
+    """
     docstring_regex = r"'''(.*?)'''|\"\"\"(.*?)\"\"\""
     matches = re.findall(docstring_regex, code, flags=re.DOTALL)
     total_lines = 0
@@ -129,10 +172,24 @@ def countDocstring(code):
     return total_lines
 
 def countblank(code):
-    # counts the number of blank lines in a script
+    """Counts the number of blank lines in a script.
+
+    :param code: Inputted script
+    :type code: String
+    :return: Number of blank lines in the script
+    :rtype: int
+    """
     return sum(1 for line in code.splitlines() if line.strip() == "")
 
 def calculatePercentage(scriptPath):
+    """Calculates the percentages of lines which are
+    docstrings, comments, and blank lengths
+
+    :param scriptPath: file path to script of choice
+    :type scriptPath: String
+    :return: percentage of lines which are docstrings, comments, blanks
+    :rtype: tuple of three floats
+    """
     # calculates percentage of lines which are docstrings, comments, blank lines
     with open(scriptPath, 'r') as file:
         code = file.read()
@@ -157,9 +214,15 @@ def calculatePercentage(scriptPath):
     return commentPercentage, docstringPercentage, blankPercentage
 
 
-# this basically works OK but could miss async functions
+
 def findFunc(tree):
-    # returns all functions in a script using ASTs
+    """Returns a list of all functions in an AST
+
+    :param tree: abstract syntax tree associated with a particular script
+    :type code: abstract syntax tree
+    :return: percentage of lines which are docstrings, comments, blanks
+    :rtype: list of ast.FunctionDef
+    """
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
     return functions
 
@@ -170,7 +233,18 @@ def newFindFunc(tree):
     return functions
 
 def getFunctionSource(scriptPath, func_node):
-    # returns the text of a particular function
+    """
+    Returns the source code of a specific function from a Python script
+    based on its node in an abstract syntax tree.
+
+    :param scriptPath: path to the script containing the function code
+    :type scriptPath: str
+    :param func_node: the AST node representing the function to find.
+    :type func_node: ast.FunctionDef
+    :return: the function's source code
+    :rtype: str
+    """
+
     with open(scriptPath, "r") as file:
         lines = file.readlines()
 
@@ -179,9 +253,17 @@ def getFunctionSource(scriptPath, func_node):
 
     return "".join(lines[start_line:end_line])
 
-# currently missing async functions
+
 def splitFunc(cleanFile):
-    # Returns list of function source code strings from source and its AST
+    """
+    Extracts all function definitions from a file and returns their code
+
+    :param cleanFile: file path of the code to analyze
+    :type cleanFile: str
+    :return: list of each function's source code
+    :rtype: list[str]
+    """
+
     tree = ast.parse(cleanFile)
     funcList = []
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
@@ -195,13 +277,30 @@ def splitFunc(cleanFile):
 
 
 def funcName(tree):
+    """
+    Retrieves the names of all function definitions from an AST 
+
+    :param tree: an abstract syntax tree to retrieve names from
+    :type tree: ast.AST
+    :return: list of function names found within tree
+    :rtype: list[str]
+    """
     # returns a list of the names of all functions in cleanFile
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
     return [func.name for func in functions]
 
 def avgFunc(tree):
-    # returns the average number of lines per function in cleanFile
+    """
+    Calculates the average number of lines per function in a given AST
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: average number of lines across all functions in tree
+    :rtype: float
+    """
+
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
+    # if no functions are found, return 0
     if len(functions) == 0:
         return 0
     total_lines = 0
@@ -213,14 +312,25 @@ def avgFunc(tree):
     return total_lines / len(functions)
 
 
-# it looks like currently this counts all loops in the entire file! 
-# that seems fine to me but clashes with the comment, so idk
 def countLoops(tree):
-    # counts the total number of for or while loops of all functions in cleanFile
+    """Counts the total number of for and while loops in a given AST
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: total count of for and while loops within tree
+    :rtype: int
+    """
     return sum(isinstance(node, (ast.For, ast.While)) for node in ast.walk(tree))
 
-# did not originally return anything if there were no loops, so added fallback
+
 def avgLoop(tree):
+    """Returns the average number of lines in a loop of tree.
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: average number of lines in a loop of tree
+    :rtype: float
+    """
     # returns average number of lines in a loop in cleanFile
     loop_lengths = []
     for node in ast.walk(tree):
@@ -236,6 +346,12 @@ def avgLoop(tree):
   
 
 def findIfOrVar(tree):
+    """Returns whether a tree contains an if statement or variable assignment
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: whether tree contains an if statement or variable assignment
+    :rtype: bool
+    """
     # returns whether a file contains an if statement or a variable assignment
     for node in ast.walk(tree):
         if isinstance(node, (ast.If, ast.Assign)):
@@ -244,7 +360,13 @@ def findIfOrVar(tree):
   
 
 def findBoolAlg(tree):
-    # returns whether a file contains a boolean operator (if, and, not)
+    """Returns whether a tree contains a boolean operator (if, and, not)
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: whether tree contains a boolean operator
+    :rtype: bool
+    """
     for node in ast.walk(tree):
         if isinstance(node, ast.BoolOp):
             return True
@@ -253,32 +375,42 @@ def findBoolAlg(tree):
     return False
 
 def findDictionaries(tree):
-    # returns whether any dictionaries are made in tree
+    """Returns whether any dictionaries are made in an AST
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: whether tree contains any dictionaries
+    :rtype: bool
+    """
+
     for node in ast.walk(tree):
         if isinstance(node, ast.Dict):
             return True
     return False
 
-# (do we also want to check for index accessing? currently we don't)
 def findSlicing(tree):
-    # returns whether any objects in cleanFile are sliced
+    """Returns whether any objects in an AST are sliced
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: whether any objects in tree are sliced
+    :rtype: bool
+    """
+
     for node in ast.walk(tree):
         if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Slice):
             return True
     return False
 
-# this only catches nested loops in consecutive lines
-def oldFindNestedLoops(tree):
-    # returns whether tree contains any nested loops
-    for node in ast.walk(tree):
-        if isinstance(node, (ast.For, ast.While)):
-            for child in ast.iter_child_nodes(node):
-                if isinstance(child, (ast.For, ast.While)):
-                    return True
-    return False
-
-# slightly vibecoded but looks good
 def findNestedLoops(tree):
+    """Returns whether any nested loops exist within a given AST
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: whether at least one nested loop exists in the tree
+    :rtype: bool
+    """
+
     for node in ast.walk(tree):
         if isinstance(node, (ast.For, ast.While)):
             # Check if there's any loop node nested *anywhere* inside this loop's body
@@ -287,10 +419,14 @@ def findNestedLoops(tree):
                     return True
     return False
 
-
-
 def findLoops(tree):
-    # returns whether tree contains any loops
+    """Returns whether any loops exist within a given AST
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: whether at least one loop exists in tree
+    :rtype: bool
+    """
     for node in ast.walk(tree):
         if isinstance(node, (ast.For, ast.While)):
             return True
@@ -298,6 +434,13 @@ def findLoops(tree):
 
         
 def findRecursion(tree):
+    """Returns whether an AST contains any recursive calls
+
+    :param tree: an abstract syntax tree to analyze
+    :type tree: ast.AST
+    :return: whether tree contains any recursive calls
+    :rtype: bool
+    """
     # returns whether tree contains any recursive calls
     functions = findFunc(tree)
     for func in functions: 
@@ -463,6 +606,7 @@ def testTimeout(scriptPath, timeout):
 #         return endTime - startTime
     
 #     except Exception as e:
+#         # TODO: RAISE ERRORS AND HANDLE
 #         return 'error'
 
 def allMetrics(scriptPath, tree=None):
@@ -515,20 +659,22 @@ def allMetrics(scriptPath, tree=None):
     Semester = fileParsing.getSemesterFromFilepath(scriptPath)
     Year = fileParsing.getYearFromFilepath(scriptPath)
 
-    return MetricRecord(
-    file=scriptPath,
-    loc=len(originalCode.splitlines()),
-    comment_pct=commentPercentage,
-    doc_pct=docstringPercentage,
-    blank_pct=blankPercentage,
-    num_funcs=numFunctions,
-    avg_func_len=avgFuncLen,
-    num_loops=numLoops,
-    avg_loop_len=avgLoopLen,
-    cyclo=totalCC,
-    max_depth=ambitionScore,
-    exec_time=executionTime,
-    class_name=Class,
-    semester=Semester,
-    year=Year
-)
+    return {
+    'file': scriptPath,
+    'loc': len(originalCode.splitlines()),
+    'comment_pct': commentPercentage,
+    'doc_pct': docstringPercentage,
+    'blank_pct': blankPercentage,
+    'num_funcs': numFunctions,
+    'avg_func_len': avgFuncLen,
+    'num_loops': numLoops,
+    'avg_loop_len': avgLoopLen,
+    'cyclo': totalCC,
+    'max_depth': ambitionScore,
+    'exec_time': executionTime,
+    'weeks_used': weeksUsed,
+    'total_weeks_tested': totalWeekstested,
+    'class_name': Class,
+    'semester': Semester,
+    'year': Year
+}
