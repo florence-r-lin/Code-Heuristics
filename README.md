@@ -41,7 +41,7 @@ The main CLI is implemented in `src/Metrics/main.py`.
 Usage:
 
 ```text
-python src/Metrics/main.py -fp <projects_path> [-c <csv_file>] [-p <ProfilerFlag>]
+python3 src/Metrics/main.py -fp <projects_path> [-c <csv_file>] [-p <ProfilerFlag>]
 ```
 
 - `-fp, --projects_path` (required): Path to the directory containing Python files / project folders.
@@ -51,7 +51,7 @@ python src/Metrics/main.py -fp <projects_path> [-c <csv_file>] [-p <ProfilerFlag
 Example:
 
 ```bash
-python src/Metrics/main.py -fp "Your/Filepath"
+python3 src/Metrics/main.py -fp "Your/Filepath"
 ```
 
 ## API usage (importable)
