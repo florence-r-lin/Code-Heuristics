@@ -480,7 +480,7 @@ def allMetrics(scriptPath, tree=None):
     depthChain = CallChain(splitFunc(clean_code), funcName(tree))
     ambitionScore = depthChain.depth
 
-    executionTime = -3.0  # placeholder
+    executionTime = None  # placeholder
 
     weeksTesting = [
         findIfOrVar(tree),
