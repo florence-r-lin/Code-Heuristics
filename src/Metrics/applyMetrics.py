@@ -18,8 +18,6 @@ from typing import Any, Dict, List, Optional
 import fileParsing
 from submission import Submission
 
-
-
 FIELDNAMES = [
     "File Name",
     "LOC",
@@ -38,7 +36,6 @@ FIELDNAMES = [
     "Year",
 ]
 
-
 def _to_row(obj: Any) -> Dict[str, Any]:
     """Convert a MetricRecord (or legacy dict/obj) to a canonical CSV row dict.
 
@@ -53,44 +50,44 @@ def _to_row(obj: Any) -> Dict[str, Any]:
     elif isinstance(obj, dict):
         data = obj
     else:
+        # fallback
         data = {}
-        for attr in (
-            "file",
-            "loc",
-            "comment_pct",
-            "doc_pct",
-            "blank_pct",
-            "num_funcs",
-            "avg_func_len",
-            "num_loops",
-            "avg_loop_len",
-            "cyclo",
-            "max_depth",
-            "exec_time",
-            "class_name",
-            "semester",
-            "year",
-        ):
-            if hasattr(obj, attr):
-                data[attr] = getattr(obj, attr)
 
     mapping = {
-        "File Name": ("File Name", "file", "scriptPath"),
-        "LOC": ("LOC", "loc"),
-        "Comment Percentage": ("Comment Percentage", "comment_pct"),
-        "Docstring Percentage": ("Docstring Percentage", "doc_pct"),
-        "Blank Percentage": ("Blank Percentage", "blank_pct"),
-        "Number Of Functions": ("Number Of Functions", "num_funcs"),
-        "Average Function Length": ("Average Function Length", "avg_func_len"),
-        "Number of Loops": ("Number of Loops", "num_loops"),
-        "Average Loop Length": ("Average Loop Length", "avg_loop_len"),
-        "CycloComplexity": ("CycloComplexity", "cyclo"),
-        "Max Depth": ("Max Depth", "max_depth"),
-        "Execution Time": ("Execution Time", "exec_time"),
-        "Class": ("Class", "class_name", "class"),
-        "Semester": ("Semester", "semester"),
-        "Year": ("Year", "year"),
-    }
+    "File Name": ("file",),
+    "LOC": ("loc",),
+    "Comment Percentage": ("comment_pct",),
+    "Docstring Percentage": ("doc_pct",),
+    "Blank Percentage": ("blank_pct",),
+    "Number Of Functions": ("num_funcs",),
+    "Average Function Length": ("avg_func_len",),
+    "Number of Loops": ("num_loops",),
+    "Average Loop Length": ("avg_loop_len",),
+    "CycloComplexity": ("cyclo",),
+    "Max Depth": ("max_depth",),
+    "Execution Time": ("exec_time",),
+    "Class": ("class_name",),
+    "Semester": ("semester",),
+    "Year": ("year",),
+}
+
+    rec = MetricRecord(
+        file=scriptPath,
+        loc=totalLOC,
+        comment_pct=commentPercentage,
+        doc_pct=docstringPercentage,
+        blank_pct=blankPercentage,
+        num_funcs=lenFuncs,
+        avg_func_len=avgFuncLen,
+        num_loops=numLoops,
+        avg_loop_len=avgLoopLen,
+        cyclo=totalCC,
+        max_depth=maxDepth,
+        exec_time=executionTime,
+        class_name=Class,
+        semester=Semester,
+        year=Year,
+    )
 
     out: Dict[str, Any] = {}
     for canonical, candidates in mapping.items():
@@ -101,7 +98,6 @@ def _to_row(obj: Any) -> Dict[str, Any]:
                 break
         out[canonical] = val
     return out
-
 
 def _write_per_year(metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]], output_dir: Optional[Path] = None) -> None:
     """Write one CSV file per-year containing the metric rows."""
@@ -114,7 +110,7 @@ def _write_per_year(metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]], 
             writer = csv.DictWriter(fh, fieldnames=FIELDNAMES)
             writer.writeheader()
             for r in rows:
-                writer.writerow({k: r.get(k) for k in FIELDNAMES})
+                writer.writerow(r)
 
 
 # this is the main attraction
@@ -131,9 +127,6 @@ def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[
 
 
     for fp in files:
-        if not fileParsing.isAPythonFile(fp):
-            continue
-
         try:
             fileParsing.replaceErrorsInFile(fp)
         except Exception:
@@ -148,7 +141,6 @@ def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[
 
         year = row.get("Year")
         metrics_by_year.setdefault(year, []).append(row)
-
 
     if write_csv:
         _write_per_year(metrics_by_year)
