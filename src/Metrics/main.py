@@ -73,7 +73,7 @@ def main():
     else:
         metrics_by_year = process_metrics(args.projects_path)
 
-    # quick GPT addition to view more stats
+    # to view more stats
     all_rows = []
     for _, rows in metrics_by_year:
         all_rows.extend(rows)
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 # statsCsv = 'histogram_stats.csv'
 # outFolder = 'data'
 
-# #To erase contents of folder, uncomment below
+# To erase contents of folder, uncomment below
 # shutil.rmtree(outFolder, ignore_errors=True)
 # with open(statsCsv, 'w') as f:
 #     f.write('')
