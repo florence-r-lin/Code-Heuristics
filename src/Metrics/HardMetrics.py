@@ -1,12 +1,31 @@
 import re  
 import ast
+from dataclasses import dataclass
+from typing import Optional
+
 from Cyclomatic import *
 import fileParsing
-from NestedDepth import CallChain 
-import time
-import multiprocessing
-import tokenize
-from io import StringIO
+from NestedDepth import CallChain
+
+
+@dataclass
+class MetricRecord:
+    """Flat, typed record that represents metrics for a single file."""
+    file: str
+    loc: int
+    comment_pct: float
+    doc_pct: float
+    blank_pct: float
+    num_funcs: int
+    avg_func_len: float
+    num_loops: int
+    avg_loop_len: float
+    cyclo: float
+    max_depth: Optional[int]
+    exec_time: float
+    class_name: Optional[str]
+    semester: Optional[str]
+    year: Optional[int]
 
 def removeComment(code):
     """Removes single-line comments from a script.
@@ -20,7 +39,6 @@ def removeComment(code):
     """
     return re.sub(r'#.*', '', code)
 
-# this should be slower on a large scale
 def tokenizeRemoveComment(code):
     """Removes single-line comments from a script.
     This is a slightly more precise version of the function,
@@ -44,7 +62,6 @@ def tokenizeRemoveComment(code):
 
     return ''.join(result)
 
-# a little too simple, but will keep it for now
 def removeDocstring(code):
     """Removes docstrings from a script.
     This is a more lightweight version of the function which is slightly
@@ -56,12 +73,9 @@ def removeDocstring(code):
     :rtype: str
     """
 
-    # remove triple-quoted docstrings
     docstring_regex = r"'''(.*?)'''|\"\"\"(.*?)\"\"\""
     return re.sub(docstring_regex, '', code, flags=re.DOTALL)
 
-
-# we can simplify this using the AST we've already generated, ideally
 def tokenizeRemoveDocstring(code):
     """Removes single-line comments from a script.
     This is a slightly more precise version of the function,
@@ -225,12 +239,6 @@ def findFunc(tree):
     functions = [node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]
     return functions
 
-# fully vibecoded, not implementing it yet, looks reasonable though
-def newFindFunc(tree):
-    # returns all functions in a script using ASTs
-    functions = [node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))]
-    return functions
-
 def getFunctionSource(scriptPath, func_node):
     """
     Returns the source code of a specific function from a Python script
@@ -330,7 +338,7 @@ def avgLoop(tree):
     :return: average number of lines in a loop of tree
     :rtype: float
     """
-    # returns average number of lines in a loop in cleanFile
+
     loop_lengths = []
     for node in ast.walk(tree):
         if isinstance(node, (ast.For, ast.While)):
@@ -351,7 +359,7 @@ def findIfOrVar(tree):
     :return: whether tree contains an if statement or variable assignment
     :rtype: bool
     """
-    # returns whether a file contains an if statement or a variable assignment
+
     for node in ast.walk(tree):
         if isinstance(node, (ast.If, ast.Assign)):
             return True
@@ -440,7 +448,7 @@ def findRecursion(tree):
     :return: whether tree contains any recursive calls
     :rtype: bool
     """
-    # returns whether tree contains any recursive calls
+
     functions = findFunc(tree)
     for func in functions: 
         func_name = func.name
@@ -525,21 +533,6 @@ def executeFile(path, return_dict):
     except Exception as e:
         return_dict['result'] = str(e)
 
-# def testTimeout(scriptPath, timeout):
-#     # returns whether scriptPath was executed in < timeout
-#     manager = multiprocessing.Manager()
-#     return_dict = manager.dict()
-
-#     process = multiprocessing.Process(target=executeFile, args=(scriptPath, return_dict))
-#     process.start()
-#     process.join(timeout)
-
-#     if process.is_alive():
-#         process.terminate()
-#         process.join()
-#         return "Execution Timed Out"
-
-#     return return_dict.get('result', 'Execution Completed')
 
 def _execute_file_worker(scriptPath, conn):
     """Child process: run the file and send back a status string."""
@@ -580,25 +573,35 @@ def testTimeout(scriptPath, timeout):
     parent_conn.close()
     return status
 
-# for now we're just going to ignore execution time. maybe we can add it back in later?
-# def findExecutionTime(scriptPath, timeout=5):
-#     # return the amount of time it takes ot execute scriptPath
-#     # (or the amount of time before "timing out")
-#     try:
-#         startTime = time.time()
-#         result = testTimeout(scriptPath, timeout)
-#         if result == "Execution Timed Out":
-#             return 'timeout'
+def findExecutionTime(scriptPath, timeout=5):
+    """
+    Measure the execution time of a Python script with a timeout safeguard.
+    We do NOT recommend running this code by default,
+    as execution time varies and all other metrics are much faster to calculate.
 
-#         endTime = time.time()
-#         return endTime - startTime
+    :param scriptPath: Path to the Python script whose runtime should be measured.
+    :type scriptPath: str
+    :param timeout: Maximum allowed execution time in seconds before terminating execution.
+    :type timeout: int or float, optional (defaults to 5s)
+    :return: 
+        - The execution time in seconds if the script finishes normally.  
+        - "timeout" if the script does not finish before the timeout.  
+        - "error" if an unexpected exception occurs.  
+    :rtype: float or str
+    """
+    try:
+        startTime = time.time()
+        result = testTimeout(scriptPath, timeout)
+        if result == "Execution Timed Out":
+            return 'timeout'
+
+        endTime = time.time()
+        return endTime - startTime
     
-#     except Exception as e:
-#         # TODO: RAISE ERRORS AND HANDLE
-#         return 'error'
+    except Exception as e:
+        return 'error'
 
-# do we want to adapt some of this to make it less CS5-specific?
-def allMetrics(scriptPath, tree=None):
+def allMetrics(scriptPath):
     """Calculates metrics for a file given its file path or AST.
 
     :param scriptPath: path to the file to analyze
@@ -608,71 +611,56 @@ def allMetrics(scriptPath, tree=None):
     :return: all relevant script metrics
     :rtype: dict
     """
+
     parseable = fileParsing.doesItParse(scriptPath)
     if not parseable:
         print(scriptPath, 'is not parseable')
         return
-
-    if tree is None:
-        clean_code = fileParsing.cleanParseFile(scriptPath)
-        tree = ast.parse(clean_code)
-    else:
-        clean_code = None  # already have tree, assume clean_code not needed here
-
+    
     with open(scriptPath, 'r', encoding='utf-8-sig', errors='ignore') as f:
         originalCode = f.read()
 
-    if clean_code is None:
-        clean_code = fileParsing.cleanParseFile(scriptPath)
+    cleanFile = fileParsing.cleanParseFile(scriptPath)
+    codeOnlyFile = removeblank(removeDocstring(removeComment(originalCode)))
 
+    # setting up all portions of list
+    totalLOC = len(originalCode.splitlines())
     commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
 
-    functions = findFunc(tree)
-    numFunctions = len(functions)
-    avgFuncLen = avgFunc(tree)
-    numLoops = countLoops(tree)
-    avgLoopLen = avgLoop(tree)
-    totalCC = calculate_cyclomatic_complexity(tree)
+    functions = findFunc(cleanFile)
+    lenFuncs = len(functions)
+    avgFuncLen = avgFunc(cleanFile)
+    numLoops = countLoops(cleanFile)
+    avgLoopLen = avgLoop(cleanFile)
 
-    depthChain = CallChain(splitFunc(clean_code), funcName(tree))
-    ambitionScore = depthChain.depth
+    totalCC = calculate_cyclomatic_complexity(cleanFile)
 
-    executionTime = -3.0  # placeholder
+    depthChain = CallChain(splitFunc(cleanFile), funcName(cleanFile))
+    maxDepth = depthChain.depth
 
-    weeksTesting = [
-        findIfOrVar(tree),
-        findRecursion(tree),
-        findListComp(tree),
-        findSlicing(tree),
-        findBoolAlg(tree),
-        findLoops(tree),
-        findNestedLoops(tree),
-        findDictionaries(tree),
-        findOop(tree)
-    ]
-    weeksUsed = sumTests(weeksTesting)
-    totalWeekstested = len(weeksTesting)
+    # ignore execution time by default
+    executionTime = -1.0
 
     Class = fileParsing.getClassFromFilepath(scriptPath)
     Semester = fileParsing.getSemesterFromFilepath(scriptPath)
     Year = fileParsing.getYearFromFilepath(scriptPath)
 
-    return {
-    'file': scriptPath,
-    'loc': len(originalCode.splitlines()),
-    'comment_pct': commentPercentage,
-    'doc_pct': docstringPercentage,
-    'blank_pct': blankPercentage,
-    'num_funcs': numFunctions,
-    'avg_func_len': avgFuncLen,
-    'num_loops': numLoops,
-    'avg_loop_len': avgLoopLen,
-    'cyclo': totalCC,
-    'max_depth': ambitionScore,
-    'exec_time': executionTime,
-    'weeks_used': weeksUsed,
-    'total_weeks_tested': totalWeekstested,
-    'class_name': Class,
-    'semester': Semester,
-    'year': Year
-}
+    # Return a single flat, typed record describing the file metrics
+    rec = MetricRecord(
+        file=scriptPath,
+        loc=totalLOC,
+        comment_pct=commentPercentage,
+        doc_pct=docstringPercentage,
+        blank_pct=blankPercentage,
+        num_funcs=lenFuncs,
+        avg_func_len=avgFuncLen,
+        num_loops=numLoops,
+        avg_loop_len=avgLoopLen,
+        cyclo=totalCC,
+        max_depth=maxDepth,
+        exec_time=executionTime,
+        class_name=Class,
+        semester=Semester,
+        year=Year,
+    )
+    return rec
