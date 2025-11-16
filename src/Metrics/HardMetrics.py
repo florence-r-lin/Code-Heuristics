@@ -601,51 +601,51 @@ def findExecutionTime(scriptPath, timeout=5):
     except Exception as e:
         return 'error'
 
-def allMetrics(scriptPath):
-    """Calculates metrics for a file given its file path or AST.
+def allMetrics(scriptPath, tree=None):
+    """
+    Calculates metrics for a file given its file path and optional AST.
 
     :param scriptPath: path to the file to analyze
     :type scriptPath: str
-    :param tree: AST of the file to analyze
-    :type tree: AST
-    :return: all relevant script metrics
-    :rtype: dict
+    :param tree: AST of the file to analyze (optional)
+    :type tree: ast.AST
+    :return: MetricRecord dataclass
     """
-
     parseable = fileParsing.doesItParse(scriptPath)
     if not parseable:
         print(scriptPath, 'is not parseable')
         return
-    
+
     with open(scriptPath, 'r', encoding='utf-8-sig', errors='ignore') as f:
         originalCode = f.read()
 
     cleanFile = fileParsing.cleanParseFile(scriptPath)
     codeOnlyFile = removeblank(removeDocstring(removeComment(originalCode)))
 
-    # setting up all portions of list
+    # If tree wasn't passed, parse the clean code
+    if tree is None:
+        import ast
+        tree = ast.parse(cleanFile)
+
+    # Now AST-based metrics
+    functions = findFunc(tree)
+    lenFuncs = len(functions)
+    avgFuncLen = avgFunc(tree)
+    numLoops = countLoops(tree)
+    avgLoopLen = avgLoop(tree)
+
+    # string-based metrics
     totalLOC = len(originalCode.splitlines())
     commentPercentage, docstringPercentage, blankPercentage = calculatePercentage(scriptPath)
-
-    functions = findFunc(cleanFile)
-    lenFuncs = len(functions)
-    avgFuncLen = avgFunc(cleanFile)
-    numLoops = countLoops(cleanFile)
-    avgLoopLen = avgLoop(cleanFile)
-
     totalCC = calculate_cyclomatic_complexity(cleanFile)
-
-    depthChain = CallChain(splitFunc(cleanFile), funcName(cleanFile))
+    depthChain = CallChain(splitFunc(cleanFile), funcName(tree))
     maxDepth = depthChain.depth
 
-    # ignore execution time by default
     executionTime = -1.0
-
     Class = fileParsing.getClassFromFilepath(scriptPath)
     Semester = fileParsing.getSemesterFromFilepath(scriptPath)
     Year = fileParsing.getYearFromFilepath(scriptPath)
 
-    # Return a single flat, typed record describing the file metrics
     rec = MetricRecord(
         file=scriptPath,
         loc=totalLOC,

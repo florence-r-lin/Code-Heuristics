@@ -17,6 +17,7 @@ from typing import Any, Dict, List, Optional
 
 import fileParsing
 from submission import Submission
+from HardMetrics import MetricRecord
 
 FIELDNAMES = [
     "File Name",
@@ -37,67 +38,51 @@ FIELDNAMES = [
 ]
 
 def _to_row(obj: Any) -> Dict[str, Any]:
-    """Convert a MetricRecord (or legacy dict/obj) to a canonical CSV row dict.
-
-    Prefer dataclass conversion. If a dict is provided, use its keys.
-    If an object with attributes is provided, attempt to read common attribute names.
+    """
+    Convert a MetricRecord (or dict/legacy obj) into a canonical CSV row dict.
     """
     if obj is None:
         return {}
 
+    # Convert MetricRecord → dict
     if is_dataclass(obj):
         data = asdict(obj)
     elif isinstance(obj, dict):
         data = obj
     else:
-        # fallback
-        data = {}
+        # Fallback: try attribute access
+        data = obj.__dict__
 
+    # Map internal field names → CSV column names
     mapping = {
-    "File Name": ("file",),
-    "LOC": ("loc",),
-    "Comment Percentage": ("comment_pct",),
-    "Docstring Percentage": ("doc_pct",),
-    "Blank Percentage": ("blank_pct",),
-    "Number Of Functions": ("num_funcs",),
-    "Average Function Length": ("avg_func_len",),
-    "Number of Loops": ("num_loops",),
-    "Average Loop Length": ("avg_loop_len",),
-    "CycloComplexity": ("cyclo",),
-    "Max Depth": ("max_depth",),
-    "Execution Time": ("exec_time",),
-    "Class": ("class_name",),
-    "Semester": ("semester",),
-    "Year": ("year",),
-}
-
-    rec = MetricRecord(
-        file=scriptPath,
-        loc=totalLOC,
-        comment_pct=commentPercentage,
-        doc_pct=docstringPercentage,
-        blank_pct=blankPercentage,
-        num_funcs=lenFuncs,
-        avg_func_len=avgFuncLen,
-        num_loops=numLoops,
-        avg_loop_len=avgLoopLen,
-        cyclo=totalCC,
-        max_depth=maxDepth,
-        exec_time=executionTime,
-        class_name=Class,
-        semester=Semester,
-        year=Year,
-    )
+        "File Name": ("file",),
+        "LOC": ("loc",),
+        "Comment Percentage": ("comment_pct",),
+        "Docstring Percentage": ("doc_pct",),
+        "Blank Percentage": ("blank_pct",),
+        "Number Of Functions": ("num_funcs",),
+        "Average Function Length": ("avg_func_len",),
+        "Number of Loops": ("num_loops",),
+        "Average Loop Length": ("avg_loop_len",),
+        "CycloComplexity": ("cyclo",),
+        "Max Depth": ("max_depth",),
+        "Execution Time": ("exec_time",),
+        "Class": ("class_name",),
+        "Semester": ("semester",),
+        "Year": ("year",),
+    }
 
     out: Dict[str, Any] = {}
     for canonical, candidates in mapping.items():
         val = None
         for c in candidates:
-            if c in data and data[c] is not None:
+            if c in data:
                 val = data[c]
                 break
         out[canonical] = val
+
     return out
+
 
 def _write_per_year(metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]], output_dir: Optional[Path] = None) -> None:
     """Write one CSV file per-year containing the metric rows."""
