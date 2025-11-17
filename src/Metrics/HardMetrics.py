@@ -22,7 +22,6 @@ class MetricRecord:
     avg_loop_len: float
     cyclo: float
     max_depth: Optional[int]
-    exec_time: float
     class_name: Optional[str]
     semester: Optional[str]
     year: Optional[int]
@@ -534,72 +533,7 @@ def executeFile(path, return_dict):
         return_dict['result'] = str(e)
 
 
-def _execute_file_worker(scriptPath, conn):
-    """Child process: run the file and send back a status string."""
-    try:
-        with open(scriptPath, 'r', encoding='utf-8', errors='ignore') as f:
-            code = f.read()
-        exec(code, {})
-        conn.send("Execution Completed")
-    except Exception as e:
-        conn.send(str(e))
-    finally:
-        conn.close()
-
-def testTimeout(scriptPath, timeout):
-    """
-    Run scriptPath in a separate process with a time limit.
-    Returns one of:
-      - "Execution Completed"
-      - an exception string from the child
-      - "Execution Timed Out"
-    """
-    parent_conn, child_conn = multiprocessing.Pipe(duplex=False)
-    p = multiprocessing.Process(target=_execute_file_worker, args=(scriptPath, child_conn))
-    p.start()
-    child_conn.close()  # close child end in parent process
-
-    p.join(timeout)
-    if p.is_alive():
-        p.terminate()
-        p.join()
-        parent_conn.close()
-        return "Execution Timed Out"
-
-    # Child finished; try to receive its message (if any)
-    status = "Execution Completed"
-    if parent_conn.poll():          # message waiting?
-        status = parent_conn.recv() # str sent by worker
-    parent_conn.close()
-    return status
-
-def findExecutionTime(scriptPath, timeout=5):
-    """
-    Measure the execution time of a Python script with a timeout safeguard.
-    We do NOT recommend running this code by default,
-    as execution time varies and all other metrics are much faster to calculate.
-
-    :param scriptPath: Path to the Python script whose runtime should be measured.
-    :type scriptPath: str
-    :param timeout: Maximum allowed execution time in seconds before terminating execution.
-    :type timeout: int or float, optional (defaults to 5s)
-    :return: 
-        - The execution time in seconds if the script finishes normally.  
-        - "timeout" if the script does not finish before the timeout.  
-        - "error" if an unexpected exception occurs.  
-    :rtype: float or str
-    """
-    try:
-        startTime = time.time()
-        result = testTimeout(scriptPath, timeout)
-        if result == "Execution Timed Out":
-            return 'timeout'
-
-        endTime = time.time()
-        return endTime - startTime
-    
-    except Exception as e:
-        return 'error'
+# Execution-time measurement helpers removed — execution time is no longer collected.
 
 def allMetrics(scriptPath, tree=None):
     """
@@ -641,7 +575,6 @@ def allMetrics(scriptPath, tree=None):
     depthChain = CallChain(splitFunc(cleanFile), funcName(tree))
     maxDepth = depthChain.depth
 
-    executionTime = -1.0
     Class = fileParsing.getClassFromFilepath(scriptPath)
     Semester = fileParsing.getSemesterFromFilepath(scriptPath)
     Year = fileParsing.getYearFromFilepath(scriptPath)
@@ -658,7 +591,6 @@ def allMetrics(scriptPath, tree=None):
         avg_loop_len=avgLoopLen,
         cyclo=totalCC,
         max_depth=maxDepth,
-        exec_time=executionTime,
         class_name=Class,
         semester=Semester,
         year=Year,

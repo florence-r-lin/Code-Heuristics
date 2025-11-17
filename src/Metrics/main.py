@@ -50,16 +50,42 @@ def process_metrics(filepath):
     textProcessing.removeEmptyFile(filepath)
     return applyMetrics.metricsOnFilepath(filepath, write_csv = False)
 
-def main():
-    import argparse
+def print_averages(all_rows):
+    from collections import defaultdict
+    import numpy as np
+
+    aggregate = defaultdict(list)
+    for row in all_rows:
+        for key, value in row.items():
+            if isinstance(value, (int, float)):
+                aggregate[key].append(value)
+
+    print("\n=== Average Metrics Across All Files ===")
+    for key, values in aggregate.items():
+        avg = np.mean(values)
+        print(f"{key}: {avg:.2f}")
+
+def write_to_csv(csv_path, all_rows):
     import csv
     from applyMetrics import FIELDNAMES  # Assuming you have this
 
+    try:
+        with open(csv_path, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
+            writer.writeheader()
+            for row in all_rows:
+                writer.writerow(row)
+        print(f"\nCSV written to: {csv_path}")
+    except Exception as e:
+        print(f"Error writing CSV: {e}")
+
+def main():
     # Add your CSV flag **after** existing parsing
     parser = argparse.ArgumentParser(description='Run the Metrics')
     parser.add_argument('-fp', '--projects_path', type=str, required=True, help='Path to your python projects')
     parser.add_argument('-p', '--profiler', type=bool, required=False, help='Here if you would like to see how long metrics take')
-    parser.add_argument('--csv_out', type=str, required=False, help='Path/filename for the output CSV')
+    parser.add_argument('-c', '--csv_out', type=str, required=False, help='Path/filename for the output CSV')
+    parser.add_argument('-p_avg', '--print_averages', type=bool, required=False, help='Here if you want to print the averages')
 
     args = parser.parse_args()
 
@@ -75,33 +101,15 @@ def main():
 
     if not all_rows:
         print("No metrics collected.")
-    else:
-        from collections import defaultdict
-        import numpy as np
+        return
+    
+    if args.print_averages:
+        print_averages(all_rows)
 
-        aggregate = defaultdict(list)
-        for row in all_rows:
-            for key, value in row.items():
-                if isinstance(value, (int, float)):
-                    aggregate[key].append(value)
+    csv_path = args.csv_out 
+    if csv_path:
+        write_to_csv(csv_path, all_rows)
 
-        print("\n=== Average Metrics Across All Files ===")
-        for key, values in aggregate.items():
-            avg = np.mean(values)
-            print(f"{key}: {avg:.2f}")
-
-
-        csv_path = args.csv_out or args.csv_file 
-        if csv_path:
-            try:
-                with open(csv_path, 'w', newline='', encoding='utf-8') as f:
-                    writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
-                    writer.writeheader()
-                    for row in all_rows:
-                        writer.writerow(row)
-                print(f"\nCSV written to: {csv_path}")
-            except Exception as e:
-                print(f"Error writing CSV: {e}")
 
 
 if __name__ == "__main__":
