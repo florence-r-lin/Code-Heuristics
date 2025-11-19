@@ -6,13 +6,7 @@ import ast
 
 
 def getChildFolderNames(folderPath):
-    # test
-    # print(f"Reading {folderPath}")
     folderTree = list(os.walk(folderPath))
-
-    # test
-    # if not folderTree:
-    #     print(f"Folder not found in path {folderPath}")
     return folderTree[0][1]
 
 def getFullPathName(folderPath):
@@ -85,7 +79,7 @@ def isOnlyComments(inputStr):
 
 def isAPythonFile(filePath):
     fileName = filePath.split("/")[-1]
-    return fileName[-3:] == ".py" #fileName[0:6] == "final|" and 
+    return fileName[-3:] == ".py" 
 
 def backOneDir(filePath):
     return "/".join(filePath.split("/")[:-1])
@@ -93,14 +87,14 @@ def backOneDir(filePath):
 def getClassFromFilepath(filePath):
     parts = filePath.split('/')
     for part in parts:
-        if part.endswith('-Data') and 'All' not in part: # CS5-Data
+        if part.endswith('-Data') and 'All' not in part: 
             return part.replace('-Data', '') 
     return None
 
 def getSemesterFromFilepath(filePath):
     parts = filePath.split('/')
     for part in parts:
-        if part.startswith('submissions'): # submissions_cs35_sp2025
+        if part.startswith('submissions'):
             parts2 = part.split('_')
             return parts2[-1] 
     return None
@@ -110,7 +104,7 @@ def getYearFromFilepath(filePath):
     newFilepath = []
     skip = False
     for part in parts:
-        if part == 'Users': # my user is summer-2024 T-T
+        if part == 'Users':
             skip = True
             continue
         if skip:

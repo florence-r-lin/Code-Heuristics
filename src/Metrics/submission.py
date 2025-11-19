@@ -25,5 +25,5 @@ class Submission:
     def get_metrics(self):
         if self.metrics_data is None:
             # Let's say allMetrics accepts path + tree and returns dataclass
-            self.metrics_data = HardMetrics.allMetrics(self.path, tree=self.tree)
+            self.metrics_data = HardMetrics.allMetrics(self.path)
         return self.metrics_data

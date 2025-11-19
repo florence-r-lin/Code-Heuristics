@@ -16,10 +16,8 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 import fileParsing
-import HardMetrics
 from submission import Submission
-
-
+from HardMetrics import MetricRecord
 
 FIELDNAMES = [
     "File Name",
@@ -33,74 +31,54 @@ FIELDNAMES = [
     "Average Loop Length",
     "CycloComplexity",
     "Max Depth",
-    "Execution Time",
     "Class",
     "Semester",
     "Year",
 ]
 
-
 def _to_row(obj: Any) -> Dict[str, Any]:
-    """Convert a MetricRecord (or legacy dict/obj) to a canonical CSV row dict.
-
-    Prefer dataclass conversion. If a dict is provided, use its keys.
-    If an object with attributes is provided, attempt to read common attribute names.
+    """
+    Convert a MetricRecord (or dict/legacy obj) into a canonical CSV row dict.
     """
     if obj is None:
         return {}
 
+    # Convert MetricRecord → dict
     if is_dataclass(obj):
         data = asdict(obj)
     elif isinstance(obj, dict):
         data = obj
     else:
-        data = {}
-        for attr in (
-            "file",
-            "loc",
-            "comment_pct",
-            "doc_pct",
-            "blank_pct",
-            "num_funcs",
-            "avg_func_len",
-            "num_loops",
-            "avg_loop_len",
-            "cyclo",
-            "max_depth",
-            "exec_time",
-            "class_name",
-            "semester",
-            "year",
-        ):
-            if hasattr(obj, attr):
-                data[attr] = getattr(obj, attr)
+        # Fallback: try attribute access
+        data = obj.__dict__
 
+    # Map internal field names → CSV column names
     mapping = {
-        "File Name": ("File Name", "file", "scriptPath"),
-        "LOC": ("LOC", "loc"),
-        "Comment Percentage": ("Comment Percentage", "comment_pct"),
-        "Docstring Percentage": ("Docstring Percentage", "doc_pct"),
-        "Blank Percentage": ("Blank Percentage", "blank_pct"),
-        "Number Of Functions": ("Number Of Functions", "num_funcs"),
-        "Average Function Length": ("Average Function Length", "avg_func_len"),
-        "Number of Loops": ("Number of Loops", "num_loops"),
-        "Average Loop Length": ("Average Loop Length", "avg_loop_len"),
-        "CycloComplexity": ("CycloComplexity", "cyclo"),
-        "Max Depth": ("Max Depth", "max_depth"),
-        "Execution Time": ("Execution Time", "exec_time"),
-        "Class": ("Class", "class_name", "class"),
-        "Semester": ("Semester", "semester"),
-        "Year": ("Year", "year"),
+        "File Name": ("file",),
+        "LOC": ("loc",),
+        "Comment Percentage": ("comment_pct",),
+        "Docstring Percentage": ("doc_pct",),
+        "Blank Percentage": ("blank_pct",),
+        "Number Of Functions": ("num_funcs",),
+        "Average Function Length": ("avg_func_len",),
+        "Number of Loops": ("num_loops",),
+        "Average Loop Length": ("avg_loop_len",),
+        "CycloComplexity": ("cyclo",),
+        "Max Depth": ("max_depth",),
+        "Class": ("class_name",),
+        "Semester": ("semester",),
+        "Year": ("year",),
     }
 
     out: Dict[str, Any] = {}
     for canonical, candidates in mapping.items():
         val = None
         for c in candidates:
-            if c in data and data[c] is not None:
+            if c in data:
                 val = data[c]
                 break
         out[canonical] = val
+
     return out
 
 
@@ -115,7 +93,7 @@ def _write_per_year(metrics_by_year: Dict[Optional[int], List[Dict[str, Any]]], 
             writer = csv.DictWriter(fh, fieldnames=FIELDNAMES)
             writer.writeheader()
             for r in rows:
-                writer.writerow({k: r.get(k) for k in FIELDNAMES})
+                writer.writerow(r)
 
 
 # this is the main attraction
@@ -132,9 +110,6 @@ def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[
 
 
     for fp in files:
-        if not fileParsing.isAPythonFile(fp):
-            continue
-
         try:
             fileParsing.replaceErrorsInFile(fp)
         except Exception:
@@ -149,7 +124,6 @@ def metricsOnFilepath(input_filepath: str, write_csv: bool = True) -> List[List[
 
         year = row.get("Year")
         metrics_by_year.setdefault(year, []).append(row)
-
 
     if write_csv:
         _write_per_year(metrics_by_year)
