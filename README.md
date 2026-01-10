@@ -113,8 +113,10 @@ Run the tests with pytest from the repository root:
 pytest -q
 ```
 
-If tests require additional dependencies, install them using the project's `requirements.txt`.
-
+If tests require additional dependencies, install them using 
+```
+pip install .
+```
 ## Developer notes
 
 - The pipeline currently uses Python's AST for parsing; files that cannot be parsed will be skipped by the AST-based analysis. Consider using tolerant/parsing libraries if you expect broken syntax input.
